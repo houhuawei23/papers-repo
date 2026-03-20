@@ -1,0 +1,136 @@
+paper:
+  id: arxiv:2307.15818v1
+  title: "RT-2: Vision-Language-Action Models Transfer Web Knowledge to Robotic Control"
+  authors:
+    - name: Anthony Brohan
+    - name: Noah Brown
+    - name: Justice Carbajal
+    - name: Yevgen Chebotar
+    - name: Xi Chen
+    - name: Krzysztof Choromanski
+    - name: Tianli Ding
+    - name: Danny Driess
+    - name: Avinava Dubey
+    - name: Chelsea Finn
+    - name: Pete Florence
+    - name: Chuyuan Fu
+    - name: Montse Gonzalez Arenas
+    - name: Keerthana Gopalakrishnan
+    - name: Kehang Han
+    - name: Karol Hausman
+    - name: Alexander Herzog
+    - name: Jasmine Hsu
+    - name: Brian Ichter
+    - name: Alex Irpan
+    - name: Nikhil Joshi
+    - name: Ryan Julian
+    - name: Dmitry Kalashnikov
+    - name: Yuheng Kuang
+    - name: Isabel Leal
+    - name: Lisa Lee
+    - name: Tsang-Wei Edward Lee
+    - name: Sergey Levine
+    - name: Yao Lu
+    - name: Henryk Michalewski
+    - name: Igor Mordatch
+    - name: Karl Pertsch
+    - name: Kanishka Rao
+    - name: Krista Reymann
+    - name: Michael Ryoo
+    - name: Grecia Salazar
+    - name: Pannag Sanketi
+    - name: Pierre Sermanet
+    - name: Jaspiar Singh
+    - name: Anikait Singh
+    - name: Radu Soricut
+    - name: Huong Tran
+    - name: Vincent Vanhoucke
+    - name: Quan Vuong
+    - name: Ayzaan Wahid
+    - name: Stefan Welker
+    - name: Paul Wohlhart
+    - name: Jialin Wu
+    - name: Fei Xia
+    - name: Ted Xiao
+    - name: Peng Xu
+    - name: Sichun Xu
+    - name: Tianhe Yu
+    - name: Brianna Zitkovich
+  publication:
+    type: preprint
+    venue: arXiv
+    date_published: "2023-07-28"
+    year: 2023
+  identifiers:
+    arxiv: 2307.15818v1
+  urls:
+    pdf: https://arxiv.org/pdf/2307.15818v1
+    abstract: https://arxiv.org/abs/2307.15818v1
+    website: https://robotics-transformer2.github.io/
+  content:
+    abstract:
+      "We study how vision-language models trained on Internet-scale data
+      can be incorporated directly into end-to-end robotic control to boost generalization
+      and enable emergent semantic reasoning. Our goal is to enable a single end-to-end
+      trained model to both learn to map robot observations to actions and enjoy the
+      benefits of large-scale pretraining on language and vision-language data from
+      the web. To this end, we propose to co-fine-tune state-of-the-art vision-language
+      models on both robotic trajectory data and Internet-scale vision-language tasks,
+      such as visual question answering. In contrast to other approaches, we propose
+      a simple, general recipe to achieve this goal: in order to fit both natural
+      language responses and robotic actions into the same format, we express the
+      actions as text tokens and incorporate them directly into the training set of
+      the model in the same way as natural language tokens. We refer to such category
+      of models as vision-language-action models (VLA) and instantiate an example
+      of such a model, which we call RT-2. Our extensive evaluation (6k evaluation
+      trials) shows that our approach leads to performant robotic policies and enables
+      RT-2 to obtain a range of emergent capabilities from Internet-scale training.
+      This includes significantly improved generalization to novel objects, the ability
+      to interpret commands not present in the robot training data (such as placing
+      an object onto a particular number or icon), and the ability to perform rudimentary
+      reasoning in response to user commands (such as picking up the smallest or largest
+      object, or the one closest to another object). We further show that incorporating
+      chain of thought reasoning allows RT-2 to perform multi-stage semantic reasoning,
+      for example figuring out which object to pick up for use as an improvised hammer
+      (a rock), or which type of drink is best suited for someone who is tired (an
+      energy drink)."
+    keywords:
+      - cs.RO
+      - cs.CL
+      - cs.CV
+      - cs.LG
+    language: en
+    citation:
+      "Anthony Brohan et al.. (2023). RT-2: Vision-Language-Action Models
+      Transfer Web Knowledg.... arXiv:2307.15818v1."
+  workflow:
+    status: unread
+    priority: normal
+    date_added: "2023-07-28"
+  relations:
+    tags: [VLA]
+    categories:
+      - cs.RO
+      - cs.CL
+      - cs.CV
+      - cs.LG
+    primary_category: cs.RO
+    related: []
+  bibtex:
+    "@misc{brohan20232307,\n  author = {Brohan, Anthony and Brown, Noah and\
+    \ Carbajal, Justice and Chebotar, Yevgen and Chen, Xi and Choromanski, Krzysztof\
+    \ and Ding, Tianli and Driess, Danny and Dubey, Avinava and Finn, Chelsea and\
+    \ Florence, Pete and Fu, Chuyuan and Arenas, Montse Gonzalez and Gopalakrishnan,\
+    \ Keerthana and Han, Kehang and Hausman, Karol and Herzog, Alexander and Hsu,\
+    \ Jasmine and Ichter, Brian and Irpan, Alex and Joshi, Nikhil and Julian, Ryan\
+    \ and Kalashnikov, Dmitry and Kuang, Yuheng and Leal, Isabel and Lee, Lisa and\
+    \ Lee, Tsang-Wei Edward and Levine, Sergey and Lu, Yao and Michalewski, Henryk\
+    \ and Mordatch, Igor and Pertsch, Karl and Rao, Kanishka and Reymann, Krista and\
+    \ Ryoo, Michael and Salazar, Grecia and Sanketi, Pannag and Sermanet, Pierre and\
+    \ Singh, Jaspiar and Singh, Anikait and Soricut, Radu and Tran, Huong and Vanhoucke,\
+    \ Vincent and Vuong, Quan and Wahid, Ayzaan and Welker, Stefan and Wohlhart, Paul\
+    \ and Wu, Jialin and Xia, Fei and Xiao, Ted and Xu, Peng and Xu, Sichun and Yu,\
+    \ Tianhe and Zitkovich, Brianna},\n  title = {RT-2: Vision-Language-Action Models\
+    \ Transfer Web Knowledge to Robotic Control},\n  year = {2023},\n  eprint = {2307.15818},\n\
+    \  archivePrefix = {arXiv},\n  primaryClass = {cs.RO},\n  url = {https://arxiv.org/abs/2307.15818v1},\n\
+    }"

@@ -1,0 +1,19 @@
+dir_name,title,year,venue,arxiv_id,tags,has_notes,has_trans,md_count,trans_count,naming_issues
+.20260318-TechArxiv-Towards-Generalist-Embodied-AI_-A-Survey-on-World-Models-for-VLA-Agents_parsed,Towards Generalist Embodied AI: A Survey on World Models for VLA Agents,2026,TechRxiv,,,False,False,0,0,隐藏目录（以 . 开头）;疑似临时解析目录
+20210226-ICML2021-CLIP-Learning-Transferable-Visual-Models-From-Natural-Language-Supervision,Learning Transferable Visual Models From Natural Language Supervision,2021,arXiv,2103.00020,CLIP,False,True,2,1,
+20210924-PMLR-CLIPort-What-and-Where-Pathways-for-Robotic-Manipulation,CLIPort: What and Where Pathways for Robotic Manipulation,2021,arXiv,2109.12098,VLA,False,True,2,1,
+20230728-Arxiv-RT-2-Vision-Language-Action-Models-Transfer-Web-Knowledge-to-Robotic-Control,RT-2: Vision-Language-Action Models Transfer Web Knowledge to Robotic Control,2023,arXiv,2307.15818,VLA,False,True,2,1,
+20240319-Arxiv-DROID-A-Large-Scale-In-The-Wild-Robot-Manipulation-Dataset-httpsdroid-datasetgithubio,DROID: A Large-Scale In-The-Wild Robot Manipulation Dataset,2024,arXiv,2403.12945,VLA;Dataset,False,True,3,1,目录名含 URL 或异常片段
+20241224-Arxiv-VLABench-A-Large-Scale-Benchmark-for-Language-Conditioned-Robotics-Manipulation-with-Long-Horizon-Reasoning-Tasks,VLABench: A Large-Scale Benchmark for Language-Conditioned Robotics Manipulation with Long-Horizon Reasoning Tasks,2024,arXiv,2412.18194,VLA;Dataset;Benchmark,False,True,2,1,
+20250311-Arxiv-PhysVLM-Enabling-Visual-Language-Models-to-Understand-Robotic-Physical-Reachability,PhysVLM: Enabling Visual Language Models to Understand Robotic Physical Reachability,2025,arXiv,2503.08481,,False,True,2,1,
+20250318-Arxiv-GR00T-N1-An-Open-Foundation-Model-for-Generalist-Humanoid-Robots,GR00T N1: An Open Foundation Model for Generalist Humanoid Robots,2025,arXiv,2503.14734,VLA;NVIDIA,False,True,2,1,
+20250507-Arxiv-Vision-Language-Action-VLA-Models-Concepts-Progress-Applications-and-Challenges,"Vision-Language-Action (VLA) Models: Concepts, Progress, Applications and Challenges",2025,arXiv,2505.04769,VLA;Survey,False,True,4,2,
+20250611-Arxiv-EfficientVLA-Training-Free-Acceleration-and-Compression-for-Vision-Language-Action-Models,EfficientVLA: Training-Free Acceleration and Compression for Vision-Language-Action Models,2025,arXiv,2506.10100,VLA,False,True,2,1,
+20251011-Arxiv-Ctrl-World-A-Controllable-Generative-World-Model-for-Robot-Manipulation,Ctrl-World: A Controllable Generative World Model for Robot Manipulation,2025,arXiv,2510.10125,VLA;World Model,False,True,2,1,
+20251020-Arxiv-Efficient-Vision-Language-Action-Models-for-Embodied-Manipulation-A-Systematic-Survey,Efficient Vision-Language-Action Models for Embodied Manipulation: A Systematic Survey,2025,arXiv,2510.17111,VLA;Survey,False,True,2,1,
+20260126-Arxiv-TERM-Bench-Trustworthy-Evaluation-of-Robotic-Manipulation-A-New-Benchmark-and-AutoEval-Methods,Trustworthy Evaluation of Robotic Manipulation: A New Benchmark and AutoEval Methods,2026,arXiv,2601.18723,VLA;Benchmark,False,True,2,1,
+20260212-Arxiv-GigaBrain-05M-a-VLA-That-Learns-From-World-Model-Based-Reinforcement-Learning,GigaBrain-0.5M*: a VLA That Learns From World Model-Based Reinforcement Learning,2026,arXiv,2602.12099,VLA;World Model;Reinforcement Learning,False,True,2,1,
+20260212-Arxiv-VLAW-Iterative-Co-Improvement-of-Vision-Language-Action-Policy-and-World-Model,VLAW: Iterative Co-Improvement of Vision-Language-Action Policy and World Model,2026,arXiv,2602.12063,VLA;World Model,True,True,3,1,
+20260220-Arxiv-How-Fast-Can-I-Run-My-VLA-Demystifying-VLA-Inference-Performance-with-VLA-Perf,How Fast Can I Run My VLA? Demystifying VLA Inference Performance with VLA-Perf,2026,arXiv,2602.18397,VLA;Performance;NVIDIA,False,True,2,1,
+20260316-Arxiv-260315031-Attention-Residuals,Attention Residuals,2026,arXiv,2603.15031,,False,True,2,1,
+20260317-Arxiv-Efficient-Reasoning-on-the-Edge,Efficient Reasoning on the Edge,2026,arXiv,2603.16867,,False,True,2,1,

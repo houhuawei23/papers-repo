@@ -1,0 +1,63 @@
+paper:
+  id: arxiv:2510.17111v3
+  title:
+    "Efficient Vision-Language-Action Models for Embodied Manipulation: A Systematic
+    Survey"
+  authors:
+    - name: Weifan Guan
+    - name: Qinghao Hu
+    - name: Aosheng Li
+    - name: Jian Cheng
+  publication:
+    type: preprint
+    venue: arXiv
+    date_published: "2025-10-20"
+    year: 2025
+  identifiers:
+    arxiv: 2510.17111v3
+  urls:
+    pdf: https://arxiv.org/pdf/2510.17111v3
+    abstract: https://arxiv.org/abs/2510.17111v3
+  content:
+    abstract:
+      "Vision-Language-Action (VLA) models extend vision-language models to
+      embodied control by mapping natural-language instructions and visual observations
+      to robot actions. Despite their capabilities, VLA systems face significant challenges
+      due to their massive computational and memory demands, which conflict with the
+      constraints of edge platforms such as on-board mobile manipulators that require
+      real-time performance. Addressing this tension has become a central focus of
+      recent research. In light of the growing efforts toward more efficient and scalable
+      VLA systems, this survey provides a systematic review of approaches for improving
+      VLA efficiency, with an emphasis on reducing latency, memory footprint, and
+      training and inference costs. We categorize existing solutions into four dimensions:
+      model architecture, perception feature, action generation, and training/inference
+      strategies, summarizing representative techniques within each category. Finally,
+      we discuss future trends and open challenges, highlighting directions for advancing
+      efficient embodied intelligence."
+    keywords:
+      - cs.RO
+      - cs.AI
+      - cs.LG
+      - Efficient VLA
+    language: en
+    citation:
+      Weifan Guan et al.. (2025). Efficient Vision-Language-Action Models
+      for Embodied Mani.... arXiv:2510.17111v3.
+  workflow:
+    status: unread
+    priority: normal
+    date_added: "2025-10-20"
+  relations:
+    tags: [VLA, Survey]
+    categories:
+      - cs.RO
+      - cs.AI
+      - cs.LG
+    primary_category: cs.RO
+    related: []
+  bibtex:
+    "@misc{guan20252510,\n  author = {Guan, Weifan and Hu, Qinghao and Li, Aosheng\
+    \ and Cheng, Jian},\n  title = {Efficient Vision-Language-Action Models for Embodied\
+    \ Manipulation: A Systematic Survey},\n  year = {2025},\n  eprint = {2510.17111},\n\
+    \  archivePrefix = {arXiv},\n  primaryClass = {cs.RO},\n  url = {https://arxiv.org/abs/2510.17111v3},\n\
+    }"

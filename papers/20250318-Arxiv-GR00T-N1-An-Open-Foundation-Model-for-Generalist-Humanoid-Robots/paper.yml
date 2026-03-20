@@ -1,0 +1,109 @@
+paper:
+  id: arxiv:2503.14734v2
+  title: "GR00T N1: An Open Foundation Model for Generalist Humanoid Robots"
+  authors:
+    - name: NVIDIA
+    - name: Johan Bjorck
+    - name: Fernando Castañeda
+    - name: Nikita Cherniadev
+    - name: Xingye Da
+    - name: Runyu Ding
+    - name: Linxi "Jim" Fan
+    - name: Yu Fang
+    - name: Dieter Fox
+    - name: Fengyuan Hu
+    - name: Spencer Huang
+    - name: Joel Jang
+    - name: Zhenyu Jiang
+    - name: Jan Kautz
+    - name: Kaushil Kundalia
+    - name: Lawrence Lao
+    - name: Zhiqi Li
+    - name: Zongyu Lin
+    - name: Kevin Lin
+    - name: Guilin Liu
+    - name: Edith Llontop
+    - name: Loic Magne
+    - name: Ajay Mandlekar
+    - name: Avnish Narayan
+    - name: Soroush Nasiriany
+    - name: Scott Reed
+    - name: You Liang Tan
+    - name: Guanzhi Wang
+    - name: Zu Wang
+    - name: Jing Wang
+    - name: Qi Wang
+    - name: Jiannan Xiang
+    - name: Yuqi Xie
+    - name: Yinzhen Xu
+    - name: Zhenjia Xu
+    - name: Seonghyeon Ye
+    - name: Zhiding Yu
+    - name: Ao Zhang
+    - name: Hao Zhang
+    - name: Yizhou Zhao
+    - name: Ruijie Zheng
+    - name: Yuke Zhu
+  publication:
+    type: preprint
+    venue: arXiv
+    date_published: "2025-03-18"
+    year: 2025
+  identifiers:
+    arxiv: 2503.14734v2
+  urls:
+    pdf: https://arxiv.org/pdf/2503.14734v2
+    abstract: https://arxiv.org/abs/2503.14734v2
+  content:
+    abstract:
+      General-purpose robots need a versatile body and an intelligent mind.
+      Recent advancements in humanoid robots have shown great promise as a hardware
+      platform for building generalist autonomy in the human world. A robot foundation
+      model, trained on massive and diverse data sources, is essential for enabling
+      the robots to reason about novel situations, robustly handle real-world variability,
+      and rapidly learn new tasks. To this end, we introduce GR00T N1, an open foundation
+      model for humanoid robots. GR00T N1 is a Vision-Language-Action (VLA) model
+      with a dual-system architecture. The vision-language module (System 2) interprets
+      the environment through vision and language instructions. The subsequent diffusion
+      transformer module (System 1) generates fluid motor actions in real time. Both
+      modules are tightly coupled and jointly trained end-to-end. We train GR00T N1
+      with a heterogeneous mixture of real-robot trajectories, human videos, and synthetically
+      generated datasets. We show that our generalist robot model GR00T N1 outperforms
+      the state-of-the-art imitation learning baselines on standard simulation benchmarks
+      across multiple robot embodiments. Furthermore, we deploy our model on the Fourier
+      GR-1 humanoid robot for language-conditioned bimanual manipulation tasks, achieving
+      strong performance with high data efficiency.
+    keywords:
+      - cs.RO
+      - cs.AI
+      - cs.LG
+    language: en
+    citation:
+      "NVIDIA et al.. (2025). GR00T N1: An Open Foundation Model for Generalist
+      Humanoi.... arXiv:2503.14734v2."
+  workflow:
+    status: unread
+    priority: normal
+    date_added: "2025-03-18"
+  relations:
+    tags: [VLA, NVIDIA]
+    categories:
+      - cs.RO
+      - cs.AI
+      - cs.LG
+    primary_category: cs.RO
+    related: []
+  bibtex:
+    "@misc{nvidia20252503,\n  author = {NVIDIA and : and Bjorck, Johan and Castañeda,\
+    \ Fernando and Cherniadev, Nikita and Da, Xingye and Ding, Runyu and Fan, Linxi\
+    \ \"Jim\" and Fang, Yu and Fox, Dieter and Hu, Fengyuan and Huang, Spencer and\
+    \ Jang, Joel and Jiang, Zhenyu and Kautz, Jan and Kundalia, Kaushil and Lao, Lawrence\
+    \ and Li, Zhiqi and Lin, Zongyu and Lin, Kevin and Liu, Guilin and Llontop, Edith\
+    \ and Magne, Loic and Mandlekar, Ajay and Narayan, Avnish and Nasiriany, Soroush\
+    \ and Reed, Scott and Tan, You Liang and Wang, Guanzhi and Wang, Zu and Wang,\
+    \ Jing and Wang, Qi and Xiang, Jiannan and Xie, Yuqi and Xu, Yinzhen and Xu, Zhenjia\
+    \ and Ye, Seonghyeon and Yu, Zhiding and Zhang, Ao and Zhang, Hao and Zhao, Yizhou\
+    \ and Zheng, Ruijie and Zhu, Yuke},\n  title = {GR00T N1: An Open Foundation Model\
+    \ for Generalist Humanoid Robots},\n  year = {2025},\n  eprint = {2503.14734},\n\
+    \  archivePrefix = {arXiv},\n  primaryClass = {cs.RO},\n  url = {https://arxiv.org/abs/2503.14734v2},\n\
+    }"

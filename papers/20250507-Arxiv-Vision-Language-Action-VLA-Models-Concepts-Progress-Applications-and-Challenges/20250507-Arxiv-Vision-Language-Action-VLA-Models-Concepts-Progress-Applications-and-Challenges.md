@@ -1,0 +1,2692 @@
+# Title: Vision-Language-Action (VLA) Models: Concepts, Progress, Applications and Challenges
+- ArXiv: 2505.04769
+- Authors: Ranjan Sapkota, Yang Cao, Konstantinos I. Roumeliotis, Manoj Karkee
+- Sections: 42
+- Estimated tokens: 81.0k
+
+## Contents
+- keywords:
+- 1 Introduction
+- 2 Concepts of Vision-Language-Action Models
+  - 2.1 Evolution and Timeline
+  - 2.2 Multimodal Integration: From Isolated Pipelines to Unified Agents
+  - 2.3 Tokenization and Representation: How VLAs Encode the World
+  - 2.4 Learning Paradigms: Data Sources and Training Strategies
+  - 2.5 Adaptive Control and Real-Time Execution
+- 3 Progress in Vision-Language-Action Models
+  - 3.1 Architectural Innovations in VLA Models
+  - 3.2 Training Efficiency Advancements in Vision–Language–Action Models
+  - 3.3 Parameter-Efficient Methods and Acceleration Techniques in VLA Models
+  - 3.4 Applications of Vision-Language-Action Models
+    - 3.4.1 Humanoid Robotics
+    - 3.4.2 Autonomous Vehicle Systems
+    - 3.4.3 Industrial Robotics
+    - 3.4.4 Healthcare and Medical Robotics
+    - 3.4.5 Precision and Automated Agriculture
+    - 3.4.6 Interactive AR Navigation with Vision-Language-Action Models
+- 4 Challenges and Limitations of Vision-Language-Action Models
+  - 4.1 Real-Time Inference Constraints
+  - 4.2 Multi-modal Action Representation and Safety Assurance
+  - 4.3 Dataset Bias, Grounding, and Generalization to Unseen Tasks
+  - 4.4 System Integration Complexity and Computational Demands
+  - 4.5 Robustness and Ethical Challenges in VLA Deployment
+- 5 Discussion
+  - 5.1 Potential Solutions
+  - 5.2 Future Roadmap
+    - Multi-modal foundation models as the “cortex” for embodied perception:
+    - Agentic, self-supervised, lifelong learning and continual adaptation:
+    - Hierarchical, neuro-symbolic planning for scalability and interpretability:
+    - Real-time adaptation via world models and physical/causal reasoning:
+    - Efficiency and scalability: bridging generality with edge deployment:
+    - Cross-embodiment transfer and morphology-agnostic skill representations:
+    - Evaluation beyond task success: safety, recovery, and resource-aware metrics:
+    - Safety, ethics, and human-centered alignment as first-class design objectives:
+    - Cross-cutting themes: continual learning, failure recovery, interaction, and control fidelity:
+- 6 Conclusion
+- Funding Declaration
+- Declarations
+- Statement on AI Writing Assistance
+- References
+
+## Abstract
+
+Abstract Vision-Language-Action (VLA) models mark a transformative advancement in artificial intelligence, aiming to unify perception, natural language understanding, and embodied action within a single computational framework. This foundational review presents a comprehensive synthesis of recent advancements in Vision-Language-Action models, systematically organized across five thematic pillars that structure the landscape of this rapidly evolving field. We begin by establishing the conceptual foundations of VLA systems, tracing their evolution from cross-modal learning architectures to generalist agents that tightly integrate vision-language models (VLMs), action planners, and hierarchical controllers. Our methodology adopts a rigorous literature review framework, covering over 80 VLA models published in the past three years. Key progress areas include architectural innovations, efficient training strategies, and real-time inference accelerations. We explore diverse application domains such as autonomous vehicles, medical and industrial robotics, precision agriculture, humanoid robotics, and augmented reality. The review further addresses major challenges across real-time control, multimodal action representation, system scalability, generalization to unseen tasks, and ethical deployment risks. Drawing from the state-of-the-art, we propose targeted solutions including agentic AI adaptation, cross-embodiment generalization, and unified neuro-symbolic planning. We outline a forward-looking roadmap where VLA models, VLMs, and agentic AI converge to strengthen socially aligned, adaptive, and general-purpose embodied agents. This work, therefore, is expected to serve as a foundational reference for advancing intelligent, real-world robotics and artificial general intelligence. The project repository is available on GitHub( Source Link )
+
+###### keywords:
+
+<a id="section-1"></a>
+
+## 1 Introduction
+
+Before Vision-Language-Action (VLA) models were developed, progress in robotics and artificial intelligence happened mostly in separate domains: vision systems that could acquire, interpret and recognize images [55, 87, 176], language systems that could understand and generate text [213, 177], and action systems that could control movement [60]. These isolated systems worked well on their own, but struggled to work together and generalize to novel scenarios or adapt to the complexity and unpredictability of real-world challenges [57, 22].
+
+<a id="figure-1"></a>
+![Figure1](images/Figure1.png)
+> Figure 1: Evolution from isolated modalities to unified Vision–Language–Action models. Integrated perception, language, and action enable adaptive, generalizable embodied intelligence.
+
+As illustrated in Figure [1](#figure-1), traditional computer vision models, primarily based on convolutional neural networks (CNNs), were tailored for narrowly specified tasks such as object detection [25, 157, 26, 24, 174] or classification [205, 89, 95, 73], requiring extensive labeled datasets and cumbersome retraining for even slight shifts in environment or objectives [200, 77]. These vision models could “see” (e.g., identifying apples in an orchard, as shown in Figure [1](#figure-1)) but lacked any understanding of language or the ability to convert visual insights into desired actions. Language models, particularly large language models (LLMs), revolutionized text-based understanding and generation [28]; however, they remained restricted to processing language without the capability to perceive or reason about the physical world [98] (“Ripe apples in orchard” in Figure [1](#figure-1) exemplifies this limitation). Meanwhile, action-based systems in robotics, relying heavily on hand-crafted policies or reinforcement learning [158], enabled specific behaviors like object manipulation but demanded painstaking engineering and failed to generalize beyond specifically designed scenarios [153].
+
+Despite progress with VLMs, which achieved impressive multi-modal understanding by combining vision and language [190, 30, 298, 37, 10, 189], there remained a clear integration gap: the inability to generate or execute coherent actions based on multi-modal input [156, 137]. As further visualized in Figure [1](#figure-1) , most AI systems are specialized in one or two modalities such as vision-language, vision-action, or language-action, which struggled to fully integrate all three into a unified, end-to-end frameworks. Consequently, robots could recognize objects visually (“apple”), understand a corresponding textual instruction (“pick the apple”), or perform a predefined motor action (grasping), yet integrating and performing all these abilities into fluid, adaptable behavior has been missing. The result was a pipeline that could not flexibly adapt to new tasks or environments, leading to brittle generalization and labor-intensive engineering efforts. This limitation highlighted a critical bottleneck in embodied AI: without systems that could jointly perceive, understand, and act, intelligent autonomous behavior remained a challenging goal.
+
+The pressing need to bridge these gaps catalyzed the emergence of VLA models. VLA models, conceptualized around 2021-2022, and pioneered by efforts such as Google DeepMind’s Robotic Transformer 2 (RT-2) [299], introduced a transformative architecture that unified perception, reasoning, and control within a single framework. As a solution to the limitations outlined in Figure [2](#figure-2), VLAs integrate vision inputs, language comprehension, and motor control capabilities, enabling embodied agents to perceive their surroundings, understand complex instructions, and execute appropriate actions dynamically. Early VLA approaches achieved this integration by extending vision-language models to include action tokens numerical or symbolic representations of robot motor commands, thereby allowing the model to learn from paired vision, language, and trajectory data [156]. This methodological innovation dramatically improved robots’ ability to generalize to unseen objects, interpret novel language commands, and perform multi-step reasoning in unstructured environments [107].
+
+VLA models represent a transformative step in the development of unified multi-modal intelligence, overcoming the long-standing limitations of treating vision, language, and action as separate domains [156]. By leveraging internet-scale datasets that integrate visual, linguistic, and behavioral information, VLAs empower robots to not only recognize and describe their environments but also to reason contextually and execute appropriate actions in complex, dynamic settings [254]. The progression illustrated in Figures [2](#figure-2) and [3](#figure-3) from isolated vision, language, and action systems to an integrated VLA paradigm-captures a fundamental shift toward the development of truly adaptive and generalizable embodied agents. In light of the transformative potential of this paradigm, a comprehensive and critically informed review of the current literature is both timely and essential. First, such a review is necessary to clarify the foundational concepts and architectural principles that distinguish VLAs from their predecessors. Second, it provides a structured account of the rapid progress and key milestones in the field, enabling researchers and practitioners to appreciate the trajectory of algorithmic and technological advancements. Third, an in-depth review is essential for mapping the diverse range of real-world applications - from household robotics to industrial automation and assistive technologies-where VLAs are already demonstrating transformative potential. Furthermore, by critically examining the current challenges, such as data efficiency, safety, generalization, and ethical considerations, the review identifies barriers that must be addressed for widespread deployment. Finally, synthesizing these insights helps to inform the broader AI and robotics communities about emerging research directions and practical considerations, fostering collaboration and innovation.
+
+In this review, we systematically analyze the foundational principles of VLA models. Additionally, we discuss their developmental progress and technical challenges. Our objective is to consolidate the current understanding and applications of VLAs while identifying limitations and proposing future directions for their evolution.The review begins with a detailed examination of key conceptual foundations (Figure [2](#figure-2)), including the definition of VLA models, their historical evolution, mechanisms for multimodal integration, and unified tokenization and representation strategies spanning vision, language, and action. These conceptual descriptions set the stage for understanding how VLAs are structured and function across modalities.
+
+Building upon this description, we present a unified view of recent progress and training efficiency strategies (Figure [3](#figure-3)). This includes architectural innovations adopted and extended within VLA models, along with data-efficient learning frameworks, parameter-efficient modeling techniques, and model acceleration strategies originally developed in broader machine learning and robotics contexts. Together, these advances are critical for scaling VLA systems to real-world applications.
+
+Following this, we present a comprehensive discussion of the current limitations encountered by VLA systems (Figure [3](#figure-3)), many of which reflect broader challenges in embodied AI and robotics but arise in distinct and compounded forms due to the tight integration of vision, language, and action.
+The limitations to be discussed include inference bottlenecks, safety concerns, high computational demands, limited generalization, and ethical implications. We not only highlight these pressing challenges but also provide an analytical discussion on potential solutions to address them.
+
+Together, these three figures offer a visual depiction that lays out the framework and supports the textual analysis presented in this review. By outlining the conceptual landscape, recent innovations, and open challenges, this work aims to guide future research and encourage the development of more robust, efficient, and ethically grounded VLA systems.
+
+Figure [4](#figure-4) summarizes the overall structure and logical flow of this review and illustrates how the manuscript is organized to provide a comprehensive and systematic analysis of VLA research. As depicted in the figure, the paper progresses from foundational concepts to recent advances, applications, challenges, and future research directions, ensuring a coherent narrative across sections. To construct this architecture, an extensive and rigorous literature search was conducted using the primary keywords “Vision–Language–Action” and “Vision–Language Models,” together with the commonly used abbreviation “VLA.” These keywords were employed to retrieve candidate studies from major academic and technical repositories, including Hugging Face, arXiv, ScienceDirect, Nature, IEEE Xplore, Wiley, and Springer Nature. The resulting corpus was further refined through manual screening to ensure relevance, technical depth, and alignment with the scope of this review. Only articles that directly contributed to the understanding of VLA concepts, methodological progress, application domains, and open challenges were retained. This multi-stage filtering process enabled a balanced coverage of both foundational and state-of-the-art works while avoiding peripheral or loosely related studies. As a result, Figure [4](#figure-4) not only reflects the thematic organization of the paper but also embodies the underlying review methodology.
+
+This paper follows a structured, hierarchical organization that systematically develops the foundations, evolution, and implications of VLA models, as summarized in Figure [4](#figure-4). The presentation begins with an introduction that motivates embodied intelligence and the emergence of VLAs, followed by a concepts section that establishes core principles including multimodal integration, tokenization, learning paradigms, and real-time control. Building on these foundations, the progress section examines architectural innovations, training and efficiency advancements, and parameter-efficient acceleration strategies. The applications section then grounds these developments in real-world domains, including humanoid robotics, autonomous vehicles, healthcare, agriculture, industrial systems, and interactive AR navigation. This is followed by a focused analysis of key challenges, including real-time inference, safety, generalization, system integration, and ethical considerations. The paper concludes with a future roadmap that distills cross-cutting research directions in continual learning, scalability, interpretability, and embodied intelligence.
+
+<a id="section-2"></a>
+
+## 2 Concepts of Vision-Language-Action Models
+
+VLA models represent a class of intelligent systems that jointly process visual inputs, interpret natural language instructions, and generate executable action representations that can be instantiated on physical robotic hardware operating in dynamic environments. Technically, VLAs combine vision encoders (e.g., CNNs, ViTs), language models (e.g., LLMs, transformers), and policy modules or planners to achieve task-conditioned control. These models typically build upon multimodal fusion techniques established in vision-language models, such as cross-attention, concatenated embeddings, or token unification, and extend them to align sensory observations, linguistic instructions, and action representations.
+
+Unlike traditional visuomotor pipelines, VLAs support semantic grounding [154], enabling context-aware reasoning [228], affordance detection [79], and temporal planning [141]. A typical VLA model observes the environment through camera or sensor data, interprets goals expressed in language (e.g., “pick up the red apple”) (Figure [5](#figure-5)), and outputs low-level or high-level action sequences that could be implemented by automated systems to perform the action. Recent advancements integrate imitation learning, reinforcement learning, or retrieval-augmented modules to improve sample efficiency and generalization. This review examines how VLA models have evolved from foundational fusion architectures to general-purpose agents capable of real-world deployment across robotics, navigation, and human-AI collaboration.
+
+VLA models are multi-modal artificial intelligence systems that unify visual perception, language comprehension, and physical action generation into a single framework. These models enable robots or AI agents to interpret sensory inputs (e.g., images, text), understand contextual meaning, and autonomously execute tasks in real-world environments - all through end-to-end learning and action rather than isolated subsystems. As shown conceptually in Figure [5](#figure-5), VLA models bridge the historical disconnect between visual recognition, language comprehension, and/or motor execution that limited the capabilities of earlier robotic and AI systems.
+
+<a id="figure-5"></a>
+![concepts](images/concepts.png)
+> Figure 5: Foundational Concept of VLA Models (in an Apple-Picking Scenario) This illustration depicts a robotic arm autonomously picking a ripe apple in an orchard, guided by a VLA model. On the right, a flowchart outlines the four key stages of VLA models: Multimodal Integration, Tokenization and Representation, Learning Paradigms, and Adaptive Control and Real-Time Execution.
+
+<a id="section-2-1"></a>
+
+### 2.1 Evolution and Timeline
+
+The rapid development of VLA models from 2022-2025 demonstrates three distinct evolutionary phases:
+
+- 1.
+Foundational Integration (2022–2023). Early VLAs established basic visuomotor coordination through multi-modal fusion architectures. [202] first combined CLIP embeddings with motion primitives, while [181] demonstrated generalist capabilities across 604 tasks. [19] achieved 97% success rates in manipulation through scaled imitation learning, and [112] introduced temporal reasoning via transformer-based planners. By 2023, [299] enabled visual chain-of-thought reasoning, and [40] advanced stochastic action prediction through diffusion processes. These foundations addressed low-level control but lacked compositional reasoning, the ability to decompose complex tasks into reusable, semantically grounded sub-actions and recombine them across novel contexts-prompting subsequent innovations in affordance grounding [287, 100].
+- 2.
+Specialization and Embodied Reasoning (2024). Second-generation VLAs incorporated domain-specific inductive biases. [269] enhanced few-shot adaptation through retrieval-augmented training, while [280] optimized navigation via 3D scene-graph integration. [48] introduced reversible architectures for memory efficiency, and [239] addressed partial observability with physics-informed attention. Simultaneously, [5] improved compositional understanding through object-centric disentanglement, and [293] extended applications to autonomous driving via multi-modal sensor fusion. However, these advances required new benchmarking methodologies [254].
+- 3.
+Generalization and Safety-Critical Deployment (2025). Latest systems prioritize robustness and human alignment. [274] integrated formal verification for risk-aware decisions, while [53] demonstrated whole-body control through hierarchical VLAs. [20] optimized compute efficiency for embedded deployment, and [131] combined neural-symbolic reasoning for causal inference. Emerging paradigms like [129]’s affordance chaining and [14]’s sim-to-real transfer learning address cross-embodiment challenges, while [139] bridges VLAs with human-in-the-loop interfaces through natural language grounding.
+
+Figure [6](#figure-6) presents a comprehensive timeline highlighting the evolution of 45 VLA models developed between 2022 and 2025. The earliest VLA systems, including CLIPort [202], Gato [181], RT-1 [19], and VIMA [112], laid the foundation by combining pretrained vision-language representations with task-conditioned policies for manipulation and control. These early VLA systems were followed by ACT [287], RT-2 [299], and VoxPoser [100], which integrated visual chain-of-thought reasoning and affordance grounding. Models like Diffusion Policy [40] and Octo [218] introduced stochastic modeling and scalable data pipelines. In 2024, systems such as Deer-VLA [269], ReVLA [48], and Uni-NaVid [280] added domain specialization and memory-efficient designs, while Occllama [239] and ShowUI [139] tackled partial observability and user interaction. The trajectory continued with robotics-focused VLAs like Quar-VLA [54] and RoboMamba [143]. Recent innovations emphasize generalization and deployment: SafeVLA [274], Humanoid-VLA [53], and MoManipVLA [246] incorporate verification, full-body control, and memory systems. Models such as Gr00t N1 [14] and SpatialVLA [175] further bridge sim-to-real transfer and spatial grounding. This timeline illustrates how VLAs have advanced from modular learning to general-purpose, safe, and embodied intelligence.
+
+<a id="section-2-2"></a>
+
+### 2.2 Multimodal Integration: From Isolated Pipelines to Unified Agents
+
+A central advancement in the emergence of VLA models lies in their ability to perform multi-modal integration, the joint processing of vision, language, and action within a unified architecture. Traditional robotic systems treated perception, natural language understanding, and control as discrete modules, often linked through manually defined interfaces or data transformations [140, 21, 219]. For instance, classic pipeline-based frameworks required a perception model to output symbolic labels, which were then mapped by a planner to specific actions frequently with domain-specific hand engineering [178, 117]. These approaches lacked adaptability, failed in ambiguous or unseen environments, and could not generalize instructions beyond pre-defined templates.
+
+In contrast, modern VLAs fuse modalities end-to-end using large-scale pretrained encoders and transformer-based architectures [244]. This shift enables the model to interpret visual observations and linguistic instructions within the same computational space, allowing flexible, context-aware reasoning [128]. For example, in the task “Pick the ripe apples” (Figure [5](#figure-5)), the vision encoder—typically a Vision Transformer (ViT) or ConvNeXt—parses the scene to localize and categorize relevant objects (e.g., fruit, foliage, background) and infer ripeness-related visual cues based on learned texture, shape, and contextual features rather than fixed color assumptions [243]. Meanwhile, the language model, often a variant of T5, GPT, or BERT, encodes the instruction into a high-dimensional embedding. These representations are then fused via cross-attention or joint tokenization schemes, producing a unified latent space that informs the action policy [86].
+
+This multimodal synergy was first effectively demonstrated in CLIPort [202], which takes an RGB image of a tabletop scene and a natural language instruction (e.g., “place the blue block on the red square”) as inputs, encodes them using CLIP for semantic grounding, and outputs pixel-level pick-and-place action distributions via a convolutional transport decoder. By directly conditioning visuomotor policies on language embeddings, CLIPort eliminates explicit language parsing and enables end-to-end language-conditioned manipulation. Similarly, VIMA [112] advanced this approach by employing a transformer encoder to jointly process object-centric visual tokens and instruction tokens, enabling few-shot generalization across spatial reasoning tasks.
+
+Recent developments push this fusion further by incorporating temporal and spatial grounding. VoxPoser [100] employs voxel-level reasoning to resolve ambiguities in 3D object selection by composing pretrained vision-language models and classical motion planners, notably achieving zero-shot manipulation without task-specific training data. In contrast, RT-2 [299] fuses visual-language tokens and action representations within a unified transformer, co-trained on large-scale internet vision-language corpora and over 100,000 real-robot demonstrations from the RT-1 dataset, enabling zero-shot generalization to unseen instructions. Another noteworthy contribution is Octo [218], which introduces a memory-augmented transformer trained on more than four million robot trajectories collected across diverse robots and environments via the Open X-Embodiment dataset, supporting long-horizon decision-making and demonstrating the scalability of joint perception–language–action learning.
+
+Crucially, VLAs offer robust solutions to challenges faced in real-world grounding. For example, Occllama [239] handles occluded object references through attention-based mechanisms, while ShowUI [139] demonstrates natural language interfaces that allow non-expert users to command agents through voice or typed input. These capabilities are only possible because the integration is not limited to surface-level fusion; rather, it captures semantic, spatial, and temporal alignment across modalities.
+
+<a id="section-2-3"></a>
+
+### 2.3 Tokenization and Representation: How VLAs Encode the World
+
+A core innovation that sets VLA models apart from conventional vision-language architectures lies in their token-based representation framework, which enables holistic reasoning over perceptual [161, 286], linguistic, and physical action spaces [136]. Inspired by autoregressive generative models like transformers, modern VLAs encode the world using discrete tokens that unify all modalities vision, language, state, and action into a shared embedding space [142]. This allows the model to not only understand “what needs to be done” (semantic reasoning), but also “how to do it” (control policy execution) in a fully learnable and compositional way [248, 150, 221].
+
+- 1.
+Prefix Tokens: Encoding Context and Instruction: Prefix tokens serve as the contextual backbone of VLA models [252, 107]. These tokens encode the environmental scene (via images or video) and the accompanying natural language instruction into compact embeddings that prime the model’s internal representations [17].
+For instance, as depicted in Figure [7](#figure-7) in a task such as “stack the green blocks on the red tray,” the image of a cluttered tabletop is processed through a vision encoder like ViT or ConvNeXt, while the instruction is embedded by an LLM (e.g., T5 or LLaMA). These are then transformed into a sequence of prefix tokens that establish the model’s initial understanding of the goal and environmental layout. This shared representation enables cross-modal grounding, allowing the system to resolve spatial references (e.g., “on the left,” “next to the blue cup”) and object semantics (“green blocks”) across both modalities.
+Figure 7: A diagram illustrating the end-to-end tokenization and representation process in VLA models. Visual input (e.g., cluttered tabletop) is encoded by a vision encoder (e.g., ViT), while natural language instructions (e.g., “stack the green blocks”) are processed by a language encoder (e.g., T5). The system fuses prefix, state, and action tokens through a transformer and autoregressively predicts motor actions.
+Figure 8: Illustrating how VLA models utilize prefix, state, and action tokens in real-world scenarios. In robotic manipulation, state tokens detect arm extension near fragile objects, enabling path adjustment. In navigation, they represent LiDAR and odometry data. The apple-picking task shows how prefix tokens guide goal understanding, while action tokens generate motion sequences for targeted grasping and execution.
+- 2.
+State Tokens: Embedding the Robot’s Configuration: In addition to perceiving external stimuli, VLAs must be aware of their internal physical state [242, 143]. This is achieved through the use of state tokens, which encode real-time information about the agent’s configuration joint positions, force-torque readings, gripper status, end-effector pose, and even the locations of nearby objects [126]. These tokens are crucial for ensuring situational awareness and safety, especially during manipulation or locomotion [211, 105].
+Figure [8](#figure-8) illustrates how VLA models utilize state tokens to enable dynamic, context-aware decision-making in both manipulation and navigation settings. In Figure [8](#figure-8)a, a robot arm is shown partially extended near a fragile object. In such scenarios, state tokens play a critical role by encoding real-time proprioceptive information, such as joint angles, gripper pose, and end-effector proximity. These tokens are continuously fused with visual and language-based prefix tokens, allowing the transformer to reason about physical constraints. The model can thus infer that a collision is imminent and adjust the motor commands accordingly e.g., rerouting the arm trajectory or modulating force output. In mobile robotic platforms, as depicted in Figure [8](#figure-8)b, state tokens encapsulate spatial features such as odometry, LiDAR scans, and inertial sensor data. These are essential for terrain-aware locomotion and obstacle avoidance. The transformer model integrates this state representation with environmental and instructional context to generate navigation actions that dynamically adapt to changing surroundings. Whether grasping objects in cluttered environments or autonomously navigating uneven terrain, state tokens provide a structured mechanism for situational awareness, enabling the autoregressive decoder to produce precise, context-informed action sequences that reflect both internal robot configuration and external sensory data.
+- 3.
+Action Tokens: Autoregressive Control Generation:
+The final layer of the VLA token pipeline involves action tokens [121, 122], which are autoregressively generated by the model to represent the next step in motor control [242]. Each token corresponds to a low-level control signal, such as joint angle updates, torque values, wheel velocities, or high-level movement primitives [81]. During inference, the model decodes these tokens one step at a time, conditioned on prefix and state tokens, effectively turning VLA models into language-driven policy generators [67, 209]. This formulation allows seamless integration with real-world actuation systems, supports variable-length action sequences [11, 99], and enables model fine-tuning via reinforcement or imitation learning frameworks [285]. Notably, models like RT-2 [299] and PaLM-E [58] exemplify this design, where perception, instruction, and embodiment are merged into a unified token stream.
+For instance, in the apple-picking task as depicted in Figure [9](#figure-9), the model may receive prefix tokens that include the image of the orchard and the text instruction. The state tokens describe the robot’s current arm posture and whether the gripper is open or closed. Action tokens are then predicted step by step to guide the robotic arm toward the apple, adjust the gripper orientation, and execute a grasp with appropriate force. The beauty of this approach is that it allows transformers, which are traditionally used for text generation, to now generate sequences of physical actions in a manner similar to generating a sentence only here, the sentence is the motion.
+
+<a id="figure-9"></a>
+![prefixtokens](images/prefixtokens.png)
+> Figure 9: Illustrating the process of how VLAs Encode the World. VLAs encode the world by converting vision, language, and sensor inputs into tokens, fusing them through cross-attention, predicting action sequences via transformers, and executing tasks with real-time feedback - enabling robots to interpret scenes, follow instructions, and adapt actions dynamically.
+
+To operationalize the VLA paradigm in robotics, we present in Figure [9](#figure-9) a structured pipeline that demonstrates how multimodal information specifically vision, language, and proprioceptive state is encoded, fused, and converted into executable action sequences. This end-to-end loop allows a robot to interpret complex tasks like “pick the ripe apple near the green leaf” and execute precise, context-sensitive manipulations. The system begins with multimodal input acquisition, where three distinct data streams are collected: visual observations (e.g., RGB-D frames), natural language commands, and real-time robot state information (e.g., joint angles or velocity). These are independently tokenized into discrete embeddings using pretrained modules [51, 282]. As depicted in the diagram, the image is processed through a Vision Transformer (ViT) backbone to generate vision tokens, the instruction is parsed by a language model such as BERT or T5 to produce language tokens, and state inputs are transformed via a lightweight MLP encoder into compact state tokens.
+
+These tokens are then fused using a cross-modal attention mechanism, where the model jointly reasons over object semantics, spatial layout, and physical constraints [76]. This fused representation forms the contextual basis for decision-making [96, 149]. In Figure [9](#figure-9), this is denoted as the multi-modal fusion step. The fused embedding is passed into an autoregressive decoder typically a transformer that generates a series of action tokens. These tokens may correspond to joint displacements, gripper force modulation, or high-level motor primitives (e.g., “move to grasp pose”, “rotate wrist”). The predicted action tokens are subsequently translated into low-level control commands and executed by an external, hardware-dependent execution loop, which interfaces with the robot controller to close the perception-action cycle by feeding back updated state observations for the next VLA inference step. This closed-loop mechanism enables the model to dynamically adapt to perturbations, object shifts, or occlusions in real time [278, 155, 251].
+
+To provide clear and specific implementation details, Algorithm 1 formalizes the VLA tokenization process. Given an RGB-D frame $I$, natural language instruction $T$, and joint angle vector $\theta$, the algorithm produces a set of action tokens that can be executed in sequence. The image $I$ is processed via a ViT to produce $V$, a set of 400 visual tokens. In parallel, the instruction $T$ is encoded by a BERT model to yield $L$, a sequence of 12 semantic language tokens. Simultaneously, the robot state $\theta$—including joint angles, end-effector pose, and proprioceptive signals—is encoded by a multilayer perceptron into a compact 64-dimensional state embedding $S$, providing the model with real-time awareness of the robot’s configuration and physical constraints during action generation. These tokens are then fused via a cross-attention module to produce a shared 512-dimensional representation $F$, capturing the semantics, intent, and situational awareness needed for grounded action. Finally, a policy decoder such as FAST [171] maps the fused features into 50 discrete action tokens, which can then be decoded into motor commands $\tau_{1:N}$.
+
+The decoding process is implemented using a transformer-based architecture, as shown in the code snippet titled Action Prediction Code. A Transformer decoder is instantiated with 12 layers, a model dimension of 512, and 8 attention heads. The fused multimodal tokens are provided as context, and the decoder autoregressively predicts action tokens one step at a time, where each predicted token represents the next control decision conditioned on the full multimodal context and all previously generated actions. The resulting action-token sequence is then detokenized into a continuous motor command trajectory for execution. This implementation mirrors how text generation works in LLMs, but here the “sentence” is a motion trajectory a novel repurposing of natural language generation techniques for physical action synthesis.
+
+Together, Figure [9](#figure-9), Algorithm [1](#algorithm-1), and the pseudocode illustrate how VLAs unify perception, instruction, and embodiment within a coherent and interpretable token space. This modularity allows the framework to generalize across tasks and robot morphologies, facilitating rapid deployment in real-world applications like apple picking, household tasks, and mobile navigation. Importantly, the clarity and separability of the tokenization steps make the architecture extensible, enabling further research on token learning, hierarchical planning, or symbolic grounding in VLA systems.
+
+<a id="algorithm-1"></a>
+ **Algorithm 1 VLA Tokenization Pipeline** 
+- 1: Input : RGB-D frame $I$ , text command $T$ , joint angles $\theta$
+- 2: $V\leftarrow\text{ViT}(I)$ $\triangleright$ 400 vision tokens
+- 3: $L\leftarrow\text{BERT}(T)$ $\triangleright$ 12 language tokens
+- 4: $S\leftarrow\text{MLP}(\theta)$ $\triangleright$ 64-dim state encoding
+- 5: $F\leftarrow\text{CrossAttention}(V,L,S)$ $\triangleright$ 512-dim fused token
+- 6: $A\leftarrow\text{FAST}(F)$ $\triangleright$ 50 action tokens
+- 7: Output : Motor commands $\tau_{1:N}$
+
+Action Prediction Code
+
+<a id="section-2-4"></a>
+
+### 2.4 Learning Paradigms: Data Sources and Training Strategies
+
+<a id="figure-10"></a>
+![utilizeprefix](images/utilizeprefix.png)
+> Figure 10: Learning Paradigms: Data Sources and Training Strategies for VLAs.
+
+Training VLA models requires a hybrid learning paradigm that integrates both semantic knowledge from the web and task-grounded information from robotics datasets [35]. As shown in prior sections, the multi-modal architecture of VLAs must be exposed to diverse forms of data that support language understanding, visual recognition, and motor control. This is typically achieved through two primary data sources.
+
+First, as depicted in figure [10](#figure-10), large-scale internet-derived corpora form the backbone of the model’s semantic prior. These datasets include image-caption pairs (e.g., COCO, LAION-400M), instruction-following datasets (e.g., HowTo100M, WebVid), and visual question-answering corpora (e.g., VQA, GQA). Such datasets enable pretraining of the visual and language encoders, helping the model acquire general representations of objects, actions, and concepts [2]. This phase often uses contrastive or masked modeling objectives, such as CLIP-style contrastive learning or language modeling losses, to align vision and language modalities within a shared embedding space [186, 262]. Importantly, this stage gives VLAs a foundational “understanding of the world” that facilitates compositional generalization, object grounding, and zero-shot transfer [32, 16].
+
+However, semantic understanding alone is insufficient for physical task execution [44, 231, 137]. Thus, the second phase focuses on grounding the model in embodied experience [231]. Robot trajectory datasets collected either from real-world robots or high-fidelity simulators are used to teach the model how language and perception translate into action [67]. These include datasets like RoboNet [45], BridgeData [61], and RT-X [227], which provide video-action pairs, joint trajectories, and environment interactions under natural language instructions [159]. Demonstration data may come from kinesthetic teaching, teleoperation, or scripted policies [115, 13]. This phase typically employs supervised learning (e.g., behavior cloning) [68], reinforcement learning (RL), or imitation learning to train the autoregressive policy decoder to predict action tokens based on fused visual-language-state embeddings [83].
+
+Recent works increasingly adopt multistage or multitask training strategies. For example, models are often pretrained on vision-language datasets using masked language modeling, then fine-tuned on robot demonstration data using token-level autoregressive loss [122, 295, 252]. Others use curriculum learning, where simpler tasks (e.g., object pushing) precede more complex ones (e.g., multistep manipulation) [288]. Some approaches further leverage domain adaptation such as in OpenVLA [122] or sim-to-real transfer to bridge the gap between synthetic and real-world distributions [125]. By unifying semantic priors with task execution data, these learning paradigms allow VLA models to generalize across tasks, domains, and embodiments forming the backbone of scalable, instruction-following agents capable of robust real-world operation.
+
+Through co-fine-tuning, these datasets are brought into alignment [232, 63]. The model learns to map from visual and linguistic inputs to appropriate action sequences [175]. This training paradigm not only helps the model understand object affordances (e.g., apples can be grasped) and action outcomes (e.g., lifting requires force and trajectory), but also promotes generalization to novel scenarios [129]. A model trained on kitchen manipulation tasks may be able to infer how to pick an apple in an outdoor orchard if it has learned general principles of object localization, grasping, and following language directives.
+
+Recent architectures, such as Google DeepMind’s RT-2 (Robotic Transformer 2) [299], have demonstrated this principle in action. RT-2 treats action generation as a form of text generation, where each action token corresponds to a discrete command in a robot’s control space. Because the model is trained on both web-scale multi-modal data and thousands of robot demonstrations, it can flexibly interpret novel instructions and perform zero-shot generalization to new objects and tasks something that was largely impossible with traditional control systems or even with early multi-modal models.
+
+<a id="section-2-5"></a>
+
+### 2.5 Adaptive Control and Real-Time Execution
+
+Another strength of VLAs lies in their ability to perform adaptive control, using real-time feedback from sensors to adjust behavior on the fly [195]. This is particularly important in dynamic, unstructured environments like orchards, homes, or hospitals, where unexpected changes (e.g., wind moving an apple, lighting changes, human presence) can alter the task parameters. During execution, state tokens are updated in real-time, reflecting sensor inputs and joint feedback [252]. The model can then revise its planned actions accordingly. For instance, in the apple-picking scenario, if the target apple shifts slightly or another apple enters the field of view, the model dynamically reinterprets the scene and adjusts the grasp trajectory. This capability mimics human-like adaptability and is a core advantage of VLA systems over pipeline-based robotics.
+
+<a id="section-3"></a>
+
+## 3 Progress in Vision-Language-Action Models
+
+The inception of VLA models was catalyzed by the remarkable success of transformer-based LLMs, notably ChatGPT, released in November 2022, which demonstrated unprecedented semantic reasoning capabilities (ChatGPT) [179]. This breakthrough inspired researchers to extend language models to multimodal domains, integrating perception and action for robotics. By 2023, GPT-4 introduced multimodal capabilities by processing both text and images, which spurred subsequent efforts to extend language-centric multimodal foundation models toward incorporating physical action representations and control interfaces [1]. Concurrently, VLMs like CLIP (2022) [202] and Flamingo (2022) [3] had established robust visual-text alignment through contrastive learning, enabling zero-shot object recognition and laying the groundwork for VLM models (such as CLIP). These models leveraged large-scale labeled datasets to align images with textual descriptions, a critical precursor to integrating actions.
+
+A pivotal development was the creation of large-scale robotic datasets, such as RT-1’s 130,000 demonstrations, which provided action-grounding data essential for co-training vision, language, and action components [19]. These datasets captured diverse tasks and environments, enabling models to learn generalizable behaviors. Architectural breakthroughs followed with Google’s RT-2 in 2023 [18], a landmark VLA model that unified vision, language, and action tokens, treating robotic control as an autoregressive sequence prediction task (RT-2 Blog([Source Link](https://deepmind.google/blog/rt-2-new-model-translates-vision-and-language-into-action/))). RT-2 discretized actions using Discrete Cosine Transform (DCT) compression and Byte-Pair Encoding (BPE), achieving a 63% improvement in performance on novel objects. Multimodal fusion techniques, such as cross-attention transformers, integrated Vision Transformer (ViT)-processed images (e.g., 400 patch tokens) with language embeddings, enabling robots to execute complex commands like “Pick the red cup left of the bowl.” Additionally, UC Berkeley’s Octo model (2023) introduced an open-source approach with 93M parameters and diffusion decoders, trained on 800,000 robot demonstrations from the OpenX-Embodiment dataset, further broadening the research landscape [218].
+
+<a id="section-3-1"></a>
+
+### 3.1 Architectural Innovations in VLA Models
+
+From 2023 to 2024, VLA models underwent significant architectural advancements and refined training methodologies. Dual-system architectures emerged as a key innovation, exemplified by NVIDIA’s GR00T N1 (2025) [14], which combined System 1 (fast diffusion policies with 10ms latency for low-level control) and System 2 (LLM-based planners for high-level task decomposition). This separation enabled efficient coordination between strategic planning and real-time execution, enhancing adaptability in dynamic environments. Other models, like Stanford’s OpenVLA (2024) [122], introduced a 7B-parameter open-source VLA trained on 970k real-world robot demonstrations, using dual vision encoders (DINOv2 [164] and SigLIP [271]) and a Llama 2 language model [223], outperforming larger models like RT-2-X (55B) [122]. Training paradigms evolved to leverage co-fine-tuning on web-scale vision-language data (e.g., LAION-5B) [194] and robotic trajectory data (e.g., RT-X) [227], aligning semantic knowledge with physical constraints [194]. Synthetic data generation tools like UniSim addressed data scarcity by creating photorealistic scenarios, such as occluded objects, crucial for robust training (UniSim [264]). Parameter efficiency was enhanced through Low-Rank Adaptation (LoRA) adapters for fine-tuning [93], which allowed domain adaptation without full retraining, reducing GPU hours by 70%. The introduction of diffusion-based policies, as seen in Physical Intelligence’s pi 0 model (2024) [15], offered improved action diversity but required significant computational resources. These advancements democratized VLA technology, fostering collaboration and accelerating innovation.
+
+Recent VLA models have converged toward three major architectural paradigms that balance efficiency, modularity, and robustness: early fusion models, dual-system architectures, and self-correcting frameworks. Each of these innovations addresses specific challenges in grounding, generalization, and action reliability in real-world robotic systems.
+
+1. Early Fusion Models:
+One class of VLA approaches focuses on fusing vision and language representations at the input stage before passing them to the policy module. Huang et al.’s EF-VLA model [96], presented at International Conference on Learning Representations (ICLR 2025), exemplifies this trend by retaining the representational alignment established by CLIP [202]. EF-VLA accepts image-text pairs, encodes them with CLIP’s frozen encoders, and fuses the resulting embeddings early in the transformer backbone prior to action prediction. This design ensures that the semantic consistency learned during CLIP pretraining is preserved, reducing overfitting and enhancing generalization. Notably, EF-VLA demonstrated a 20% performance improvement on compositional manipulation tasks and reached 85% success on previously unseen goal descriptions. By keeping the vision-language backbone frozen, this approach preserves computational efficiency and avoids catastrophic forgetting, while domain-specific training is confined to lightweight policy or action modules, enabling task adaptation without sacrificing the model’s general-purpose visual-semantic representations.
+
+2. Dual-System Architectures:
+Inspired by dual-process theories of human cognition, models like NVIDIA’s GR00T N1 (2025) [14] implement two complementary subsystems: a fast-reactive module (System 1) and a slow-reasoning planner (System 2). System 1 comprises a diffusion-based control policy that operates at 10 ms latency, ideal for fine-grained, low-level control such as end-effector stabilization or adaptive grasping. In contrast, System 2 uses a LLM for task planning, skill composition, and high-level sequencing. The planner parses long-horizon goals (e.g., “clean the table”) into atomic subtasks, while the low-level controller ensures real-time execution. This decomposition enables multi-timescale reasoning and improved safety, especially in environments where rapid reaction and deliberation must co-exist. In benchmark tests on multi-stage household manipulation, GR00T N1 outperformed monolithic models such as RT-1, RT-2, and OpenVLA by 17% in success rate and reduced collision failures by 28%.
+
+3. Self-Correcting Frameworks:
+A third architectural evolution is the emergence of self-correcting VLA models, which augment conventional inference pipelines with explicit failure detection and recovery mechanisms. SC-VLA (2024) retains a standard fast inference path similar to earlier end-to-end or hierarchical VLA designs, but introduces an additional, slower correction path that is selectively activated to re-evaluate decisions and generate recovery actions when execution failures or inconsistencies are detected. In this framework, the default behavior is to predict poses or actions directly from the fused embedding using a lightweight transformer. When failures are detected e.g., unsuccessful grasps or obstacle collisions, the model invokes a secondary process that performs chain-of-thought reasoning [281, 270]. This path queries an internal LLM (or external expert system) to diagnose failure modes and generate correction strategies [59]. For example, if the robot repeatedly misidentifies an occluded object, the LLM may suggest an active viewpoint change or gripper reorientation. In closed-loop experiments, SC-VLA reduced task failure rates by 35% and significantly improved recoverability in cluttered and adversarial environments.
+
+4. Architectural Design Space of VLA Models
+VLA models exhibit a rich diversity of architectural designs and functional emphases, which can be systematically organized along the dimensions of end-to-end versus modular pipelines, hierarchical versus flat policy structures, and the balance between low-level control and high-level planning (Table [1](#table-1)). End-to-end VLAs, such as CLIPort [202], RT-1 [19], and OpenVLA [122], process raw sensory inputs directly into motor commands via a single unified network. By contrast, component-focused models like VLATest [237] and Chain-of-Affordance [129] decouple perception, language grounding, and action modules, enabling targeted improvements in individual submodules.
+
+Hierarchical architectures have emerged to tackle complex, long-horizon tasks by separating strategic decision making from reactive control. For instance, CogACT [131] and NaVILA [38] employ a two-tier hierarchy where an LLM-based planner issues subgoals to a low-level controller, thereby combining the strengths of System 2 reasoning and System 1 execution. Similarly, ORION [69] integrates a QT-Former for long-term context aggregation with a generative trajectory planner in a cohesive framework.
+
+Low-level policy emphasis is typified by diffusion-based controllers (e.g. Pi-0 [15], DexGraspVLA [291]), which excel at producing smooth, diverse motion distributions but often incur higher computational cost. In contrast, high-level planners (e.g. FAST Pi-0 Fast [171], CoVLA [5]) focus on rapid subgoal generation or coarse trajectory prediction, delegating fine-grained control to specialized modules or traditional motion planners. End-to-end dual-system models like HybridVLA [142] and Helix [217] blur these distinctions by jointly training both components while preserving modular interpretability.
+
+Table [1](#table-1) further highlights how recent VLAs balance these trade-offs. Models such as OpenDriveVLA [293] and CombatVLA [34] prioritize hierarchical planning in dynamic, safety-critical domains, whereas lightweight, edge-targeted systems like Edge VLA [20] and TinyVLA [242] emphasize real-time low-level policies at the expense of high-level reasoning. This classification framework not only clarifies the design space of VLAs but also guides future development by pinpointing under-explored combinations such as fully end-to-end, hierarchical models optimized for embedded deployment that promise to advance both the capabilities and the applicability of VLA systems across robotics, autonomous driving, and beyond.
+
+The classification in Table [1](#table-1) is significant because it provides a clear framework for comparing diverse VLA architectures, highlighting how design choices such as end-to-end integration versus hierarchical decomposition impact task performance, scalability, and adaptability. By categorizing models along dimensions such as low-level policy execution and high-level planning, researchers can more clearly identify the strengths and limitations of existing approaches and uncover opportunities for architectural innovation. For example, agricultural robotics tasks such as high-speed fruit harvesting or precision spraying benefit from architectures emphasizing fast, reactive low-level controllers, whereas applications like orchard navigation, multi-row coverage planning, or long-horizon crop monitoring require stronger high-level planning and reasoning capabilities. This taxonomy therefore aids in selecting appropriate VLA architectures for specific use cases and guides future development toward hybrid systems that balance responsiveness with cognitive planning, ultimately accelerating progress in embodied AI.
+
+Additionally, to synthesize recent advancements in VLA models, Table LABEL:tab:vla_models_compact presents a summary of notable systems developed from 2022 through 2025. Building upon architectural innovations such as early fusion, dual-system processing, and self-correcting feedback loops, these models incorporate diverse design philosophy and training strategies. Each table entry explicitly enumerates the model’s architectural components—namely the vision encoder, language encoder, and action decoder together with the primary training datasets used to ground and evaluate the model’s capabilities. Models like CLIPort [202] and RT-2 [299] laid early foundations by aligning semantic embeddings with action policies, while more recent frameworks like Pi-Zero, CogACT [131], and GR00T N1 [14] introduce scalable architectures with diffusion-based or high-frequency controllers. Several models leverage multi-modal pretraining with internet-scale vision-language corpora and robot trajectory datasets, enhancing generalization and zero-shot capabilities [297, 291, 289, 258]. This tabulated comparison serves as a reference point for researchers seeking to understand the functional diversity, domain applicability, and emerging trends in VLA design across real and simulated environments.
+
+<a id="table-1"></a>
+ **Table 1: Taxonomy of VLA models showing structured classification based on architectural paradigms and scientific priorities. We differentiate models by their support for end-to-end execution, hierarchical planning–control decomposition, or component-focused modularity, and further by their emphasis on low-level motor policies versus high-level task planners.** 
+| Model Name | Year | End-to-End | Hie rarc hical | Comp onent Focused | Low-Level Policy | High-Level Planner |
+| --- | --- | --- | --- | --- | --- | --- |
+| CLIPort [202] | 2022 | ✓ | ✗ | ✗ | ✓ | ✗ |
+| RT-1 [19] | 2022 | ✓ | ✗ | ✗ | ✓ | ✗ |
+| Gato [181] | 2022 | ✓ | ✗ | ✗ | ✓ | ✗ |
+| VIMA [112] | 2022 | ✓ | ✗ | ✗ | ✓ | ✗ |
+| Diffusion Policy [40] | 2023 | ✓ | ✗ | ✗ | ✓ | ✗ |
+| ACT [287] | 2023 | ✓ | ✗ | ✗ | ✓ | ✗ |
+| VoxPoser [100] | 2023 | ✓ | ✗ | ✗ | ✓ | ✗ |
+| Seer [80] | 2023 | ✓ | ✗ | ✗ | ✓ | ✗ |
+| Octo [218] | 2024 | ✓ | ✗ | ✗ | ✓ | ✗ |
+| OpenVLA [122] | 2024 | ✓ | ✗ | ✗ | ✓ | ✗ |
+| CogACT [131] | 2024 | ✗ | ✓ | ✗ | ✓ | ✓ |
+| VLATest [237] | 2024 | ✗ | ✗ | ✓ | ✗ | ✗ |
+| NaVILA [38] | 2024 | ✗ | ✓ | ✗ | ✓ | ✓ |
+| RoboNurse-VLA [132] | 2024 | ✓ | ✗ | ✗ | ✓ | ✗ |
+| Mobility VLA [42] | 2024 | ✗ | ✓ | ✗ | ✓ | ✓ |
+| RevLA [48] | 2024 | ✗ | ✗ | ✓ | ✗ | ✗ |
+| Uni-NaVid [280] | 2024 | ✗ | ✓ | ✗ | ✓ | ✓ |
+| RDT-1B [145] | 2024 | ✓ | ✗ | ✗ | ✓ | ✗ |
+| RoboMamba [143] | 2024 | ✓ | ✗ | ✗ | ✓ | ✗ |
+| Chain-of-Affordance [129] | 2024 | ✗ | ✗ | ✓ | ✗ | ✗ |
+| Edge VLA [20] | 2024 | ✗ | ✗ | ✓ | ✗ | ✗ |
+| ShowUI-2B [139] | 2024 | ✓ | ✗ | ✗ | ✓ | ✗ |
+| Pi-0 [15] | 2024 | ✓ | ✗ | ✗ | ✓ | ✗ |
+| FAST (Pi-0 Fast) [171] | 2025 | ✗ | ✗ | ✓ | ✓ | ✗ |
+| OpenVLA-OFT [121] | 2025 | ✓ | ✗ | ✗ | ✓ | ✗ |
+| CoVLA [5] | 2025 | ✗ | ✓ | ✗ | ✓ | ✓ |
+| OpenDriveVLA [293] | 2025 | ✗ | ✓ | ✗ | ✓ | ✓ |
+| ORION [69] | 2025 | ✗ | ✓ | ✗ | ✓ | ✓ |
+| UAV-VLA [191] | 2025 | ✗ | ✓ | ✗ | ✓ | ✓ |
+| CombatVLA [34] | 2025 | ✓ | ✗ | ✗ | ✓ | ✗ |
+| HybridVLA [142] | 2025 | ✗ | ✓ | ✗ | ✓ | ✓ |
+| NORA [103] | 2025 | ✓ | ✗ | ✗ | ✓ | ✗ |
+| SpatialVLA [175] | 2025 | ✗ | ✗ | ✓ | ✓ | ✗ |
+| MoLe-VLA [283] | 2025 | ✗ | ✗ | ✓ | ✓ | ✗ |
+| JARVIS-VLA [130] | 2025 | ✓ | ✗ | ✗ | ✓ | ✗ |
+| UP-VLA [279] | 2025 | ✓ | ✗ | ✗ | ✓ | ✗ |
+| Shake-VLA [120] | 2025 | ✗ | ✗ | ✓ | ✓ | ✗ |
+| DexGraspVLA [291] | 2025 | ✗ | ✓ | ✗ | ✓ | ✓ |
+| DexVLA [241] | 2025 | ✗ | ✓ | ✗ | ✓ | ✓ |
+| Humanoid-VLA [53] | 2025 | ✓ | ✗ | ✗ | ✓ | ✗ |
+| ObjectVLA [297] | 2025 | ✓ | ✗ | ✗ | ✓ | ✗ |
+| Long-VLA [64] | 2025 | ✓ | ✗ | ✗ | ✓ | ✗ |
+| RetoVLA [123] | 2025 | ✗ | ✗ | ✓ | ✓ | ✗ |
+| Vlaser [256] | 2025 | ✗ | ✓ | ✗ | ✓ | ✓ |
+| Discrete Diffusion VLA [138] | 2025 | ✓ | ✗ | ✗ | ✓ | ✗ |
+| Being-H0 [152] | 2025 | ✓ | ✗ | ✗ | ✓ | ✗ |
+| EgoVLA [257] | 2025 | ✓ | ✗ | ✗ | ✓ | ✗ |
+| StereoVLA [47] | 2025 | ✓ | ✗ | ✗ | ✓ | ✗ |
+| GeoVLA [212] | 2025 | ✗ | ✓ | ✗ | ✓ | ✓ |
+| EfficientVLA [260] | 2025 | ✗ | ✗ | ✓ | ✓ | ✗ |
+
+<a id="table-2"></a>
+ **Table 2: Compact summary of representative Vision–Language–Action (VLA) models. Each row reports the primary encoders/decoders, training data, and the main distinctive capability.** 
+| Model (Ref.) | Architecture (vision / language / action) | Training data | Key strength / uniqueness |
+| --- | --- | --- | --- |
+| CLIPort [202] | CLIP-ResNet50 + Transporter-ResNet / CLIP-GPT / LingUNet | Self-collected [SC] | Aligns semantic CLIP features with Transporter spatial reasoning for precise SE(2) manipulation. |
+| RT-1 [19] | EfficientNet / Universal Sentence Encoder / Transformer (discretized actions) | RT-1-Kitchen [SC] | Early large-scale transformer policy for multi-task kitchen manipulation with tokenized actions. |
+| RT-2 [299] | ViT-22B or ViT-4B / PaLI-X or PaLM-E / symbol-tuning (action tokens) | VQA + RT-1-Kitchen | Co-finetunes internet-scale VQA with robot data, yielding emergent generalization for embodied tasks. |
+| Gato [181] | ViT / SentencePiece / Transformer (unified token stream) | Self-collected [SC] | Generalist agent unifying robotics, language, and Atari via shared tokenization and a single transformer. |
+| VIMA [112] | ViT + Mask R-CNN / T5 / Transformer | VIMA-Data [SC] | Prompt-driven VL grounding across multiple compositional task types (six prompt modalities). |
+| ACT [287] | ResNet-18 / — / CVAE-Transformer | ALOHA [SC] | Temporal ensembling enables smooth bimanual imitation with fine control precision. |
+| Octo [218] | CNN / T5-base / Diffusion Transformer | Open X-Embodiment (OXE) | Large multi-robot policy trained on 4M+ trajectories spanning many robot embodiments. |
+| VoxPoser [100] | ViLD + MDETR / GPT-4 / MPC (LLM-guided planning) | Zero-shot | Composes LLM+VLM for constraint-aware motion planning without task-specific training. |
+| Diffusion Policy [40] | ResNet-18 / — / U-Net or Transformer diffusion | Self-collected [SC] | Diffusion modeling captures multimodal action distributions for robust visuomotor control. |
+| OpenVLA [122] | DINOv2 + SigLIP / Prismatic-7B / symbol-tuning | OXE + DROID | Open-source RT-2-like VLA; supports efficient LoRA adaptation and broad generalization. |
+| $\pi^{0}$ (Pi-Zero) [15] | PaliGemma VLM / PaliGemma (multimodal) / 300M diffusion action model | Pi-Cross-Embodiment | Lightweight general robot controller (reported $\sim$3B total) with strong cross-robot, open-world generalization and bimanual skills. |
+| $\pi^{0}$-Fast [171] | PaliGemma VLM / PaliGemma / autoregressive transformer with FAST tokenization | Pi-Cross-Embodiment | High-frequency real-time control via compressed frequency-space action tokens (reported up to 15$\times$ faster inference). |
+| OpenVLA-OFT [121] | SigLIP + DINOv2 (multi-view) / Llama-2 7B / parallel decoding + action chunking (L1 regression) | LIBERO; bimanual ALOHA | Fine-tuning recipe with parallel decoding and chunked actions; reported 97.1% LIBERO success and 26$\times$ faster inference for high-frequency bimanual control. |
+| RDT-1B [145] | Multi-view RGB encoder / transformer language module / Diffusion Transformer (unified action space) | 46 datasets ($>$1M episodes) + ALOHA fine-tune | 1.2B diffusion foundation model for dexterous bimanual manipulation with strong language conditioning and zero-shot transfer. |
+| Helix(^1^11[https://www.figure.ai/news/helix](https://www.figure.ai/news/helix)) | System 2: open-source VLM for multimodal reasoning (7–9 Hz) / integrated semantics / System 1: transformer visuomotor policy (200 Hz, full upper-body) | Figure robot E2E (pixels+language$\rightarrow$actions) | Humanoid-focused dual-rate VLA enabling real-time high-DoF control, dexterity, and collaborative multi-robot manipulation with zero-shot generalization. |
+| CogACT [131] | DINOv2 ViT-L/14 + SigLIP ViT-So400M/14 / Llama-2 via Prismatic-7B / DiT-Base (300M diffusion) | OXE subset; Realman & Franka tasks | Componentized VLA with diffusion action transformer; reported +59.1% real-world success vs. OpenVLA and strong adaptation to unseen robots/objects. |
+| Chain-of-Affordance (CoA) [129] | Affordance-aware visual encoder / transformer reasoning prompts / autoregressive + diffusion policy (affordance-conditioned) | LIBERO; real+sim manipulation | Sequential affordance reasoning (object$\rightarrow$grasp$\rightarrow$spatial$\rightarrow$motion) improves spatial planning and obstacle avoidance; reported stronger LIBERO performance than OpenVLA. |
+| Edge VLA (EVLA) [20] | SigLIP + DINOv2 / Qwen2 (0.5B) / non-autoregressive joint control prediction | Bridge; OXE; 1.2M text–image pairs | Edge-optimized VLA (e.g., Jetson-class) with reported 30–50 Hz inference and OpenVLA-comparable performance under low power. |
+| ShowUI-2B [139] | UI-guided visual token selection / interleaved V–L–A streaming / transformer GUI action predictor | 256K GUI instruction-following | Compact 2B VLA for digital automation; strong screenshot grounding and GUI/web navigation with efficient token selection. |
+| GR00T N1 [14] | NVIDIA Eagle-2 VLM / integrated high-level planning / diffusion transformer (DiT) | Human demos + robot trajectories + simulation + internet video | Generalist humanoid dual-system design combining planning and diffusion execution for dexterous multi-step control and broad embodiment generalization. |
+| Seer [80] | Grounding-optimized visual backbone / transformer language / autoregressive action head | LIBERO | Strong visual grounding for manipulation; competitive on LIBERO but typically below newer fine-tuned variants (e.g., OpenVLA-OFT). |
+| DiffusionVLA [240] | Transformer visual encoder / autoregressive reasoning / diffusion action head | LIBERO; factory sorting; zero-shot bin-picking | Diffusion control improves robustness and interpretability; reported weaker spatial generalization than CoA in some configurations. |
+| NaVILA [38] | CLIP + CNN / LLaMA-2 / hierarchical control: topological planner + RL locomotion | Real-world legged robot nav demos | Modular hierarchy for terrain generalization; reported 88% real-world navigation success from natural language. |
+| RoboNurse-VLA [132] | SAM2 + RGB-D / LLaMA-2 + voice-to-text / pose regression + gripper classifier | Surgical handover videos + voice prompts | Real-time surgical tool handover robust to novel tools and dynamic operating-room scenes. |
+| Mobility VLA [42] | Long-context ViT + goal-image encoder / T5-based instruction encoder / graph planner + visual goal localization | MINT dataset (VL instruction tours) | Topological mapping from multimodal tours enables navigation generalization across large unseen spaces. |
+| TinyVLA [242] | FastViT / compact 128-d language / diffusion decoder (50M) | Mini-ALOHA + SC tasks | No large-scale pretraining required; reported faster inference (5$\times$) with strong precision under tight compute budgets. |
+| QUAR-VLA [54] | CLIP + proprioceptive embedding / BERT + grounding adapter / transformer full-body decoder | QUART (locomotion+manipulation) | Quadruped-centric VLA with strong sim-to-real transfer and fine-grained instruction alignment. |
+| ChatVLA [295] | Phase-aligned vision encoder / Prismatic MoE LLM / unified V–L–A planner | Unified chat-action (web+robot) | Joint VQA+planning; mitigates forgetting and supports conversational task execution with manipulation. |
+| PointVLA [125] | CLIP + 3D point cloud fusion / LLaMA-2 / transformer with spatial token fusion | Few-shot spatial tasks (real+sim) | Improves long-horizon spatial reasoning by injecting 3D structure while preserving pretrained 2D knowledge. |
+| VLA-Cache [252] | SigLIP + token memory buffer / Prismatic-7B / transformer with dynamic token reuse | ALOHA + sim/real fusion | Caches static visual tokens for efficiency; reported 40–50% faster inference with negligible performance loss. |
+| HybridVLA [142] | CLIP + DINOv2 / LLaMA-2 / hybrid diffusion + autoregressive ensemble | RT-X + synthetic fusion | Dynamic ensemble improves robustness in multi-arm settings and supports stronger sim-to-real generalization. |
+| MoLe-VLA [283] | Multi-stage ViT + STAR router / CogKD-enhanced transformer / sparse transformer (dynamic routing) | RLBench + real-world manipulation | Selective layer activation yields efficiency (reported 5.6$\times$ speedup) and higher success (reported +8%). |
+| UAV-VLA [191] | ViT for aerial imagery / GPT instruction parsing / transformer path planner | Satellite + UAV imagery instructions | Zero-shot aerial task planning with scalable language grounding for large unmapped environments. |
+| DexGraspVLA [291] | Object-centric spatial ViT / transformer grasp reasoning / diffusion grasp controller | Dexterous grasping benchmark (sim+real) | Reported $>$90% zero-shot success across diverse objects; robust to lighting/background variation and unseen conditions. |
+| GraspVLA [46] | Multi-view DINOv2 + SigLIP / VLM predicts boxes+grasps / flow-matching action expert (PAG) | SynGrasp-1B; GRIT | Synthetic-pretrained grasping VLA; improves sim-to-real transfer and supports zero-/few-shot generalization to long-tail object classes and preferences. |
+| Interleave-VLA [62] | InternVL2.5 + OWLv2 / Qwen2.5 / continuous action predictor (OpenVLA+$\pi^{0}$-style, diffusion controller) | Open Interleaved X-Embodiment (210k eps., 11 datasets) | End-to-end interleaved image–text instruction following; reported 2–3$\times$ out-of-domain gains and zero-shot execution from sketches and novel multimodal prompts. |
+| Long-VLA [64] | End-to-end VLA for long-horizon tasks / phase-aware input masking + transformer policy (subtask phase segmentation) | Long-horizon multi-step robot manipulation demonstrations (task sequences) | Targets long-horizon execution by explicitly separating “moving” vs. “interaction” phases, improving subtask compatibility and robustness over extended task horizons. |
+| RetoVLA [123] | VLM-based policy / reuses register tokens as spatial context for action prediction | Real-robot manipulation on a 7-DoF arm + task-specific demonstrations | Lightweight spatial-reasoning upgrade by repurposing register tokens; reported sizable success-rate gains on complex manipulation with minimal architectural overhead. |
+| Vlaser [256] | VLM-to-VLA pipeline / synergistic embodied reasoning + policy learning (reasoning-aware VLA fine-tuning) | Vlaser-6M embodied reasoning dataset + VLA fine-tuning data (robot demonstrations) | Bridges embodied reasoning and control: strong performance across embodied grounding/QA/planning while improving transfer to policy learning under domain shift. |
+| Discrete Diffusion VLA [138] | Single-transformer VLA / discretized action chunks + discrete diffusion refinement (CE training; remasking) | LIBERO + SimplerEnv (Fractal/Bridge) style VLA benchmarks | Unifies diffusion-style refinement with discrete token interfaces: adaptive decoding order, error correction via remasking, and reduced autoregressive bottlenecks with strong benchmark success rates. |
+| Being-H0 [152] | Dexterous VLA pretrained from human videos / explicit hand-motion modeling + VL grounding for action | Large-scale human manipulation videos (egocentric/third-person) + transfer to robot control | Scales dexterous manipulation by leveraging diverse human video data; improves generalization to novel tasks/scenes compared with small teleop-only robot datasets. |
+| EgoVLA [257] | VLM pretraining on egocentric human manipulation / unified human–robot action space + robot fine-tuning | Large-scale egocentric human videos + small set of robot demonstrations | Uses abundant egocentric videos for scalable pretraining, then aligns embodiments via unified action space to enable practical robot transfer with limited robot data. |
+| StereoVLA [47] | Stereo-enhanced VLA / geometric-semantic fusion from stereo pairs (+ auxiliary depth cues) for action decoding | Stereo robot manipulation demonstrations (stereo RGB with language-conditioned actions) | Explicitly exploits stereo geometry to improve spatial precision (depth-sensitive grasping/manipulation) and robustness to viewpoint/camera variations. |
+| EfficientVLA [260] | Training-free VLA acceleration/compression / structured redundancy removal across VLA pipeline (token/interface optimizations) | Applies to existing VLAs (evaluation on standard manipulation benchmarks; e.g., SIMPLER-style settings) | Practical deployability: speeds up and reduces compute/memory of large VLA policies with minimal accuracy drop, enabling closer-to-real-time inference on constrained hardware. |
+
+<a id="section-3-2"></a>
+
+### 3.2 Training Efficiency Advancements in Vision–Language–Action Models
+
+VLA models have seen rapid progress in training and optimization techniques to reconcile multimodal inputs, reduce compute requirements, and enable real-time control. Key areas of advancement include:
+
+- 1.
+Data-Efficient Learning.
+(a)
+*Co-fine-tuning* on massive vision–language corpora (e.g. LAION-5B) and robotic trajectory collections (e.g. Open X-Embodiment) aligns semantic understanding with motor skills. OpenVLA (7 B parameters) achieves a 16.5 % higher success rate than a 55 B-parameter RT-2 variant, demonstrating that co-fine-tuning yields strong generalization with fewer parameters [194, 227, 122] compared to compared to scaling model size alone.
+(b)
+*Synthetic Data Generation* via UniSim produces photorealistic scenes including occlusions and dynamic lighting to augment rare edge-case scenarios, improving model robustness in cluttered environments by over 20 % [264, 218].
+(c)
+*Self-Supervised Pretraining* adopts contrastive objectives (à la CLIP) to learn joint visual–text embeddings before action fine-tuning, reducing reliance on task-specific labels. Qwen2-VL leverages self-supervised alignment to accelerate downstream grasp-and-place convergence by 12 % [177, 98].
+- 2.
+Parameter-Efficient Adaptation.
+Low-Rank Adaptation (LoRA) inserts lightweight adapter matrices into frozen transformer layers, cutting trainable weights by up to 70 % while retaining performance [93]. The Pi-0 Fast variant uses merely 10 M adapter parameters atop a static backbone to deliver continuous 200 Hz control with negligible accuracy loss [171].
+- 3.
+Inference Acceleration.
+(a)
+*Compressed Action Tokens* (FAST) and *parallel decoding* in dual-system frameworks (e.g. GR00T N1) achieve up to 2.5$\times$ faster policy inference, reducing per-step latency to below 5 ms compared to standard autoregressive decoding in single-policy VLAs evaluated on real-time manipulation and humanoid control benchmarks. This acceleration comes at a modest cost in trajectory smoothness, manifested as slightly higher action discretization error and reduced fine-grained motion continuity under high-frequency control [14, 209].
+
+Together, these methods have transformed VLAs into practical agents capable of handling language-conditioned, vision-guided tasks in dynamic, real-world settings.
+
+<a id="section-3-3"></a>
+
+### 3.3 Parameter-Efficient Methods and Acceleration Techniques in VLA Models
+
+Beyond data-efficient learning strategies, a complementary line of research in VLA models focuses on reducing model size, memory footprint, and inference latency to enable deployment on real robotic platforms with limited computational and power resources. Unlike training-centric efficiency methods discussed earlier, the techniques in this subsection primarily target *parameter efficiency at adaptation time* and *runtime acceleration during policy inference*.
+
+- 1.
+Parameter-Efficient Adaptation via Low-Rank Modules:
+Rather than full fine-tuning, many VLAs adopt parameter-efficient adaptation mechanisms such as Low-Rank Adaptation (LoRA), which was introduced earlier in the context of training efficiency. In this section, we emphasize its role in *reducing the effective parameter footprint during deployment*. For example, OpenVLA employs lightweight LoRA adapters (approximately 20 M parameters) on top of a frozen 7 B-parameter backbone, allowing task adaptation with minimal memory overhead and avoiding duplication of full model weights across tasks [93, 122]. This design enables multiple task-specialized policies to coexist on resource-constrained systems while preserving the general-purpose visual–semantic representations learned during pretraining.
+- 2.
+Quantization for Edge Deployment:
+Model quantization reduces numerical precision to improve inference throughput and memory efficiency. Experiments with OpenVLA show that INT8 quantization on embedded platforms such as NVIDIA Jetson Orin preserves approximately 97 % of full-precision task success on pick-and-place benchmarks, with only minor degradation in fine-grained dexterous manipulation [194, 122]. Post-training quantization and per-channel calibration further mitigate accuracy loss under high-dynamic-range sensory inputs [164]. These optimizations enable sustained control frequencies of up to 30 Hz within strict power budgets typical of mobile robots.
+- 3.
+Model Pruning and Architectural Slimming:
+Structured pruning removes redundant architectural components such as attention heads or feed-forward sublayers to reduce memory and compute requirements. Although less explored in VLAs than in standalone vision or language models, early studies on diffusion-based visuomotor policies indicate that pruning up to 20 % of convolutional vision encoders results in negligible degradation in grasp stability [40]. Similar pruning strategies applied to transformer-based VLAs (e.g. RDT-1B) can reduce memory footprint by approximately 25 % with less than 2 % drop in task success, enabling sub-4 GB deployments [145, 131].
+- 4.
+Compressed Action Tokenization:
+To address inference bottlenecks arising from long-horizon control sequences, compressed action representations have been proposed. FAST reformulates continuous action trajectories into compact frequency-domain tokens, substantially reducing decoding length. The Pi-0 Fast variant achieves up to 15$\times$ faster inference by compressing 1000 ms action windows into 16 discrete tokens, enabling control rates of up to 200 Hz on desktop GPUs [171]. This method trades minimal trajectory granularity for large speedups, making it well suited for high-frequency, reactive manipulation tasks.
+- 5.
+Parallel Decoding and Action Chunking:
+Standard autoregressive VLAs decode actions sequentially, leading to cumulative latency. Parallel decoding strategies, as employed in dual-system architectures such as GR00T N1, generate groups of spatio-temporal action tokens concurrently, achieving approximately 2.5$\times$ reduction in end-to-end inference latency on 7-DoF robotic arms operating at 100 Hz [14, 209]. Action chunking further abstracts multi-step routines (e.g. *pick-and-place*) into single high-level tokens, reducing inference steps by up to 40 % in long-horizon manipulation tasks such as kitchen workflows [112].
+- 6.
+Hardware-Aware Compilation and Runtime Optimization:
+Finally, hardware-aware optimizations leverage compiler-level graph rewrites, kernel fusion, and accelerator-specific primitives to maximize throughput. Frameworks such as TensorRT-LLM exploit tensor cores, fused attention kernels, and pipelined memory transfers to accelerate both transformer inference and diffusion sampling. In OpenVLA-OFT, such optimizations reduce inference latency by approximately 30 % and lower energy consumption per inference by 25 % on RTX-class GPUs compared to standard PyTorch execution [121]. These system-level optimizations are critical for deploying real-time VLAs on mobile robots, aerial platforms, and humanoid systems with strict power constraints.
+
+Discussion:
+Parameter‐efficient adaptation and inference acceleration techniques collectively democratize VLA deployment:
+
+- 1.
+LoRA and quantization empower smaller labs and research/development programs to fine‐tune and operate billion‐parameter VLAs on consumer‐grade hardware, unlocking cutting‐edge semantic understanding for robots [93, 122].
+- 2.
+Pruning and FAST tokenization compress model and action representations, enabling sub‐4 GB, sub‐5 ms control loops without sacrificing precision in dexterous tasks [145, 171].
+- 3.
+Parallel decoding and action chunking overcome sequential bottlenecks of autoregressive policies, supporting 100–200 Hz decision rates needed for agile manipulation and legged locomotion [14, 209].
+- 4.
+Hybrid RL‐SL training stabilizes exploration in complex environments, while hardware‐aware compilation ensures real‐time performance on edge accelerators [159, 121].
+
+Together, these advances make it practical to embed VLA models across industrial manipulators, assistive drones, and consumer robots, bridging the gap from research prototypes to real‐world autonomy.
+
+<a id="section-3-4"></a>
+
+### 3.4 Applications of Vision-Language-Action Models
+
+VLA models are rapidly emerging as foundational building blocks for embodied intelligence, integrating perception, natural language understanding, and motor control within a unified architecture. By encoding visual and linguistic modalities into shared semantic spaces and generating contextually grounded actions, VLA models enable seamless interaction between agents and their environments [131, 293]. By encoding visual and linguistic modalities into shared semantic spaces and generating contextually grounded actions, VLA models enable seamless interaction between agents and their environment. This multimodal capacity has positioned VLAs as transformative agents across a wide spectrum of real-world applications. In humanoid robotics, systems like Helix and RoboNurse-VLA combine vision, language, and dexterous manipulation to assist with domestic tasks and surgical operations, demonstrating real-time reasoning and safety-aware control [132, 242]. In autonomous vehicles, models such as OpenDriveVLA and ORION process dynamic visual streams and natural language instructions to make transparent, adaptive driving decisions in complex urban environments [69, 293]. Industrial deployments leverage VLA architectures for high-precision assembly, inspection, and collaborative manufacturing [131]. In agriculture, VLA-powered robotic systems could enable vision-guided fruit harvesting, plant monitoring, and anomaly detection, reducing labor dependency and increasing sustainability. Furthermore, recent advances in interactive augmented reality systems utilize VLA models for real-time, language-conditioned spatial navigation, guiding users in indoor and outdoor settings based on voice or visual cues [191, 74]. Across these domains, VLAs offer a unified framework for robust, adaptable, and semantically aligned task execution, marking a pivotal shift toward embodied generalist agents.
+
+Table [3](#table-3) shows the recent VLA models by summarizing their methodologies, application domains, and key innovations.
+
+<a id="table-3"></a>
+ **Table 3: Comparison of representative Vision-Language-Action (VLA) methodologies, application areas, and key innovations.** 
+| Reference (Year) | VLA methodology | Application area | Strength / key innovation |
+| --- | --- | --- | --- |
+| CogACT [131] (2024) | Modular VLA with a specialized action module based on diffusion transformers. | Industrial robotics; language-guided manipulation. | Robust action modeling with fast adaptation and strong generalization, improving task success in diverse industrial settings. |
+| VLATest [237] (2024) | Automated large-scale testing framework for VLA manipulation evaluation. | Robotic manipulation benchmarking (robustness/reliability). | Systematic multi-scene and multi-task evaluation that exposes robustness gaps and supports targeted VLA improvements. |
+| NaVILA [38] (2024) | Two-level VLA: high-level vision-language generates mid-level navigation commands; RL locomotion executes. | Legged navigation from natural language in cluttered real-world scenes. | Modular high/low-level split with strong generalization and high real-world success across challenging terrains. |
+| RoboNurse-VLA [132] (2024) | Vision module (SAM2) + language module (Llama2) with real-time voice-to-action pipeline. | Surgical assistance (instrument grasp and handover). | Accurate real-time assistance, robustness to unseen tools, and stable performance in dynamic operating room conditions. |
+| Mobility VLA [42] (2024) | Hierarchical VLA with long-context VLM for goal localization and topological graph navigation. | Multimodal instruction navigation with demonstration tours (MINT). | Leverages demonstrations for scalable navigation in large spaces; robust to novel language+image queries. |
+| CoVLA [5] (2025) | CLIP-based vision, Llama-2 language, trajectory prediction for action. | Autonomous driving (dataset + VLA training). | Large-scale richly annotated dataset enabling interpretable scene understanding and robust path planning. |
+| OpenDriveVLA [293] (2025) | Hierarchical alignment of 2D/3D visual tokens and language embeddings; autoregressive agent–environment–ego modeling. | End-to-end autonomous driving. | Unified semantic space and interaction modeling that improves planning and QA performance in complex traffic scenes. |
+| ORION [69] (2025) | QT-Former for history context, LLM reasoning, generative planner for trajectory prediction. | Holistic end-to-end autonomous driving. | Aligns reasoning and action spaces with unified optimization for VQA and planning, yielding stronger closed-loop performance. |
+| QUAR-VLA [54] (2025) | QUART-based fusion of vision and language for action generation. | Quadruped navigation, manipulation, whole-body tasks. | Tight VL-A coupling and instruction alignment with strong sim-to-real generalization for legged platforms. |
+| TinyVLA [242] (2025) | Compact multimodal backbone with diffusion-policy decoder. | Fast, data-efficient manipulation control. | Reduced inference cost with strong generalization; improves efficiency without requiring heavy pre-training. |
+| UAV-VLA [191] (2025) | Modular pipeline: GPT for goal extraction, VLM for object search, GPT for action generation. | UAV mission planning from language + satellite imagery. | Efficient flight/action planning with minimal prior training; supports intuitive human–UAV interaction and benchmarking. |
+| Bi-VLA [74] (2025) | Multimodal transformer linking vision, language, and bimanual action modules. | Bimanual household manipulation. | High adaptability and robust real-world bimanual execution through explicit action-module integration. |
+| ChatVLA [295] (2025) | Phased alignment training with Mixture-of-Experts for VL-A integration. | Unified multimodal understanding and robot control. | Reduces forgetting/interference, improving both VQA and manipulation with efficient specialization. |
+| RoboMamba [143] (2025) | Mamba/SSM-based VLA with co-trained vision encoder and SE(3) action modeling. | Efficient robotic reasoning and manipulation. | Linear-complexity inference and minimal fine-tuning enable fast pose-aware reasoning and efficient control. |
+| OTTER [97] (2025) | Text-aware feature extraction using frozen pre-trained VLMs. | Manipulation with zero-shot generalization. | Preserves VL semantic alignment without VLM fine-tuning via task-relevant feature selection for strong zero-shot transfer. |
+| PointVLA [125] (2025) | Injects 3D point-cloud features into frozen VLA via modular skip-blocks. | Spatial reasoning; few-shot and long-horizon manipulation. | Adds 3D geometry while preserving 2D knowledge, improving spatial grounding without full retraining. |
+| VLA-Cache [252] (2025) | Adaptive token caching with selective reuse of static visual tokens. | Real-time efficient manipulation inference. | Layer-wise token reuse yields major speedups with minimal accuracy loss, practical for on-robot deployment. |
+| CombatVLA [34] (2025) | Video-action AoT training with truncated AoT for fast inference. | Real-time combat decision-making in 3D games. | Large inference acceleration with improved tactical reasoning and high success in real-time interactive environments. |
+| HybridVLA [142] (2025) | Unified LLM with collaborative diffusion and autoregressive action policies. | Single-/dual-arm manipulation across sim and real tasks. | Adaptive action ensembling improves robustness and generalization on complex manipulations. |
+| NORA [103] (2025) | 3B-parameter VLA using Qwen-2.5-VL-3B backbone with FAST+ tokenizer. | Generalist embodied robotics (sim + real). | Low overhead with strong visual reasoning and fast action decoding; competitive with larger VLAs. |
+| SpatialVLA [175] (2025) | Ego3D position encoding and adaptive action grids for spatially-aware VLA. | Cross-robot, multi-task, zero-shot manipulation. | Explicit 3D spatial integration and adaptive discretization improve transfer and generalization; open-sourced. |
+| MoLe-VLA [283] (2025) | Mixture-of-Layers with dynamic layer-skipping via router and distillation. | Efficient manipulation on RLBench + real robots. | Selective layer activation provides strong speedups while maintaining cognition and improving success. |
+| JARVIS-VLA [130] (2025) | Post-trained large VLMs with VL guidance and an action head for keyboard/mouse control. | Open-world visual games (e.g., Minecraft), 1k+ tasks. | Self-supervised post-training yields strong generalization and world knowledge; open-sourced task suite and models. |
+| UP-VLA [279] (2025) | Unified VLA with joint multimodal understanding and future prediction objectives. | Embodied manipulation with precise spatial reasoning. | Joint semantics+dynamics learning improves performance on long-horizon tasks requiring fine spatial control. |
+| Shake-VLA [120] (2025) | Modular stack with vision, speech-to-text, RAG, anomaly detection, and bimanual arms. | Bimanual cocktail mixing in clutter/noise. | Robust end-to-end deployment with reliable ingredient handling, recipe adaptation, and real-world task completion. |
+| MoRE [285] (2025) | Sparse MoE with LoRA modules and RL-based Q-function training. | Quadruped multi-task locomotion, navigation, manipulation. | Scalable fine-tuning on mixed-quality data with strong multi-task and OOD generalization in sim and real. |
+| DexGraspVLA [291] (2025) | Hierarchical planner (pre-trained VL) + diffusion low-level controller. | General dexterous grasping in diverse conditions. | Domain-invariant representations support strong zero-shot generalization across objects, lighting, and backgrounds. |
+| DexVLA [241] (2025) | Plug-in diffusion action expert with embodiment curriculum learning. | General robot control: single-arm, bimanual, dexterous hand. | Cross-embodiment action modeling and fast adaptation enable strong long-horizon performance without task-specific tuning. |
+
+The following subsections chronologically explore the application areas in depth as shown in Figure [11](#figure-11).
+
+#### 3.4.1 Humanoid Robotics
+
+Humanoid robots, designed to mimic the form and functionality of the human body, represent one of the most demanding yet impactful domains for the deployment of VLA models. These platforms must seamlessly perceive complex environments, understand spoken or written natural language, and perform intricate physical tasks with human-level dexterity [184, 23]. The core strength of VLA models lies in their ability to unify perception, cognition, and control into a single, end-to-end trainable framework allowing humanoid robots to interpret visual inputs (e.g., RGB-D imagery of cluttered scenes), comprehend linguistic instructions (e.g., “place the spoon in the drawer”), and generate precise motor trajectories [151, 296].
+
+Recent advances have significantly accelerated the deployment of VLAs in humanoid robotics. For example, Helix(^2^22[https://www.figure.ai/news/helix](https://www.figure.ai/news/helix)), a humanoid robot developed by Figure AI, leverages a fully integrated VLA model to perform full-body manipulation at high frequency, controlling arms, hands, torso, and even fine-grained finger motion in real time. The architecture follows a dual-system design: a multimodal transformer processes inputs such as language commands and vision streams, while a real-time motor policy outputs dense action vectors at 200 Hz. This allows Helix to generalize across previously unseen objects and tasks, adapting fluidly to changing environments without the need for task-specific retraining.
+
+The key advantage of VLAs in humanoid systems is their ability to scale across diverse tasks using shared representations [8]. Unlike traditional robotic systems that rely on task-specific programming or modular pipelines, VLA-powered humanoids operate under a unified token-based framework. Vision inputs are encoded via pretrained vision-language models like DINOv2 or SigLIP, while instructions are processed using LLMs such as LLaMA or GPT-style encoders. These representations are fused into prefix tokens that capture the full context of the scene and task. Action tokens are then generated autoregressively, similar to language decoding, but represent motor commands for the robot’s joints and end-effectors.
+
+This capability enables humanoid robots to operate effectively in human-centric spaces, such as households, hospitals, and retail environments. In domestic settings, VLA-powered robots can clean surfaces, prepare simple meals, or organize objects simply by interpreting voice commands [151, 296]. In healthcare, systems like RoboNurse-VLA [132] have demonstrated the ability to perform precise instrument handovers to surgeons using real-time voice and visual cues. In retail, humanoid platforms equipped with VLAs can assist with customer queries, restock shelves, and navigate store layouts without explicit pre-programming [8].
+
+What distinguishes modern humanoid VLAs is their ability to run on embedded, low-power hardware, making real-world deployment viable. For instance, systems such as TinyVLA [242] and MoManipVLA [246] demonstrate efficient inference pipelines that run on Jetson-class GPUs, enabling mobile deployment without compromising performance. These models exploit techniques like diffusion-based policies, LoRA-based fine-tuning, and dynamic token caching to minimize compute cost while retaining high precision and generalization.
+
+In logistics and manufacturing, VLA-enabled humanoids are already making a commercial impact. Robots like Figure 01 are deployed in warehouses to perform repetitive, physically intensive tasks such as picking, sorting, and shelving alongside human workers. Their ability to handle novel object categories and dynamically changing scenes is powered by continual learning and robust multimodal grounding [252, 131].
+
+As VLA models continue to advance in their capacity for diverse action generation, spatial reasoning, and real-time adaptation, humanoid robots are emerging as highly capable assistants across homes, industrial settings, and public spaces. Their strength lies in their ability to unify perception, language comprehension, and motor control through a shared token-based architecture enabling seamless, context-aware behavior in unstructured human environments.
+
+<a id="figure-12"></a>
+![VLAencode](images/VLAencode.png)
+> Figure 12: This figure illustrates “Helix,” a next-generation humanoid robot executing a household task using a VLA framework. Upon receiving a verbal command, Helix integrates a vision-language model (e.g., SigLIP) and a language model (e.g., LLaMA-4) to jointly perceive and interpret the environment. A hierarchical VLA controller plans and executes sub-tasks opening the fridge, grasping a bottle while an agentic AI module adapts actions in real time. This demonstrates VLA-based generalist robotics with dynamic task adaptation and safe, semantically grounded manipulation.
+
+For example, as depicted in the figure [12](#figure-12), consider ’Helix’, a state-of-the-art humanoid robot equipped with a next-generation VLA model. When instructed verbally, “Please take the water bottle from the fridge,” Helix activates its integrated perception system, where a foundation vision-language model (e.g., SigLIP or DINOv2) segments the visual scene to identify the refrigerator, its handle, and the bottle. The language input is processed by an LLM such as LLaMA-4, which tokenizes the instruction and fuses it with the visual context. This fused representation is passed to a hierarchical controller: the high-level policy plans the task sequence (locate handle, pull door, identify bottle, grasp), while a mid-level planner defines motor primitives, such as grasp type and joint trajectories. The low-level VLA controller, often based on diffusion policy networks, executes these actions with sub-second latency. Upon encountering variations (e.g., a tilted bottle or slippery grip), Helix’s agentic AI module performs micro-policy refinement in real time, adjusting its grip based on feedback. This example illustrates the transformative potential of VLA-enabled humanoid. From kitchens to clinics, these systems not only interpret complex instructions and execute physical tasks with dexterity but also adapt to environmental unpredictability. By embedding agentic reasoning and safety alignment mechanisms, modern humanoid robots powered by VLAs are transitioning from narrow-task performers to generalist, trustworthy collaborators. As energy-efficient models like TinyVLA and MoManipVLA mature, deployment on mobile, low-power platforms becomes increasingly practical ushering in a new era of embodied, socially aligned AI.
+
+#### 3.4.2 Autonomous Vehicle Systems
+
+Autonomous vehicles (AVs), including self-driving cars, trucks, and aerial drones, represent a frontier application domain for VLA models, where safety-critical decision-making demands tightly coupled perception, semantic understanding, and real-time action generation. Unlike traditional modular AV pipelines that explicitly separate perception, planning, and control, VLA frameworks explore tighter architectural coupling by jointly processing visual observations, high-level semantic cues, and internal state representations within a unified model. While such end-to-end formulations have shown promising results in simulation and controlled benchmarks for instruction-conditioned navigation and reasoning, large-scale commercial systems (e.g., Tesla Autopilot ([Source Link](https://www.tesla.com/fsd))) continue to rely on modular or hybrid pipelines, with recent industry efforts focusing on integrating vision-language reasoning components rather than fully deploying VLA-style action generation in safety-critical driving.
+
+VLA models empower AVs to comprehend complex environments beyond pixel-level object recognition. For instance, a self-driving car navigating an urban setting must detect traffic signs, understand pedestrian behavior, and interpret navigation commands such as “take the second right after the gas station.” These tasks involve fusing visual and linguistic signals to understand spatial relationships, predict intent, and generate context-aware driving actions. VLAs encode this information through token-based representations, where visual encoders (e.g., ViT, CLIP), language models (e.g., LLaMA-4), and trajectory decoders operate in a coherent semantic space, enabling the vehicle to reason about high-level goals and translate them into low-level motion.
+
+A notable contribution in this direction is CoVLA [5], which provides a comprehensive dataset pairing over 80 hours of real-world driving videos with synchronized sensor streams (e.g., LiDAR, odometry), detailed natural language annotations, and high-resolution driving trajectories. This dataset enables training VLA models to align perceptual and linguistic features with physical actions. CoVLA employs CLIP for visual grounding, LLaMA-2 for instruction embedding, and trajectory decoders for motion prediction. This configuration allows AVs to interpret verbal cues (e.g., “yield to ambulance”) and environmental conditions (e.g., merging traffic) to make transparent and safe driving decisions.
+
+OpenDriveVLA [293] advances the state of VLA modeling by integrating hierarchical alignment of 2D/3D multi-view vision tokens with natural language inputs. Its architecture leverages both egocentric spatial perception and external scene understanding to construct a dynamic agent-environment-ego interaction model. Through autoregressive decoding, OpenDriveVLA generates both action plans (e.g. steering angle, acceleration) and trajectory visualizations interpretable to humans. Its end-to-end framework achieves leading performance on public autonomous driving benchmarks, including planning and trajectory prediction tasks on the nuScenes and Waymo Open Motion datasets, as well as vision–language question-answering benchmarks for driving scenes, demonstrating strong robustness in urban navigation and behavioral prediction.
+
+Another seminal model, ORION [69], pushes the boundaries of closed-loop autonomous driving by incorporating a QT-Former to retain long-horizon visual context, an LLM to reason over traffic narratives, and a generative trajectory planner. ORION excels at aligning the discrete reasoning space of vision-language models with the continuous control space of AV motion. This unified optimization results in accurate visual question answering (VQA) and trajectory planning, crucial for scenarios involving ambiguous human instructions or occluded obstacles (e.g., “take the exit behind the red truck”).
+
+For example, as depicted in Figure [13](#figure-13), consider an autonomous delivery vehicle, “AutoNav,” operating in a dense urban environment using a next-generation VLA architecture. As AutoNav receives a cloud-based instruction “Drop off the package near the red awning beside the bakery, then return to base avoiding construction zones”, its onboard VLM (e.g., CLIP or SigLIP) parses the visual stream from multiple cameras, identifying dynamic landmarks such as bakery signs, red awnings, and traffic cones. Simultaneously, the LLM module grounded in LLaMA-4 decodes the instruction and fuses it with real-time sensory context including LiDAR, GPS, and inertial odometry. A hierarchical control stack processes these multi-modal signals via an autoregressive VLA decoder that integrates egocentric views and world-centric maps to plan adaptive paths. As the vehicle approaches the delivery location, unexpected pedestrian activity prompts an agentic submodule to trigger trajectory re-planning using a reinforcement learning-inspired policy refinement routine. At the same time, AutoNav audibly warns pedestrians and recalibrates its speed to maintain safety margins. This interplay of semantic understanding, perceptual grounding, and adaptive control exemplifies the power of VLA-based systems in achieving interpretable, human-aligned behavior in safety-critical scenarios.
+
+This scenario illustrates how tightly integrated VLA architectures can surpass traditional perception-planning-control pipelines by enabling end-to-end semantic reasoning, rapid cross-module adaptation, and interpretable decision making. Unlike modular pipelines, where perception outputs, planner updates, and control adjustments are handled by loosely coupled components with limited semantic feedback, the VLA-based system jointly reasons over language intent, visual context, and embodied state, allowing it to dynamically replan trajectories, communicate safety-relevant intentions to humans, and adjust control policies in real time. As a result, the system exhibits greater autonomy, improved transparency through human-interpretable outputs, and enhanced decision-making agility in safety-critical environments.
+
+<a id="figure-13"></a>
+![LearningParadigms](images/LearningParadigms.png)
+> Figure 13: This illustration depicts an autonomous delivery vehicle powered by a VLA system, integrating VLMs for visual grounding, LLMs for instruction parsing, and a VLA decoder for path planning. Agentic AI enables adaptive trajectory refinement in dynamic environments, exemplifying how multi-modal integration drives safe, interpretable, and autonomous decision-making in real-world navigation tasks.
+
+In aerial robotics, VLAs enhance the capabilities of drones or UAVs in delivery and other tasks. Models such as UAV-VLA [191] combine satellite imagery, natural language mission descriptions, and onboard sensing to execute high-level commands (e.g., “deliver to the rooftop pad with the blue tarp”). These systems use modular VLA architectures, where a vision-language planner parses global context and a flight controller executes precise waypoints, supporting applications in logistics, disaster response, and military reconnaissance.
+
+As autonomous systems increasingly operate in unstructured environments, VLAs provide a scalable, interpretable, and data-efficient alternative to traditional pipelines. By learning from large-scale multimodal datasets and modeling decision-making as token prediction, VLAs align human-level semantics with robotic motion, paving the way for safer, smarter autonomous driving and navigation technologies.
+
+#### 3.4.3 Industrial Robotics
+
+Industrial robotics is undergoing a paradigm shift with the integration of VLA models, enabling a new generation of intelligent robots capable of high-level reasoning, flexible task execution, and natural communication with human operators [33, 7]. Traditional industrial robots typically operate in highly structured environments using rigid programming, often requiring extensive reconfiguration and manual intervention when adapting to new assembly lines or product variants [6, 182]. Such systems lack the semantic grounding and adaptability required for modern dynamic manufacturing settings.
+
+VLA models, by contrast, offer a more human-interpretable and generalizable framework. Through the joint embedding of visual inputs (e.g., component layout or conveyor belt state), natural language instructions (e.g., “tighten the screw on the red module”), and robot state, VLAs can infer context and execute appropriate control commands in real-time [134, 72, 156]. Vision transformers (e.g., ViT, DINOv2), LLMs (e.g., LLaMA-4), and autoregressive or diffusion-based action decoders form the backbone of these systems, allowing the robot to parse multi-modal instructions and perform actions grounded in its environment.
+
+One of the most significant contributions in this domain is CogACT [131], a modular VLA framework explicitly designed for industrial robotic manipulation. Unlike early VLAs that relied on frozen language-vision embeddings followed by direct action quantization, CogACT introduces a diffusion-based action transformer that models action sequences more robustly and adaptively. The system uses a visual-language encoder (e.g., Prismatic-7B) to extract high-level scene and instruction embeddings, which are then passed to a diffusion transformer (DiT-Base) to generate fine-grained motor actions. This modular separation enables superior generalization to unseen tools, parts, and layouts while preserving interpretability and robustness under real-world constraints.
+
+Furthermore, CogACT demonstrates rapid adaptation across different robot embodiments such as 6-DoF arms or bimanual systems through efficient fine-tuning, making it suitable for deployment across heterogeneous factory environments [131]. Empirical evaluations show that CogACT outperforms prior models like OpenVLA by over 28% in real-world task success rates [122], especially in complex, high-precision tasks such as multi-step assembly, screw fastening, and part sorting [131, 260].
+
+As manufacturing shifts toward Industry 4.0 paradigms, VLAs promise to reduce programming overhead, support voice-commanded robot programming, and facilitate real-time human-robot collaboration on mixed-initiative tasks. While execution precision, safety guarantees, and latency optimizations remain areas of active research, the use of VLA models marks a substantial step toward autonomous, intelligent, and adaptable robots transforming the factories.
+
+#### 3.4.4 Healthcare and Medical Robotics
+
+Healthcare and medical robotics represent a high-stakes domain where precision, safety, and adaptability are critical qualities that VLA models are increasingly well-suited to provide [132, 193]. Traditional medical robotic systems rely heavily on teleoperation or pre-programmed behaviors [166, 204], limiting their autonomy and responsiveness in dynamic surgical or care environments. In contrast, VLA models offer a flexible framework that integrates real-time visual perception, language comprehension, and fine-grained motor control, enabling medical robots to understand high-level instructions and autonomously perform intricate procedures or assistance tasks [131, 54, 225].
+
+<a id="figure-14"></a>
+![humanoidHelix](images/humanoidHelix.png)
+> Figure 14: a) This figure illustrates a VLA surgical system executing the task “apply a suture to the left coronary artery.” The vision module identifies anatomical targets, the language model interprets the instruction, and the action decoder generates precise motor commands, enabling adaptive tool control, real-time feedback, and safe autonomous operation; b) A VLA-powered assistive robot perceives patient behavior, processes verbal requests (e.g., “bring my walker”), and autonomously executes context-aware motion plans, enabling real-time assistance in eldercare, rehabilitation, and hospital logistics without relying on predefined scripts or manual oversight.
+
+In surgical robotics, VLAs can dramatically enhance capabilities in minimally invasive surgeries [50, 230]. These systems can fuse laparoscopic video feeds [127], anatomical maps [146, 50], and voice commands into a unified tokenized representation using vision encoders (e.g., ViT, SAM-2) and language models (e.g., LLaMA, T5) [234]. For instance, as depicted in Figure [14](#figure-14)a, in a task like “apply a suture to the left coronary artery,” the vision module identifies the anatomical target, while the language module contextualizes the instruction. The action decoder then translates the fused semantic embedding into stepwise motion commands with sub-millimeter precision. This closed-loop fusion of visual perception, language-grounded intent, and action-level control enables the robot to adaptively reposition tools, apply dynamic force feedback, and avoid critical anatomical structures, thereby reducing the need for surgeon micromanagement and minimizing the risk of human error.
+
+Beyond the operating room, VLA models are powering a new generation of patient-assistive robots in elderly care, rehabilitation, and hospital logistics. These systems can autonomously perceive patient behavior, understand spoken or gestural input, and execute responsive tasks such as retrieving medication, guiding mobility aids, or notifying caregivers during emergencies. For example, as depicted in Figure [14](#figure-14)b, a VLA-enabled robot can visually detect a patient attempting to rise from bed, interpret a verbal request such as “bring my walker,” and generate a context-appropriate motion plan to assist without predefined scripts or constant supervision.
+
+Recent VLA frameworks such as RoboNurse-VLA [132] highlight the real-world feasibility of this approach. RoboNurse employs SAM-2 for semantic scene segmentation and LLaMA-2 for command comprehension, integrated into a real-time voice-to-action pipeline that enables robots to assist with surgical instrument handovers in operating rooms [132]. The system demonstrates robustness to diverse tools, varied lighting conditions, and noisy environments - common challenges in clinical settings.
+
+Additionally, VLA architectures offer advantages in explainability and auditability, both critical in regulated medical domains [224, 147]. Scene grounding and trajectory prediction can be visualized and reviewed post-hoc [277], which could facilitate clinical trust and enabling FDA-style validation pipelines. LoRA-based fine-tuning allows adaptation to specific hospital environments or procedural workflows with minimal data and computational infrastructure [9, 229, 146].
+
+Importantly, the multi-modal foundation of VLA models enables cross-domain transferability: the same model trained on surgical tool manipulation can be adapted to patient mobility tasks with modest retraining [56]. This modularity significantly reduces development time and cost compared to task-specific automation systems [94]. As medical robotics transitions from teleoperated assistance to semi-autonomous and collaborative systems, VLA models stand at the core of this transformation.
+
+As also discussed earier in other application areas, VLA’s capability in combining high-level semantic understanding with low-level control is instrumental to provide a unified solution for scalable, human-aligned, and adaptive robotic healthcare [249, 295, 279]. As healthcare systems face increasing demand and workforce shortages, VLA-driven robotics will play a crucial role in enhancing medical precision, operational efficiency, and patient-centered care.
+
+#### 3.4.5 Precision and Automated Agriculture
+
+As illustrated in Figure [15](#figure-15), VLA models are emerging as transformative tools in precision and automated agriculture, offering intelligent, adaptive solutions for labor-intensive tasks across diverse farming landscapes [70, 191]. Unlike traditional agricultural automation systems that depend on rigid, sensor-driven pipelines requiring manual reprogramming for each task or environmental variation [220, 108], VLAs integrate multi-modal perception, natural language understanding, and real-time action generation within a unified framework [167, 84]. This unified multimodal integration enables autonomous ground robots and drones to interpret complex field scenes, follow spoken or text-based farming instructions, and generate context-aware actions such as selective fruit picking or adaptive irrigation. The ability of VLAs to dynamically adjust to occlusions, terrain irregularities, lighting variability, or varying crop types combined with training on synthetic, photorealistic datasets allows them to generalize across crop types, geographies and seasons. By leveraging action tokenization [245], transformer-based policy generation [12, 85], and techniques like LoRA fine-tuning [93], these systems are redefining the scalability and intelligence of agricultural robotics for sustainable and precision-driven farming.
+
+<a id="figure-15"></a>
+![selfdriving](images/selfdriving.png)
+> Figure 15: Conceptual illustration of VLA models in precision and automated agriculture. A ground robot combines vision encoders and language instructions (e.g., “pick only Grade A fruits”) to generate action tokens for damage-free harvesting, while aerial robots use VLA reasoning for language-guided irrigation. Synthetic training, LoRA-based adaptation, and lifelong feedback enable generalization across crops, environments, and geographies, supporting sustainable, data-driven agricultural automation.
+
+In modern fruit orchards and other crop fields, VLAs can process visual inputs from RGB-D cameras, multispectral sensors, or drones to monitor plant growth, detect diseases, and identify nutrient deficiencies. Vision transformers (e.g., ConvNeXt, DINOv2) encode spatial and semantic information from visual scenes, while LLMs (e.g., T5, LLaMA) parse natural language commands such as “inspect the east plot for powdery mildew” or “harvest ripe apples near the irrigation trench.” Through token fusion, these modalities are aligned in a shared representation space, allowing robots to execute fine-grained, context-aware actions with precision.
+
+For instance, in fruit-picking tasks, as illustrated in Figure [15](#figure-15), a VLA-equipped ground robot can identify ripe produce using image-based ripeness cues, interpret user-specified criteria such as “pick only Grade A fruits,” and execute motion sequences via action tokens that control its end-effector. This approach ensures minimal crop damage, optimizes pick rates, and allows real-time adaptation to unexpected variables like occlusions or terrain shifts. In irrigation management, drones guided by VLA models can interpret field maps and verbal instructions to selectively water stressed zones, reducing water usage %.
+
+Beyond immediate task execution, VLA models are expected to support dynamic reconfiguration and lifelong learning through closed-loop feedback mechanisms. In particular, execution outcomes, sensory observations, and task success signals collected during deployment can be logged and periodically incorporated into offline or incremental updates of the VLA policy. When combined with synthetic training data generated from photorealistic simulations of crop environments (e.g., 3D orchard renderings), such feedback-driven adaptation may enable models to progressively improve robustness to new crop varieties, pest conditions, and seasonal variations without extensive manual annotation. Parameter-efficient techniques such as LoRA adapters and diffusion-based policy refinement are anticipated to play a key role in facilitating this continual adaptation while limiting computational overhead.
+
+Overall, the integration of VLA models into agricultural workflows is expected to offer several long-term benefits, including reduced reliance on skilled manual labor, improved yields through targeted intervention, and enhanced environmental sustainability via optimized input usage. As global food systems increasingly face climate variability and resource constraints, VLA-enabled agricultural technologies are anticipated to contribute to scalable, intelligent, and context-aware farming practices that better accommodate real-world complexity.
+
+#### 3.4.6 Interactive AR Navigation with Vision-Language-Action Models
+
+Interactive Augmented Reality (AR) navigation represents a frontier where VLA models can significantly enhance human-environment interaction by providing intelligent, context-aware guidance in real-time [31, 104, 255]. In this paradigm, VLAs process continuous streams of visual data from AR-enabled devices such as smart glasses or smartphones alongside natural language queries to generate dynamic navigational cues overlaid directly onto the user’s view of the physical world. Unlike traditional GPS-based systems that rely on rigid maps and limited user input [29, 207], VLA-based AR agents interpret complex visual scenes (e.g., intersections, indoor hallways, signage) and respond to free-form instructions such as “take me to the nearest pharmacy with a wheelchair ramp” or “show the quietest route to the conference room.”
+
+Technically, these models integrate a vision encoder (e.g., ViT, DINOv2) that extracts scene representations from RGB camera frames, a language encoder (e.g., T5 or LLaMA) that processes user prompts or voice commands, and an action decoder that predicts tokenized navigation cues such as directional overlays, waypoints, or voice instructions. A transformer-based architecture fuses these modalities to reason about both the spatial layout and semantic intent, allowing the AR agent to adaptively highlight paths, landmarks, and hazards directly within the user’s field of view [211, 165]. For example, as shown in Figure [16](#figure-16), in a crowded airport, the VLA agent could visually identify escalators, gates, or baggage claims while understanding a query like “how do I reach Gate 22 without stairs?”, adjusting the route in response to real-time occupancy and obstacles.
+
+VLAs are expected to support interactive instruction loops in which users can first issue high-level commands (e.g., “navigate to the pharmacy”) and subsequently refine them with additional constraints such as “avoid busy areas” or “take the scenic route.” Through context-aware feedback and iterative clarification, such interaction paradigms can improve accessibility and usability for visually impaired or cognitively challenged individuals. In logistics and indoor navigation, these systems can be integrated with IoT sensors and digital twins to guide warehouse workers, maintenance teams, or delivery robots through complex environments. Furthermore, personalized navigation can be achieved through continual fine-tuning, where VLA models learn user preferences and local spatial layouts over time.
+
+<a id="figure-16"></a>
+![Healthcare](images/Healthcare.png)
+> Figure 16: Showing how VLA models enable interactive AR navigation by fusing real-time visual perception, language understanding, and action planning. In dynamic environments such as airports, VLAs interpret user queries like “avoid stairs to Gate 22,” analyze visual scenes (e.g., detecting escalators), and adjust navigational paths accordingly, supporting personalized, accessible, and context-aware mobility guidance.
+
+As AR hardware becomes more affordable and integrated into daily life, VLA-powered navigation systems will enable seamless spatial understanding, multi-modal interaction, and autonomous guidance in public, industrial, and assistive contexts redefining how humans perceive, explore, and interact with physical spaces.
+
+<a id="section-4"></a>
+
+## 4 Challenges and Limitations of Vision-Language-Action Models
+
+VLA models face a spectrum of interrelated challenges that impede their translation from research prototypes to robust, real‐world systems. First, achieving real‐time, resource‐aware inference remains difficult: models like DeeR-VLA leverage dynamic early‐exit architectures to cut computation 5–6× on manipulation benchmarks while preserving accuracy, yet their gains diminish in complex scenarios [269]. Similarly, Uni-NaVid compresses egocentric video tokens for 5 Hz navigation but still struggles under highly ambiguous instructions and longer horizons [280]. Moreover, these efficiency-driven designs often expose a trade-off between computational speed and representational coverage. When operating under aggressive compression or early-exit constraints, even advanced hybrid vision–language grounding methods exhibit limited object generalization; for example, ObjectVLA generalizes to only 64 % of novel objects, highlighting how real-time optimization can exacerbate gaps in open-world robustness [297].
+
+Second, adapting VLA models with minimal supervision and ensuring stable policy updates under scarce, noisy data is nontrivial. ConRFT combines behavior cloning and Q-learning with human‐in‐the‐loop fine‐tuning to rapidly converge to 96.3% success over eight contact‐rich tasks, yet it relies heavily on expert interventions and reward shaping [36]. Hierarchical frameworks such as Hi Robot decouple high‐level reasoning from low‐level execution to improve instruction fidelity, but coordinating these modules and grounding ambiguous feedback remains challenging [199]. Likewise, Tactile-language-action model model’s fusion of tactile streams with language commands achieves over 85 % success on unseen peg‐in-hole tasks, but dataset breadth and real‐time multi‐step decoding still limit broader generalization [88].
+
+Furthermore, ensuring safety, generalization, and end‐to‐end reliability in dynamic environments demands new modeling and evaluation standards. Occupancy‐Language‐Action models like OccLLaMA unify 3D scene understanding with action planning, yet they need to scale to richer scene dynamics and semantic consistency across modalities [239]. RaceVLA advances high-speed drone navigation through quantized, iterative control loops; however, its limited visual–physical generalization compared to larger VLAs and dedicated reasoning models raises safety concerns in unseen or rapidly changing environments [195]. Model‐merging strategies in ReVLA recover lost out‐of‐domain visual robustness improving oriented object detection (OOD) grasp success by up to 77 % but introduce extra computation and complexity [48]. Finally, SafeVLA formulates constraints via constrained Markov decision processes to cut unsafe behavior by over 80 %, yet defining comprehensive, non‐restrictive safety rules for diverse real‐world tasks remains an open problem [274]. Addressing these intersecting limitations is critical for VLA models to achieve reliable, autonomous operation under the full complexity of real‐world robotics.
+
+Building upon the critical limitations outlined above, it is imperative to map each challenge to targeted mitigation strategies and assess their system-level impact. Table [4](#table-4) presents this map identifying core limitations, potential technical remedies drawn from recent advances, and articulating the anticipated benefits for real-world VLA deployment. For instance, addressing real-time inference constraints leverages parallel decoding and quantized transformer pipelines with hardware acceleration (e.g., TensorRT) to sustain control loop speed in drones and manipulators [129, 122, 75, 142]. Addressing multi-modal action representation via hybrid diffusion–autoregressive policies enriches a model’s capacity to produce varied, context-sensitive motor commands for complex tasks [171, 156]. To guarantee safety in open worlds, dynamic risk assessment modules and adaptive planning layers can be integrated, ensuring robust emergency stop behaviors in unpredictable settings [183, 233, 113]. Similarly, dataset bias and grounding can be minimized through curated debiased corpora and advanced contrastive fine-tuning, strengthening fairness and semantic fidelity when generalizing to novel objects and scenes [185, 17, 175]. Together, these strategies and other approaches spanning simulation-to-real transfer, tactile integration, and energy-efficient architectures frame a comprehensive roadmap for transitioning VLA research into reliable, scalable autonomy.
+
+<a id="table-4"></a>
+ **Table 4: Challenges, potential solutions, and expected impact of VLA models.** 
+| Challenge / limitation | Potential solution | Expected impact |
+| --- | --- | --- |
+| Real-time inference constraints | Parallel decoding, quantized transformers, and hardware acceleration (e.g., TensorRT) [129, 122]; reduce autoregressive overhead [75, 142]. | Enables real-time control and deployment in latency-critical domains [251, 191] (e.g., UAVs, manipulators). |
+| Multi-modal action representation | Hybrid tokenization combining diffusion and autoregressive policies [171]; train on diverse demonstrations and multi-modal outputs [156]. | Improves performance on complex, dynamic manipulation with multiple valid solution modes [74]. |
+| Safety assurance in open worlds | Dynamic risk assessment modules [183, 233]; low-latency emergency-stop and adaptive planning layers [113]. | Improves reliability and safety in unpredictable settings (homes, factories, healthcare); enhances user acceptability. |
+| Dataset bias and grounding | Curate diverse/debiased datasets [185]; stronger grounding (e.g., CLIP fine-tuning with hard negatives) [282, 17]. | Improves fairness and semantic fidelity [109], and enhances generalization to novel real-world inputs [227, 288, 175]. |
+| Limited 3D perception and reasoning | Integrate depth/LiDAR; develop 3D-aware architectures; fuse point clouds with vision–language features. | Enables stronger spatial reasoning for manipulation and navigation in complex environments [129]. |
+| Cross-embodiment generalization | Train across diverse morphologies; learn embodiment-agnostic action abstractions; apply cross-domain adaptation [266]. | Facilitates policy transfer across robot platforms and configurations [279, 122]. |
+| Annotation complexity and cost | Weak supervision, active learning, and synthetic data generation to reduce manual labeling [148]. | Lowers development cost and accelerates scaling to new tasks/domains [233, 286]. |
+| Sim-to-real transfer gap | Domain adaptation, sim-to-real fine-tuning, and real-world calibration [210, 135]. | Improves reliability and consistency when deploying beyond simulation [4, 66]. |
+| Integration of physical knowledge | Physics priors, simulation environments, and dynamics modeling in training pipelines [53]. | Improves prediction and planning under real physical constraints [106]. |
+| Multi-modal integration (tactile, audio) | Fuse tactile/audio with vision and language [114]; extend multimodal transformer fusion. | Improves robustness under occlusion/ambiguity and expands the task repertoire [76, 136, 91]. |
+| Long-horizon multi-stage tasks | Hierarchical policies, memory-augmented networks, and trajectory planning modules [136]. | Improves sequential planning, memory, and compositional execution [131, 286, 227, 175]. |
+| System integration complexity | Unified transformer backbones [289]; temporal alignment and sim-to-real transfer strategies [163, 276]. | Enables tighter planning–control coordination and more robust transfer to physical robots [187, 208]. |
+| Energy and compute demands | Pruning, LoRA, quantization-aware training, and low-power accelerators. | Enables efficient embedded/mobile deployment [252, 283, 125, 246]. |
+| Generalization to unseen tasks | Compositional generalization, few-shot meta-learning, and task-agnostic pretraining [173, 147]. | Reduces overfitting and strengthens zero-/few-shot adaptation [97, 242, 286]. |
+| Robustness to environmental variability | Domain randomization, sensor fusion, broader training datasets, and online recalibration [156]. | Improves stability under changing lighting, clutter, and scene dynamics [285, 242]. |
+| Ethical and societal implications | Privacy via on-device processing/anonymization [149, 198, 252, 34]; fairness audits; regulatory and trust frameworks. | Promotes equitable and trustworthy adoption across social, medical, and labor domains [160, 180, 217, 172]. |
+
+The remainder of this section is organized into five focused subsections, each examining a distinct cluster of VLA challenges identified in the literature. First, we analyze real-time inference constraints and the emerging methods to address them. Next, we explore multi-modal action representation alongside safety assurance in open-world settings. We then discuss dataset bias, grounding strategies, and generalization to unseen tasks, followed by an exploration of system integration complexity and computational demands. Finally, we consider robustness and the ethical implications of deploying VLAs in real-world applications.
+
+<a id="section-4-1"></a>
+
+### 4.1 Real-Time Inference Constraints
+
+Despite recent progress, deploying VLA models in latency-critical settings continues to be constrained by real-time inference requirements, particularly in applications such as robotic manipulation, autonomous driving, and aerial control. VLAs typically depend on autoregressive decoding strategies, which sequentially generate action tokens based on previous predictions. While effective for many tasks, this autoregressive decoding paradigm substantially limits inference speed, typically achieving only 3-5 Hz when deployed on standard GPU-based research platforms (e.g., single high-end consumer or datacenter GPUs) for end-to-end VLA inference [67]. This rate remains substantially below the control frequencies typically required for responsive and stable robotic operation, which often range from tens of hertz for high-level planning to higher update rates for low-level feedback control, depending on the task and hardware platform. For instance, when a robotic arm manipulates delicate objects, frequent positional updates are essential to maintain accuracy and prevent damage. Models such as OpenVLA [122] and Pi-0 [15] face inherent challenges with this sequential token generation approach, thereby limiting their effectiveness in dynamic environments.
+
+Emerging solutions such as parallel decoding, exemplified by NVIDIA’s GR00T N1 model [14], aim to accelerate inference by predicting multiple tokens simultaneously. GR00T N1 achieves approximately a 2.52× speedup over traditional decoding methods; however, this parallelism often introduces trade-offs in trajectory smoothness, resulting in suboptimal robot movements. Such movements are undesirable in sensitive applications like surgical robotics, where precision, adaptability and flexibility are paramount. Thus, achieving rapid inference without compromising output quality remains an open challenge.
+
+Additionally, hardware limitations exacerbate real-time inference constraints. For example, processing high-dimensional visual embeddings, typically involving over 400 vision tokens at 512 dimensions each, requires approximately 1.2 GB/s memory bandwidth. This demand significantly exceeds the capacity of current embedded systems or edge-AI hardware such as NVIDIA Jetson platforms, thereby restricting practical deployment [82, 275]. Even with efficient quantization techniques, which reduce the precision of floating-point operations to alleviate memory constraints, models frequently experience accuracy degradation, especially in tasks demanding sub-millimeter precision, such as bimanual robotic manipulation or medical robotics.
+
+<a id="section-4-2"></a>
+
+### 4.2 Multi-modal Action Representation and Safety Assurance
+
+Multi-modal Action Representation: One significant limitation of current VLA models is accurately representing multi-modal actions, particularly in scenarios requiring continuous and nuanced control [62, 46]. Traditional discrete tokenization methods, such as those dividing actions into 256 distinct bins, inherently lack precision, creating substantial errors in fine-grained tasks like delicate robotic grasping or intricate surgical procedures [171]. For instance, during precise robotic manipulation in assembly tasks, discrete representations can result in misaligned or imprecise actions, undermining performance and reliability. On the other hand, continuous multilayer perceptron (MLP) based approaches face the risk of mode collapse [162, 232], where models converge prematurely to single action trajectories, despite multiple viable paths available. This diminishes the flexibility necessary for adaptive decision-making in highly dynamic environments. Emerging diffusion-based policies, exemplified by models like Pi-Zero and RDT-1B [145], offer richer multi-modal action representation capable of capturing diverse action possibilities. However, their substantial computational overhead, approximately three times that of conventional transformer-based decoders, renders them impractical for real-time deployment. Consequently, VLA models currently struggle with complex dynamic tasks, such as robotic navigation in densely crowded spaces or sophisticated bimanual manipulations [74, 247], where multiple strategic actions may be equally valid and contextually dependent.
+
+Safety Assurance in Open World: Another critical challenge facing VLAs is ensuring robust safety in dynamic, unpredictable environments characteristic of real-world scenarios [39, 274]. Many current implementations depend heavily on predefined, hardcoded force and torque thresholds, significantly constraining their adaptability in encountering unforeseen or novel conditions, such as unexpected obstacles or sudden environmental changes [156]. Models used for collision prediction typically attain only about 82% accuracy in cluttered and dynamic spaces, posing serious risks in applications such as warehouse logistics or household robotics, where safety margins are minimal [288, 122]. Moreover, the essential safety mechanisms like emergency stops incorporate substantial latency often between 200 and 500 milliseconds due to comprehensive safety verifications [170, 122]. This delay, although seemingly minor, can prove hazardous in high-speed operations or critical interventions, such as automated driving or emergency robotic responses.
+
+<a id="section-4-3"></a>
+
+### 4.3 Dataset Bias, Grounding, and Generalization to Unseen Tasks
+
+A significant obstacle limiting the effectiveness of VLA models is the pervasive presence of dataset bias and grounding deficiencies. Current training datasets, predominantly sourced from web-crawled repositories, frequently exhibit inherent biases [214, 119]. Studies indicate that approximately 17% of the associations within standard datasets are skewed toward stereotypical interpretations, such as disproportionately associating terms like “doctor” with male figures [222, 124]. These biases propagate through training, resulting in VLAs that produce semantically misaligned or contextually inappropriate responses when deployed in diverse environments. For instance, models such as OpenVLA have been documented to overlook approximately 23% of object references in novel settings, significantly limiting their practical utility in real-world applications where accurate interpretation of instructions is critical [122]. This grounding issue also extends to challenges in compositional generalization, where VLAs often fail when encountering rare or unconventional combinations, such as interpreting a phrase like “yellow horse” because of underrepresentation in training corpora. These shortcomings highlight an urgent need for carefully curated, balanced, and comprehensive, domain-specific datasets, coupled with advanced grounding algorithms designed to mitigate biases and enhance semantic alignment across varied contexts.
+
+Complementing the challenges posed by dataset bias is the broader issue of generalization to unseen tasks, a critical barrier for the practical deployment of VLAs. While existing models demonstrate proficiency in familiar environments or tasks similar to their training scenarios, their performance significantly degrades, often by as much as 40%, when encountering entirely novel tasks or unfamiliar variations. For example, a VLA trained specifically on domestic tasks may struggle or fail when introduced into industrial or agricultural settings, largely due to discrepancies in object types, environmental dynamics, and operational constraints. This limitation arises primarily from overfitting to narrowly scoped training distributions and insufficient exposure to diverse task representations. Consequently, current VLAs exhibit limited generalization in zero-shot or few-shot learning scenarios, impeding their adaptability and scalability.
+
+<a id="section-4-4"></a>
+
+### 4.4 System Integration Complexity and Computational Demands
+
+Integrating VLA models within dual-system architectures, which combine high-level cognitive planning (System 2) and real-time physical control (System 1), presents significant complexity in robotic applications. A primary challenge arises from temporal mismatches between these two systems. Typically, System 2 leverages LLMs such as GPT or LLaMA-4 for complex task decomposition and strategic planning. These models, due to their substantial computational requirements, often incur inference latencies on the order of $\sim$800 ms or more when executed on standard GPU-based inference platforms (e.g., single high-end consumer or datacenter GPUs) commonly used for LLM deployment. Conversely, System 1 components responsible for low-level motor execution typically run within tightly constrained control loops implemented on real-time CPUs, microcontrollers, or dedicated robot controllers, where update intervals on the order of several milliseconds are common, depending on the platform and task. This stark discrepancy in operational cadence leads to synchronization difficulties, causing delays and potentially suboptimal execution trajectories. For example, NVIDIA’s GR00T N1 model demonstrates an effective integration of these two systems but still suffers from occasional jerkiness in motion due to asynchronous interaction, highlighting this intrinsic challenge.
+
+Furthermore, the feature space misalignment between high-dimensional vision encoders, such as Vision Transformers (ViT), and lower-dimensional action decoders exacerbates integration complexity. When attempting to reconcile these disparate embeddings, the coherence between perceptual understanding and actionable commands can deteriorate significantly. OpenVLA [122] and RoboMamba [143], which utilize transformer-based visual processing and subsequent action decoding, illustrate these integration challenges resulting in diminished performance when ported from simulation environments to physical hardware deployments. Such discrepancies may lead to reduction in performance, primarily due to mismatches between simulated dynamics and real-world sensor noise or calibration issues[122, 49, 92].
+
+Energy and compute demands constitute another significant barrier for VLA deployment, particularly in edge computing contexts typical of autonomous drones, mobile robots, and wearable robotic systems. The substantial parameter counts typical of advanced VLAs (e.g.,models possessing upwards of 7 billion parameters) necessitate computational resources often exceeding 28 GB of VRAM in their native form. These requirements are substantially higher than the capabilities of most current edge-oriented processors and GPUs, restricting the practical applicability of sophisticated VLAs outside specialized, high-resource environments.
+
+<a id="section-4-5"></a>
+
+### 4.5 Robustness and Ethical Challenges in VLA Deployment
+
+A central barrier to the real-world deployment of VLA models lies in their limited robustness to environmental variability, which in turn raises important ethical and safety considerations. Environmental robustness refers to a system’s ability to sustain reliable perception, reasoning, and action generation under dynamically changing and partially observable conditions. In practice, real-world environments introduce significant uncertainty through factors such as fluctuating illumination, adverse weather, sensor noise, and object occlusions.
+
+Empirical evidence highlights these limitations across multiple VLA components. For example, vision modules employed in systems such as OpenDriveVLA [293] experience accuracy degradations of approximately 20–30% in low-contrast or shadow-dominated scenes, reflecting the sensitivity of current visual encoders to challenging lighting conditions. Similarly, language understanding in VLAs such as CoVLA [5] deteriorates in acoustically noisy or semantically ambiguous settings, where instruction misinterpretation can propagate into incorrect action execution. In manipulation-centric scenarios, VLA-enabled robotic systems like RoboMamba [143] struggle in cluttered environments, frequently misestimating the pose or orientation of partially occluded objects and thereby reducing task success rates.
+
+These robustness limitations have direct ethical implications in safety-critical deployments, as performance degradation under real-world variability can lead to unintended behaviors, reduced reliability, and loss of user trust. Addressing robustness is therefore not only a technical challenge but also a prerequisite for responsible and ethical deployment of VLA systems in human-centered environments.
+
+<a id="figure-17"></a>
+![agricultureVLA](images/agricultureVLA.png)
+> Figure 17: Figure maps six core VLA challenges; namely real-time inference, multimodal fusion safety, dataset bias, integration complexity, compute demands, and robustness/ethics; against six targeted solutions: adaptive pruning, hybrid policy architectures, meta/transfer learning, LoRA/quantization, domain randomization, and ethical oversight. This systematic alignment clarifies pathways to robust, efficient, and safe VLA deployment across broader real-world robotic domains.
+
+<a id="section-5"></a>
+
+## 5 Discussion
+
+As illustrated in Figure [17](#figure-17), VLA models face a multifaceted set of challenges that span algorithmic, computational, and ethical dimensions. First, achieving real-time inference on resource-constrained hardware remains difficult due to the sequential nature of autoregressive decoders and the high dimensionality of multi-modal inputs. Second, fusing vision, language, and action into coherent policies introduces safety vulnerabilities when encountering unanticipated environmental changes. Third, dataset bias and grounding errors compromise generalization, often causing models to fail on out-of-distribution tasks. Fourth, integrating diverse components perception, reasoning, and control yields complex architectures that are hard to optimize and maintain. Fifth, the energy and compute demands of large VLA systems hinder the deployment on embedded or mobile platforms.
+
+Finally, limited robustness to environmental variability can result in unsafe or unreliable behavior, which in turn raises ethical and regulatory concerns related to safety assurance, accountability, privacy, and bias mitigation. Collectively, these limitations constrain the practical adoption of VLA models in real-world robotics, autonomous systems, and interactive applications. The potential solutions to these challenges are discussed below.
+
+<a id="figure-18"></a>
+![ARpdf](images/ARpdf.png)
+> Figure 18: This conceptual illustration presents “Eva,” a future humanoid assistant powered by Vision-Language Models (VLMs), VLA frameworks, and agentic AI systems. VLMs enable semantic scene understanding and object affordance prediction, while VLAs translate language-grounded instructions into hierarchical motor plans. Agentic AI modules ensure adaptive learning, self-refinement, and interactive decision-making in open-ended environments. Together, these components represent a foundational blueprint for Artificial General Intelligence (AGI) in robotics, where perception, language understanding, planning, and safe autonomous behavior converge in real-world, socially aware tasks.
+
+<a id="section-5-1"></a>
+
+### 5.1 Potential Solutions
+
+- 1.
+Real-Time Inference Constraints.
+Future research must develop VLA architectures that harmonize latency, throughput, and task-specific accuracy. One promising direction is the integration of specialized hardware accelerators such as FPGA-based vision processors and tensor cores optimized for sparse matrix operations to execute convolutional and transformer layers at sub-millisecond scales [122, 129]. Model compression techniques like Low-Rank Adaptation (LoRA) [93] and knowledge distillation can shrink parameter counts by up to 90%, reducing both memory footprint and inference time while retaining over 95% of original performance on benchmark tasks. Progressive quantization strategies that combine mixed-precision arithmetic (e.g., FP16/INT8) with block-wise calibration can further cut computation by 2–4× with minimal accuracy loss [121]. Adaptive inference architectures that dynamically adjust network depth or width based on input complexity akin to early-exit branches in DeeR-VLA [269] can reduce average compute by selectively bypassing transformer layers when visual scenes or linguistic commands are simple. Finally, efficient tokenization schemes leveraging subword patch embeddings and dynamic vocabulary allocation can compress visual and linguistic input into compact representations, minimizing token counts without sacrificing semantic richness [171]. Together, these innovations can enable sub-50 ms end-to-end inference on commodity edge GPUs, paving the way for latency-sensitive applications in autonomous drone flight, real-time teleoperation, and collaborative manufacturing.
+- 2.
+Multi-modal Action Representation and Safety Assurance.
+Addressing multi-modal action representation and robust safety requires end-to-end frameworks that unify perception, reasoning, and control under stringent safety constraints. Hybrid policy architectures combining diffusion-based sampling for low-level motion primitives [40] with autoregressive high-level planners [242] enable compact stochastic representations of diverse action trajectories, improving adaptability in dynamic environments. Safety can be enforced via real-time risk assessment modules that ingest multi-sensor fusion streams including visual, depth, and proprioceptive data to predict collision probability and joint stress thresholds, triggering emergency stop circuits when predefined safety envelopes are breached [183, 233]. Reinforcement learning algorithms augmented with constrained optimization (e.g., Lagrangian methods in SafeVLA [274]) can learn policies that maximize task success while strictly respecting safety constraints. Online model adaptation techniques such as rule-based RL (GRPO) and Direct Preference Optimization (DPO) further refine action selection under new environmental conditions, ensuring consistent safety performance across scenarios [113]. Crucially, embedding formal verification layers that symbolically analyze planner outputs before execution can guarantee compliance with safety invariants, even for neural-network–based controllers. Integrating these methodologies will produce VLA systems that not only execute complex, multi-modal actions but do so with provable safety in unstructured, real-world settings.
+- 3.
+Dataset Bias, Grounding, and Generalization to Unseen Tasks.
+Robust generalization demands both broadened data diversity and advanced learning paradigms. Curating large-scale, debiased multi-modal datasets combining web-scale image–text corpora like LAION-5B [194] with robot-centric trajectory archives such as Open X-Embodiment [227] lays the groundwork for equitable semantic grounding. Hard-negative sampling and contrastive fine-tuning of vision–language backbones (e.g., CLIP variants) can mitigate spurious correlations and enhance semantic fidelity [17, 282]. Meta-learning frameworks enable rapid adaptation to novel tasks by learning shared priors across task families, as demonstrated in vision-language robotic navigation models [175]. Continual learning algorithms with replay buffers and regularization strategies preserve old knowledge while integrating new concepts, addressing catastrophic forgetting in VLA models [48]. Transfer learning from 3D perception domains (e.g., point cloud reasoning in 3D-VLA [288]) can endow models with stronger spatial inductive biases, thereby improving robustness to out-of-distribution scenarios. Finally, simulation-to-real (sim2real) fine-tuning with domain randomization and real-world calibration such as dynamic lighting, texture, and physics variations ensures that policies learned in synthetic environments transfer effectively to physical robots [4, 66]. These combined strategies will empower VLAs to generalize confidently to unseen objects, scenes, and tasks in real-world deployments.
+- 4.
+System Integration Complexity and Computational Demands.
+To manage the intricate orchestration of multi-modal pipelines under tight compute budgets, researchers must embrace model modularization and hardware–software co–design. Low-Rank Adaptation (LoRA) adapters can be injected into pre–trained transformer layers, enabling task-specific fine–tuning without modifying core weights [93]. Knowledge distillation from large “teacher” VLAs to lightweight “student” networks, guided by mutual information–based objectives that encourage the student to match the teacher’s intermediate representations and action distributions, produces compact models with 5–10$\times$ fewer parameters while retaining 90–95% of task performance [121]. Mixed-precision quantization augmented by quantization-aware training can compress weights to 4–8 bits, cutting memory bandwidth and energy consumption by over 60% [122]. Hardware accelerators tailored for VLA workloads supporting sparse tensor operations, dynamic token routing, and fused vision–language kernels can deliver sustained 100+ TOPS throughput within a 20–30 W power envelope, meeting the demands of embedded robotic platforms [171, 242]. Toolchains like TensorRT-LLM [129] and TVM can optimize end-to-end VLA graphs for specific edge devices, fusing layers and precomputing static subgraphs. Emerging architectures such as TinyVLA demonstrate that sub–1 B parameter VLAs can achieve near–state-of-the-art performance on manipulation benchmarks with real–time inference, charting a path for widespread deployment in resource-constrained settings.
+- 5.
+Robustness to Environmental Variability in VLA Deployment.
+Ensuring robust VLA performance in real-world settings requires targeted technical interventions to handle environmental uncertainty and long-term system drift. Domain randomization and synthetic data augmentation pipelines, such as UniSim’s closed-loop sensor simulator, generate photorealistic variations in lighting, occlusion, and sensor noise, thereby improving resilience to distributional shifts [264]. In addition, adaptive recalibration modules that dynamically adjust perception thresholds and control gains based on real-time feedback can mitigate performance degradation caused by sensor aging or changing operating conditions. Together, these approaches aim to enhance the stability and reliability of VLA systems under diverse and evolving deployment scenarios.
+- 6.
+Ethical, Privacy, and Societal Considerations in VLA Deployment.
+Beyond technical robustness, the deployment of VLA systems raises important ethical and societal challenges that require governance-oriented solutions. Bias auditing tools are needed to identify skewed demographic or semantic distributions in training data, followed by corrective strategies such as adversarial debiasing and counterfactual data augmentation [185, 282]. Privacy-preserving inference mechanisms, including on-device processing, homomorphic encryption for sensitive data streams, and differential privacy during training, are critical for safeguarding user data in domains such as healthcare and smart homes [160, 180]. Furthermore, transparent impact assessments, stakeholder engagement, and workforce upskilling initiatives can help manage socioeconomic effects, while regulatory frameworks and industry standards are essential to ensure accountability and responsible VLA adoption.
+
+<a id="section-5-2"></a>
+
+### 5.2 Future Roadmap
+
+The future of VLA-based systems are expected to evolved at the intersection of increasingly capable multi-modal foundations, agentic reasoning, and embodied continual learning. Over the next decade, we anticipate several converging trends that will propel VLAs from capable yet brittle task specialists toward dependable, generalist robotic intelligence. However, this trajectory will be shaped by persistent constraints/limitations highlighted earlier: (i) real-time inference bottlenecks in closed-loop control, (ii) incomplete multi-modal action representations and weak safety assurance, (iii) dataset bias and grounding failures under distribution shift, (iv) integration complexity across perception-memory-reasoning-control, (v) high compute and energy demands that hinder edge deployment, and (vi) robustness, transparency, and ethical concerns in open-world settings. To address these issues holistically, Figure [19](#figure-19) summarizes a system-level research roadmap, while Figure [18](#figure-18) provides an intuitive conceptual illustration of how VLMs, VLA architectures, and agentic AI modules may co-evolve toward embodied AGI in robotics.
+
+##### Multi-modal foundation models as the “cortex” for embodied perception:
+
+Today’s VLA stacks often rely on a vision-language backbone coupled to task-specific policy heads, which limits reuse of general knowledge and increases retraining cost across domains. A plausible next step is a unified multi-modal foundation model trained on web-scale image, video, text, and interaction/affordance traces to function as a shared “cortex” that encodes not only static semantics but also dynamics, contact priors, and commonsense physical knowledge [295, 289, 272]. Such a cortex can reduce failure modes caused by shallow correlations by grounding language in object-centric representations and persistent scene structure [206]. As emphasized in Figure [18](#figure-18), this foundation-model cortex would enable robots to segment environments into actionable entities (objects, regions, affordances) and provide stable semantic anchors to downstream planners and controllers. Yet, to prevent overconfidence and hallucinated grounding, these models must incorporate calibrated uncertainty and evidence-linked reasoning to ensure that perception-driven plans remain verifiable under occlusion, clutter, and ambiguous instructions [144].
+
+##### Agentic, self-supervised, lifelong learning and continual adaptation:
+
+A defining limitation of current VLAs is their static nature: policies trained once are deployed unchanged, despite operating in non-stationary environments. Future VLAs should adopt agentic learning loops where models propose exploration objectives, hypothesize outcomes, and self-correct through simulated and real rollouts, enabling continual skill growth over months or years [43, 90]. This direction is expected to mitigate distribution shift, dataset bias, and long-horizon brittleness by allowing models to adapt over time; however, continual policy updates introduce new risks. In particular, repeated online or incremental learning can overwrite previously acquired competencies (catastrophic forgetting), induce unintended behavioral regressions, and increase susceptibility to noisy, adversarial, or unintended environmental feedback that may corrupt the learned policy [292, 263]. Therefore, lifelong learning must be coupled with replay and safety-aware updates, modular adapters, and verification-informed policy revisions [121]. Within the roadmap of Figure [19](#figure-19), this agentic lifelong learning paradigm falls naturally at the intersection of Reliable & Safe Intelligence and Unified Systems & Governance, where continual learning is treated as a controlled, auditable lifecycle process rather than an ad hoc fine-tuning step.
+
+##### Hierarchical, neuro-symbolic planning for scalability and interpretability:
+
+Scaling from low-level motor primitives to long-horizon objectives requires explicit hierarchy [261, 265]. Next-generation VLA systems will likely use language-grounded planners (LLM-style modules fine-tuned for affordances and constraints) that decompose goals into structured sub-tasks, followed by mid-level skill policies and low-level controllers that ensure compliant motion [94, 253]. This neuro-symbolic blend helps bridge integration complexity by imposing interfaces that are easier to debug, monitor, and certify [201]. Importantly, hierarchy also enables selective verification: high-level plans can be checked for constraint violations (unsafe steps, forbidden regions) [192, 71], while low-level trajectories can be shielded by control barrier functions, MPC, and runtime safety monitors [188, 196]. These components align with Figure [19](#figure-19) under the pillar of *Reliable & Safe Intelligence*, where safety is enforced through both planning-time constraints and execution-time guards rather than post hoc evaluation alone [101, 274].
+
+##### Real-time adaptation via world models and physical/causal reasoning:
+
+Robust deployment in unstructured settings demands that VLAs maintain internal predictive models of objects, contacts, and dynamics. World models that forecast near-term state transitions and failure likelihoods can support counterfactual evaluation (“if I push here, what collides?”) and rapid corrective actions when reality deviates from expectation (e.g., slipping grasp, unexpected friction) [203]. This capability is central to safe manipulation, navigation, and human-robot interaction, where small errors compound quickly [156]. Yet, world models must be efficient enough for on-board use and consistent with multi-sensor evidence. Thus, a major future direction is hardware-aware, memory-efficient predictive modeling such as temporal token compression [267, 216], event-driven state updates [250, 226], and hybrid physics-learning models that combine differentiable physical simulators with learned dynamics to enable control-relevant update rates [102, 52]. In Figure [19](#figure-19), these needs appear jointly in the *Efficient Deployment* pillar (real-time constraints) and the *Reliable & Safe Intelligence* pillar (physics/causality for grounded decision-making).
+
+##### Efficiency and scalability: bridging generality with edge deployment:
+
+A central barrier to VLA adoption remains the mismatch between the computational footprint of large multi-modal backbones and the latency/energy constraints of closed-loop control [268, 238]. Future VLAs should prioritize parameter-efficient designs (structured sparsity, low-rank adaptation, modular experts) that preserve generalization while reducing inference cost [65, 197]. Beyond training-time efficiency, anytime/early-exit policies can allocate computation adaptively, ensuring that safety-critical steps retain high fidelity while routine steps use cheaper pathways [41, 274]. Equally important is action-space efficiency: compact action tokenization and chunked control representations shorten autoregressive horizons, enabling higher control rates without sacrificing temporal smoothness [171]. These model-level choices must be paired with hardware-aware compilation across GPU/NPU/edge accelerators, including quantization-aware scheduling and memory-optimized attention kernels [65, 168]. Compute-aware caching and episodic memory further reduce redundant forward passes and improve responsiveness in long-horizon tasks [27, 133]. Collectively, these directions operationalize the *Efficient Deployment* pillar of Figure [19](#figure-19) and directly address the compute/energy limitations emphasized earlier.
+
+##### Cross-embodiment transfer and morphology-agnostic skill representations:
+
+The approach of training separate VLAs for each robot morphology is unlikely to scale. A key future theme is embodiment-agnostic policy learning, where skills are expressed in abstract action spaces (e.g., contact goals, affordance-point manipulation, task-space constraints) that transfer across wheeled platforms, quadrupeds, and humanoids [275, 118]. Meta-learning and few-shot calibration can allow rapid bootstrapping on new robots with minutes of data rather than weeks of training [35]. This direction also mitigates dataset bias by enforcing invariances across embodiments and environments, but it demands standardized representations, common interfaces, and reproducible evaluation protocols [118, 275]. In Figure [19](#figure-19), this embodiment-agnostic skill learning paradigm sits under *Unified Systems & Governance*, linking architectural unification with principled transfer and benchmarking.
+
+##### Evaluation beyond task success: safety, recovery, and resource-aware metrics:
+
+Progress in VLA requires measurement that reflects deployment realities. Task success alone does not clearly represent failure severity, temporal inconsistency, unsafe near-misses, and energy inefficiency. Future benchmarks should quantify safety violations, uncertainty calibration, recovery behavior, temporal coherence, energy consumption, and downstream utility under human constraints [274, 78]. Moreover, evaluations should report compute budgets, dataset composition, and deployment conditions to enable fair comparisons and diagnose bias-driven gains [215, 273, 118]. Such measurement is not merely scientific hygiene: it is the foundation for auditing and governance, and it determines whether a system can be responsibly deployed at scale [274, 275]. This motivation underlies the evaluation branch of Figure [19](#figure-19) and complements the conceptual deployment narrative in Figure [18](#figure-18).
+
+##### Safety, ethics, and human-centered alignment as first-class design objectives:
+
+As VLAs gain autonomy, built-in safety and value alignment become critical. Future systems should integrate real-time risk estimators that assess potential harm before executing high-risk actions, request natural-language confirmation under ambiguity, and maintain transparent logs for accountability [274, 118]. Privacy-aware sensing, bias audits, and human-in-the-loop oversight must be embedded into the lifecycle, especially for assistive robotics and safety-critical autonomy [284, 236]. Regulatory-aligned evaluation protocols and standardization efforts will be essential to translate VLA advances into trusted real-world systems [169, 294, 235]. This governance perspective is explicitly captured in Figure [19](#figure-19) and is implicitly reflected by the socially aware humanoid setting illustrated in Figure [18](#figure-18).
+
+##### Cross-cutting themes: continual learning, failure recovery, interaction, and control fidelity:
+
+Across all pillars in Figure [19](#figure-19), several cross-cutting themes are expected to shape the next decade of VLA research. First, continual and lifelong learning must be safe, auditable, and resistant to forgetting, enabling long-term adaptation without destabilizing deployed systems [290]. Second, failure detection and recovery should be treated as first-class capabilities, incorporating introspective monitoring, uncertainty-aware perception, and structured recovery behaviors when execution deviates from expected outcomes [116, 259]. Third, improving the precision and reliability of action generation remains critical: while VLA-based planners enable flexible, language-conditioned decision making, their trajectory accuracy and control stability currently lag behind conventional analytical approaches such as model predictive control, sampling-based motion planning, and feedback-linearized controllers. As a result, hybrid architectures that combine VLA-driven high-level planning with classical or learned low-level controllers are expected to play a central role in achieving both semantic flexibility and control-level precision. Finally, human alignment and interaction require mechanisms for intent clarification, shared autonomy, and explainable action rationales, supporting trust and usability across diverse real-world settings [111, 110].
+
+In summary, Figure [19](#figure-19) emphasizes that closing the gap between laboratory demonstrations and robust real-world deployment will require coordinated advances in efficiency, safety, data and generalization, system integration, evaluation, and governance. Complementarily, Figure [18](#figure-18) illustrates how these advances may converge toward generalist embodied agents across multiple platforms including mobile robots, manipulators, assistive systems, and humanoids where multi-modal perception, hierarchical planning, continual adaptation, and human-aligned safety are integrated within a unified intelligence stack. Addressing these directions collectively is expected to transform VLAs from promising research prototypes into dependable, broadly applicable embodied systems rather than solutions limited to any single robot morphology.
+
+<a id="section-6"></a>
+
+## 6 Conclusion
+
+In this comprehensive review, we systematically evaluated the recent developments, methodologies, and applications of Vision-Language-Action (VLA) models published over the last three years. Our analysis began with the foundational concepts of VLAs, defining their role as multi-modal systems that unify visual perception, natural language understanding, and action generation in physical or simulated environments. We traced their evolution and timeline, detailing key milestones that marked the transition from isolated perception-action modules to fully unified, instruction-following robotic agents. We highlighted how multi-modal integration has matured from loosely coupled pipelines to transformer-based architectures that enable seamless coordination between modalities.
+
+Next, we examined tokenization and representation techniques, focusing on how VLAs encode visual and linguistic information, including action primitives and spatial semantics. We explored learning paradigms, detailing the datasets and training strategies from supervised learning and imitation learning to reinforcement learning and multi-modal pretraining that have shaped VLA performance. In ’adaptive control and real-time execution’ section, we discussed how modern VLAs are optimized for dynamic environments, analyzing policies that support latency-sensitive tasks. We then categorized major architectural innovations, surveying over 50 recent VLA models. This discussion included advancements in model design, memory systems, and interaction fidelity. We further studied strategies for training efficiency improvement, including parameter-efficient methods like LoRA, quantization, and model pruning, alongside acceleration techniques such as parallel decoding and hardware-aware inference. Our analysis of real-world applications highlighted both the promise and current limitations of VLA models across six domains: humanoid robotics, autonomous vehicles, industrial automation, healthcare, agriculture, and augmented reality (AR) navigation. Across these settings, VLAs demonstrated strong capabilities in high-level semantic reasoning, instruction-following, and task generalization, particularly in structured or partially controlled environments. However, their effectiveness was often constrained by real-time inference latency, limited robustness under environmental variability, and reduced precision in long-horizon or safety-critical control when compared to conventional analytical planning and control pipelines. Moreover, application-specific adaptations and extensive data curation were frequently required to achieve reliable performance, underscoring challenges in scalability and deployment. These findings suggest that while VLAs are well-suited for semantic decision making and flexible task specification, hybrid architectures that integrate VLA reasoning with classical or learned low-level controllers remain essential for practical, real-world operation.
+
+In addressing challenges and limitations, we focused on five core areas: real-time inference, multi-modal action representation and safety, bias and generalization, system integration and compute constraints, and ethical deployment. We proposed potential solutions drawn from current literature, including model compression, cross-modal grounding, domain adaptation, and agentic learning frameworks. Finally, our discussion and future roadmap articulated how the convergence of VLMs, VLA architectures, and agentic AI systems is steering robotics toward artificial general intelligence (AGI). This review provides a unified understanding of VLA advancements, identifies unresolved challenges, and outlines a structured path forward for developing intelligent, embodied, and human-aligned agents in the future.
+
+## Funding Declaration
+
+This work was supported in part by the National Science Foundation (NSF) and the United States Department of Agriculture (USDA), National Institute of Food and Agriculture (NIFA), through the “Artificial Intelligence (AI) Institute for Agriculture” program under Award Numbers AWD003473 and AWD004595, and USDA-NIFA Accession Number 1029004 for the project titled “Robotic Blossom Thinning with Soft Manipulators.” Additional support was provided through USDA/NIFA Grant Number 2024-67022-41788, Accession Number 1031712, under the project “ExPanding UCF AI Research To Novel Agricultural EngineeRing Applications (PARTNER).
+
+## Declarations
+
+The authors declare no conflicts of interest.
+
+## Statement on AI Writing Assistance
+
+ChatGPT and Perplexity were utilized to enhance grammatical accuracy and refine sentence structure; all AI-generated revisions were thoroughly reviewed and edited for relevance.
+
+## References
+
+- [1]
+J. Achiam, S. Adler, S. Agarwal, L. Ahmad, I. Akkaya, F. L. Aleman, D. Almeida, J. Altenschmidt, S. Altman, S. Anadkat, et al. (2023)
+Gpt-4 technical report.
+arXiv preprint arXiv:2303.08774.
+Cited by: [§3](https://arxiv.org/html/2505.04769v2#S3.p1.1).
+- [2]
+L. Agarwal and B. Verma (2024)
+From methods to datasets: a survey on image-caption generators.
+Multimedia Tools and Applications 83 (9), pp. 28077–28123.
+Cited by: [§2.4](https://arxiv.org/html/2505.04769v2#S2.SS4.p2.1).
+- [3]
+J. Alayrac, J. Donahue, P. Luc, A. Miech, I. Barr, Y. Hasson, K. Lenc, A. Mensch, K. Millican, M. Reynolds, et al. (2022)
+Flamingo: a visual language model for few-shot learning.
+Advances in neural information processing systems 35, pp. 23716–23736.
+Cited by: [§3](https://arxiv.org/html/2505.04769v2#S3.p1.1).
+- [4]
+P. Anderson, A. Shrivastava, J. Truong, A. Majumdar, D. Parikh, D. Batra, and S. Lee (2021)
+Sim-to-real transfer for vision-and-language navigation.
+In Conference on Robot Learning,
+pp. 671–681.
+Cited by: [Table 4](https://arxiv.org/html/2505.04769v2#S4.T4.3.9.8.3.1.1),
+[item 3](https://arxiv.org/html/2505.04769v2#S5.I1.i3.p1.1).
+- [5]
+H. Arai, K. Miwa, K. Sasaki, K. Watanabe, Y. Yamaguchi, S. Aoki, and I. Yamamoto (2025)
+Covla: comprehensive vision-language-action dataset for autonomous driving.
+In 2025 IEEE/CVF Winter Conference on Applications of Computer Vision (WACV),
+pp. 1933–1943.
+Cited by: [Figure 6](https://arxiv.org/html/2505.04769v2#S2.F6.1.pic1.31.31.31.27.27.1.1.3),
+[item 2](https://arxiv.org/html/2505.04769v2#S2.I1.i2.p1.1),
+[§3.1](https://arxiv.org/html/2505.04769v2#S3.SS1.p8.1),
+[§3.4.2](https://arxiv.org/html/2505.04769v2#S3.SS4.SSS2.p3.1),
+[Table 1](https://arxiv.org/html/2505.04769v2#S3.T1.1.27.26.1.1.1),
+[Table 3](https://arxiv.org/html/2505.04769v2#S3.T3.3.7.6.1.1.1),
+[§4.5](https://arxiv.org/html/2505.04769v2#S4.SS5.p2.1).
+- [6]
+S. Asif, M. Bueno, P. Ferreira, P. Anandan, Z. Zhang, Y. Yao, G. Ragunathan, L. Tinkler, M. Sotoodeh-Bahraini, N. Lohse, et al. (2025)
+Rapid and automated configuration of robot manufacturing cells.
+Robotics and Computer-Integrated Manufacturing 92, pp. 102862.
+Cited by: [§3.4.3](https://arxiv.org/html/2505.04769v2#S3.SS4.SSS3.p1.1).
+- [7]
+G. Assres, G. Bhandari, A. Shalaginov, T. Gronli, and G. Ghinea (2025)
+State-of-the-art and challenges of engineering ml-enabled software systems in the deep learning era.
+ACM Computing Surveys.
+Cited by: [§3.4.3](https://arxiv.org/html/2505.04769v2#S3.SS4.SSS3.p1.1).
+- [8]
+K. Asuzu, H. Singh, and M. Idrissi (2025)
+Human–robot interaction through joint robot planning with large language models.
+Intelligent Service Robotics, pp. 1–17.
+Cited by: [§3.4.1](https://arxiv.org/html/2505.04769v2#S3.SS4.SSS1.p3.1),
+[§3.4.1](https://arxiv.org/html/2505.04769v2#S3.SS4.SSS1.p4.1).
+- [9]
+M. Ayaz, M. Khan, M. Saqib, A. Khelifi, M. Sajjad, and A. Elsaddik (2024)
+MedVLM: medical vision-language model for consumer devices.
+IEEE Consumer Electronics Magazine.
+Cited by: [§3.4.4](https://arxiv.org/html/2505.04769v2#S3.SS4.SSS4.p5.1).
+- [10]
+S. Bai, K. Chen, X. Liu, J. Wang, W. Ge, S. Song, K. Dang, P. Wang, S. Wang, J. Tang, H. Zhong, Y. Zhu, M. Yang, Z. Li, J. Wan, P. Wang, W. Ding, Z. Fu, Y. Xu, J. Ye, X. Zhang, T. Xie, Z. Cheng, H. Zhang, Z. Yang, H. Xu, and J. Lin (2025)
+Qwen2.5-vl technical report.
+arXiv preprint arXiv:2502.13923.
+Cited by: [§1](https://arxiv.org/html/2505.04769v2#S1.p3.1).
+- [11]
+F. Bartoccioni, E. Ramzi, V. Besnier, S. Venkataramanan, T. Vu, Y. Xu, L. Chambon, S. Gidaris, S. Odabas, D. Hurych, et al. (2025)
+VaViM and vavam: autonomous driving through video generative modeling.
+arXiv preprint arXiv:2502.15672.
+Cited by: [item 3](https://arxiv.org/html/2505.04769v2#S2.I2.i3.p1.1).
+- [12]
+N. V. Bathula, I. Paleti, S. Pagidi, S. S. Akkumahanthi, and N. T. Guduru (2024)
+Policy learning-based image captioning with vision transformer.
+In 2024 IEEE International Students’ Conference on Electrical, Electronics and Computer Science (SCEECS),
+pp. 1–6.
+Cited by: [§3.4.5](https://arxiv.org/html/2505.04769v2#S3.SS4.SSS5.p1.1).
+- [13]
+S. Belkhale, T. Ding, T. Xiao, P. Sermanet, Q. Vuong, J. Tompson, Y. Chebotar, D. Dwibedi, and D. Sadigh (2024)
+Rt-h: action hierarchies using language.
+arXiv preprint arXiv:2403.01823.
+Cited by: [§2.4](https://arxiv.org/html/2505.04769v2#S2.SS4.p3.1).
+- [14]
+J. Bjorck, F. Castañeda, N. Cherniadev, X. Da, R. Ding, L. Fan, Y. Fang, D. Fox, F. Hu, S. Huang, et al. (2025)
+Gr00t n1: an open foundation model for generalist humanoid robots.
+arXiv preprint arXiv:2503.14734.
+Cited by: [Figure 6](https://arxiv.org/html/2505.04769v2#S2.F6.1.pic1.45.45.45.41.41.1.1.3),
+[item 3](https://arxiv.org/html/2505.04769v2#S2.I1.i3.p1.1),
+[§2.1](https://arxiv.org/html/2505.04769v2#S2.SS1.p2.1),
+[item 3a](https://arxiv.org/html/2505.04769v2#S3.I1.i3.I1.i1.p1.1),
+[item 5](https://arxiv.org/html/2505.04769v2#S3.I2.i5.p1.1),
+[item 3](https://arxiv.org/html/2505.04769v2#S3.I3.i3.p1.1),
+[§3.1](https://arxiv.org/html/2505.04769v2#S3.SS1.p1.1),
+[§3.1](https://arxiv.org/html/2505.04769v2#S3.SS1.p11.1),
+[§3.1](https://arxiv.org/html/2505.04769v2#S3.SS1.p4.1),
+[Table 2](https://arxiv.org/html/2505.04769v2#S3.T2.15.30.14.1.1.1),
+[§4.1](https://arxiv.org/html/2505.04769v2#S4.SS1.p2.1).
+- [15]
+K. Black, N. Brown, D. Driess, A. Esmail, M. Equi, C. Finn, N. Fusai, L. Groom, K. Hausman, B. Ichter, et al. (2024)
+Pi-0: a vision-language-action flow model for general robot control.
+arXiv preprint arXiv:2410.24164.
+Cited by: [Figure 6](https://arxiv.org/html/2505.04769v2#S2.F6.1.pic1.19.19.19.15.15.1.1.3),
+[§3.1](https://arxiv.org/html/2505.04769v2#S3.SS1.p1.1),
+[§3.1](https://arxiv.org/html/2505.04769v2#S3.SS1.p8.1),
+[Table 1](https://arxiv.org/html/2505.04769v2#S3.T1.1.24.23.1.1.1),
+[Table 2](https://arxiv.org/html/2505.04769v2#S3.T2.1.1.1.1.1),
+[§4.1](https://arxiv.org/html/2505.04769v2#S4.SS1.p1.1).
+- [16]
+D. Bolya, P. Huang, P. Sun, J. H. Cho, A. Madotto, C. Wei, T. Ma, J. Zhi, J. Rajasegaran, H. Rasheed, et al. (2025)
+Perception encoder: the best visual embeddings are not at the output of the network.
+arXiv preprint arXiv:2504.13181.
+Cited by: [§2.4](https://arxiv.org/html/2505.04769v2#S2.SS4.p2.1).
+- [17]
+F. Bordes, R. Y. Pang, A. Ajay, A. C. Li, A. Bardes, S. Petryk, O. Mañas, Z. Lin, A. Mahmoud, B. Jayaraman, et al. (2024)
+An introduction to vision-language modeling.
+arXiv preprint arXiv:2405.17247.
+Cited by: [item 1](https://arxiv.org/html/2505.04769v2#S2.I2.i1.p1.1),
+[Table 4](https://arxiv.org/html/2505.04769v2#S4.T4.3.5.4.2.1.1),
+[§4](https://arxiv.org/html/2505.04769v2#S4.p4.1),
+[item 3](https://arxiv.org/html/2505.04769v2#S5.I1.i3.p1.1).
+- [18]
+A. Brohan, N. Brown, J. Carbajal, Y. Chebotar, X. Chen, K. Choromanski, T. Ding, D. Driess, A. Dubey, C. Finn, et al. (2023)
+Rt-2: vision-language-action models transfer web knowledge to robotic control.
+arXiv preprint arXiv:2307.15818.
+Cited by: [§3](https://arxiv.org/html/2505.04769v2#S3.p2.1).
+- [19]
+A. Brohan, N. Brown, J. Carbajal, Y. Chebotar, J. Dabis, C. Finn, K. Gopalakrishnan, K. Hausman, A. Herzog, J. Hsu, et al. (2022)
+Rt-1: robotics transformer for real-world control at scale.
+arXiv preprint arXiv:2212.06817.
+Cited by: [Figure 6](https://arxiv.org/html/2505.04769v2#S2.F6.1.pic1.7.7.7.3.3.1.1.3),
+[item 1](https://arxiv.org/html/2505.04769v2#S2.I1.i1.p1.1),
+[§2.1](https://arxiv.org/html/2505.04769v2#S2.SS1.p2.1),
+[§3.1](https://arxiv.org/html/2505.04769v2#S3.SS1.p6.1),
+[Table 1](https://arxiv.org/html/2505.04769v2#S3.T1.1.3.2.1.1.1),
+[Table 2](https://arxiv.org/html/2505.04769v2#S3.T2.15.18.2.1.1.1),
+[§3](https://arxiv.org/html/2505.04769v2#S3.p2.1).
+- [20]
+P. Budzianowski, W. Maa, M. Freed, J. Mo, A. Xie, V. Tipnis, and B. Bolte (2024)
+EdgeVLA: efficient vision-language-action models.
+environments 20, pp. 3.
+Cited by: [Figure 6](https://arxiv.org/html/2505.04769v2#S2.F6.1.pic1.22.22.22.18.18.1.1.3),
+[item 3](https://arxiv.org/html/2505.04769v2#S2.I1.i3.p1.1),
+[§3.1](https://arxiv.org/html/2505.04769v2#S3.SS1.p9.1),
+[Table 1](https://arxiv.org/html/2505.04769v2#S3.T1.1.22.21.1.1.1),
+[Table 2](https://arxiv.org/html/2505.04769v2#S3.T2.15.28.12.1.1.1).
+- [21]
+A. Cangelosi, G. Metta, G. Sagerer, S. Nolfi, C. Nehaniv, K. Fischer, J. Tani, T. Belpaeme, G. Sandini, F. Nori, et al. (2010)
+Integration of action and language knowledge: a roadmap for developmental robotics.
+IEEE Transactions on Autonomous Mental Development 2 (3), pp. 167–195.
+Cited by: [§2.2](https://arxiv.org/html/2505.04769v2#S2.SS2.p1.1).
+- [22]
+J. Cao, Z. Gan, Y. Cheng, L. Yu, Y. Chen, and J. Liu (2020)
+Behind the scene: revealing the secrets of pre-trained vision-and-language models.
+In Computer Vision–ECCV 2020: 16th European Conference, Glasgow, UK, August 23–28, 2020, Proceedings, Part VI 16,
+pp. 565–580.
+Cited by: [§1](https://arxiv.org/html/2505.04769v2#S1.p1.1).
+- [23]
+L. Cao (2024)
+Ai robots and humanoid ai: review, perspectives and directions.
+arXiv preprint arXiv:2405.15775.
+Cited by: [§3.4.1](https://arxiv.org/html/2505.04769v2#S3.SS4.SSS1.p1.1).
+- [24]
+Y. Cao, Y. Ju, and D. Xu (2024)
+3DGS-det: empower 3d gaussian splatting with boundary guidance and box-focused sampling for 3d object detection.
+arXiv preprint arXiv:2410.01647.
+Cited by: [§1](https://arxiv.org/html/2505.04769v2#S1.p2.1).
+- [25]
+Y. Cao, Y. Zeng, H. Xu, and D. Xu (2023)
+CoDA: collaborative novel box discovery and cross-modal alignment for open-vocabulary 3d object detection.
+In NeurIPS,
+Cited by: [§1](https://arxiv.org/html/2505.04769v2#S1.p2.1).
+- [26]
+Y. Cao, Y. Zeng, H. Xu, and D. Xu (2024)
+Collaborative novel object discovery and box-guided cross-modal alignment for open-vocabulary 3d object detection.
+arXiv preprint arXiv:2406.00830.
+Cited by: [§1](https://arxiv.org/html/2505.04769v2#S1.p2.1).
+- [27]
+C. Chang, Y. Shi, D. Cao, W. Yang, J. Hwang, H. Wang, J. Pang, W. Wang, Y. Liu, W. Peng, et al. (2025)
+A survey of reasoning and agentic systems in time series with large language models.
+arXiv preprint arXiv:2509.11575.
+Cited by: [§5.2](https://arxiv.org/html/2505.04769v2#S5.SS2.SSS0.Px5.p1.1).
+- [28]
+Y. Chang, X. Wang, J. Wang, Y. Wu, L. Yang, K. Zhu, H. Chen, X. Yi, C. Wang, Y. Wang, et al. (2024)
+A survey on evaluation of large language models.
+ACM transactions on intelligent systems and technology 15 (3), pp. 1–45.
+Cited by: [§1](https://arxiv.org/html/2505.04769v2#S1.p2.1).
+- [29]
+D. Chatzopoulos, C. Bermejo, Z. Huang, and P. Hui (2017)
+Mobile augmented reality survey: from where we are to where we go.
+Ieee Access 5, pp. 6917–6950.
+Cited by: [§3.4.6](https://arxiv.org/html/2505.04769v2#S3.SS4.SSS6.p1.1).
+- [30]
+B. Chen, Z. Xu, S. Kirmani, B. Ichter, D. Sadigh, L. Guibas, and F. Xia (2024)
+Spatialvlm: endowing vision-language models with spatial reasoning capabilities.
+In Proceedings of the IEEE/CVF Conference on Computer Vision and Pattern Recognition,
+pp. 14455–14465.
+Cited by: [§1](https://arxiv.org/html/2505.04769v2#S1.p3.1).
+- [31]
+H. Chen, L. Hou, S. Wu, G. Zhang, Y. Zou, S. Moon, and M. Bhuiyan (2024)
+Augmented reality, deep learning and vision-language query system for construction worker safety.
+Automation in Construction 157, pp. 105158.
+Cited by: [§3.4.6](https://arxiv.org/html/2505.04769v2#S3.SS4.SSS6.p1.1).
+- [32]
+H. Chen, B. Liu, S. Wang, X. Wang, W. Han, Y. Zhu, X. Wang, and Y. Bi (2025)
+Language modulates vision: evidence from neural networks and human brain-lesion models.
+arXiv preprint arXiv:2501.13628.
+Cited by: [§2.4](https://arxiv.org/html/2505.04769v2#S2.SS4.p2.1).
+- [33]
+H. Chen, S. Li, J. Fan, A. Duan, C. Yang, D. Navarro-Alarcon, and P. Zheng (2025)
+Human-in-the-loop robot learning for smart manufacturing: a human-centric perspective.
+IEEE Transactions on Automation Science and Engineering.
+Cited by: [§3.4.3](https://arxiv.org/html/2505.04769v2#S3.SS4.SSS3.p1.1).
+- [34]
+P. Chen, P. Bu, Y. Wang, X. Wang, Z. Wang, J. Guo, Y. Zhao, Q. Zhu, J. Song, S. Yang, et al. (2025)
+CombatVLA: an efficient vision-language-action model for combat tasks in 3d action role-playing games.
+arXiv preprint arXiv:2503.09527.
+Cited by: [§3.1](https://arxiv.org/html/2505.04769v2#S3.SS1.p9.1),
+[Table 1](https://arxiv.org/html/2505.04769v2#S3.T1.1.31.30.1.1.1),
+[Table 3](https://arxiv.org/html/2505.04769v2#S3.T3.3.19.18.1.1.1),
+[Table 4](https://arxiv.org/html/2505.04769v2#S4.T4.3.17.16.2.1.1).
+- [35]
+X. Chen, W. Xu, S. Kan, L. Zhang, Y. Jin, Y. Cen, and Y. Li (2025)
+Vision-semantics-label: a new two-step paradigm for action recognition with large language model.
+IEEE Transactions on Circuits and Systems for Video Technology.
+Cited by: [§2.4](https://arxiv.org/html/2505.04769v2#S2.SS4.p1.1),
+[§5.2](https://arxiv.org/html/2505.04769v2#S5.SS2.SSS0.Px6.p1.1).
+- [36]
+Y. Chen, S. Tian, S. Liu, Y. Zhou, H. Li, and D. Zhao (2025)
+ConRFT: a reinforced fine-tuning method for vla models via consistency policy.
+arXiv preprint arXiv:2502.05450.
+Cited by: [Figure 6](https://arxiv.org/html/2505.04769v2#S2.F6.1.pic1.35.35.35.31.31.1.1.3),
+[§4](https://arxiv.org/html/2505.04769v2#S4.p2.1).
+- [37]
+Z. Chen, J. Wu, W. Wang, W. Su, G. Chen, S. Xing, M. Zhong, Q. Zhang, X. Zhu, L. Lu, et al. (2024)
+Internvl: scaling up vision foundation models and aligning for generic visual-linguistic tasks.
+In Proceedings of the IEEE/CVF Conference on Computer Vision and Pattern Recognition,
+pp. 24185–24198.
+Cited by: [§1](https://arxiv.org/html/2505.04769v2#S1.p3.1).
+- [38]
+A. Cheng, Y. Ji, Z. Yang, Z. Gongye, X. Zou, J. Kautz, E. Bıyık, H. Yin, S. Liu, and X. Wang (2024)
+Navila: legged robot vision-language-action model for navigation.
+arXiv preprint arXiv:2412.04453.
+Cited by: [Figure 6](https://arxiv.org/html/2505.04769v2#S2.F6.1.pic1.24.24.24.20.20.1.1.3),
+[§3.1](https://arxiv.org/html/2505.04769v2#S3.SS1.p7.1),
+[Table 1](https://arxiv.org/html/2505.04769v2#S3.T1.1.14.13.1.1.1),
+[Table 2](https://arxiv.org/html/2505.04769v2#S3.T2.15.33.17.1.1.1),
+[Table 3](https://arxiv.org/html/2505.04769v2#S3.T3.3.4.3.1.1.1).
+- [39]
+H. Cheng, E. Xiao, C. Yu, Z. Yao, J. Cao, Q. Zhang, J. Wang, M. Sun, K. Xu, J. Gu, et al. (2024)
+Manipulation facing threats: evaluating physical vulnerabilities in end-to-end vision language action models.
+arXiv preprint arXiv:2409.13174.
+Cited by: [§4.2](https://arxiv.org/html/2505.04769v2#S4.SS2.p2.1).
+- [40]
+C. Chi, Z. Xu, S. Feng, E. Cousineau, Y. Du, B. Burchfiel, R. Tedrake, and S. Song (2023)
+Diffusion policy: visuomotor policy learning via action diffusion.
+The International Journal of Robotics Research, pp. 02783649241273668.
+Cited by: [Figure 6](https://arxiv.org/html/2505.04769v2#S2.F6.1.pic1.12.12.12.8.8.1.1.3),
+[item 1](https://arxiv.org/html/2505.04769v2#S2.I1.i1.p1.1),
+[§2.1](https://arxiv.org/html/2505.04769v2#S2.SS1.p2.1),
+[item 3](https://arxiv.org/html/2505.04769v2#S3.I2.i3.p1.1),
+[Table 1](https://arxiv.org/html/2505.04769v2#S3.T1.1.6.5.1.1.1),
+[Table 2](https://arxiv.org/html/2505.04769v2#S3.T2.15.25.9.1.1.1),
+[item 2](https://arxiv.org/html/2505.04769v2#S5.I1.i2.p1.1).
+- [41]
+H. Chi, H. Gao, Z. Liu, J. Liu, C. Liu, J. Li, K. Yang, Y. Yu, Z. Wang, W. Li, et al. (2025)
+Impromptu vla: open weights and open data for driving vision-language-action models.
+arXiv preprint arXiv:2505.23757.
+Cited by: [§5.2](https://arxiv.org/html/2505.04769v2#S5.SS2.SSS0.Px5.p1.1).
+- [42]
+H. L. Chiang, Z. Xu, Z. Fu, M. G. Jacob, T. Zhang, T. E. Lee, W. Yu, C. Schenck, D. Rendleman, D. Shah, et al. (2024)
+Mobility vla: multimodal instruction navigation with long-context vlms and topological graphs.
+arXiv preprint arXiv:2407.07775.
+Cited by: [Table 1](https://arxiv.org/html/2505.04769v2#S3.T1.1.16.15.1.1.1),
+[Table 2](https://arxiv.org/html/2505.04769v2#S3.T2.15.35.19.1.1.1),
+[Table 3](https://arxiv.org/html/2505.04769v2#S3.T3.3.6.5.1.1.1).
+- [43]
+S. S. Chowa, R. Alvi, S. S. Rahman, M. A. Rahman, M. A. K. Raiaan, M. R. Islam, M. Hussain, and S. Azam (2026)
+From language to action: a review of large language models as autonomous agents and tool users.
+Artificial Intelligence Review.
+Cited by: [§5.2](https://arxiv.org/html/2505.04769v2#S5.SS2.SSS0.Px2.p1.1).
+- [44]
+R. Dang, Y. Yuan, W. Zhang, Y. Xin, B. Zhang, L. Li, L. Wang, Q. Zeng, X. Li, and L. Bing (2025)
+ECBench: can multi-modal foundation models understand the egocentric world? a holistic embodied cognition benchmark.
+arXiv preprint arXiv:2501.05031.
+Cited by: [§2.4](https://arxiv.org/html/2505.04769v2#S2.SS4.p3.1).
+- [45]
+S. Dasari, F. Ebert, S. Tian, S. Nair, B. Bucher, K. Schmeckpeper, S. Singh, S. Levine, and C. Finn (2019)
+Robonet: large-scale multi-robot learning.
+arXiv preprint arXiv:1910.11215.
+Cited by: [§2.4](https://arxiv.org/html/2505.04769v2#S2.SS4.p3.1).
+- [46]
+S. Deng, M. Yan, S. Wei, H. Ma, Y. Yang, J. Chen, Z. Zhang, T. Yang, X. Zhang, H. Cui, Z. Zhang, and H. Wang (2025)
+GraspVLA: a grasping foundation model pre-trained on billion-scale synthetic action data.
+External Links: 2505.03233,
+[Link](https://arxiv.org/abs/2505.03233)
+Cited by: [Table 2](https://arxiv.org/html/2505.04769v2#S3.T2.15.42.26.1.1.1),
+[§4.2](https://arxiv.org/html/2505.04769v2#S4.SS2.p1.1).
+- [47]
+S. Deng, M. Yan, Y. Zheng, J. Su, W. Zhang, X. Zhao, H. Cui, Z. Zhang, and H. Wang (2025)
+StereoVLA: enhancing vision-language-action models with stereo vision.
+arXiv preprint arXiv:2512.21970.
+Cited by: [Figure 6](https://arxiv.org/html/2505.04769v2#S2.F6.1.pic1.55.55.55.51.51.1.1.3),
+[Table 1](https://arxiv.org/html/2505.04769v2#S3.T1.1.49.48.1.1.1),
+[Table 2](https://arxiv.org/html/2505.04769v2#S3.T2.15.49.33.1.1.1).
+- [48]
+S. Dey, J. Zaech, N. Nikolov, L. Van Gool, and D. P. Paudel (2024)
+Revla: reverting visual domain limitation of robotic foundation models.
+arXiv preprint arXiv:2409.15250.
+Cited by: [Figure 6](https://arxiv.org/html/2505.04769v2#S2.F6.1.pic1.17.17.17.13.13.1.1.3),
+[item 2](https://arxiv.org/html/2505.04769v2#S2.I1.i2.p1.1),
+[§2.1](https://arxiv.org/html/2505.04769v2#S2.SS1.p2.1),
+[Table 1](https://arxiv.org/html/2505.04769v2#S3.T1.1.17.16.1.1.1),
+[§4](https://arxiv.org/html/2505.04769v2#S4.p3.1),
+[item 3](https://arxiv.org/html/2505.04769v2#S5.I1.i3.p1.1).
+- [49]
+M. U. Din, W. Akram, L. S. Saoud, J. Rosell, and I. Hussain (2025)
+Vision language action models in robotic manipulation: a systematic review.
+arXiv preprint arXiv:2507.10672.
+Cited by: [§4.4](https://arxiv.org/html/2505.04769v2#S4.SS4.p2.1).
+- [50]
+D. Ding, T. Yao, R. Luo, and X. Sun (2025)
+Visual question answering in robotic surgery: a comprehensive review.
+IEEE Access.
+Cited by: [§3.4.4](https://arxiv.org/html/2505.04769v2#S3.SS4.SSS4.p2.1).
+- [51]
+J. Ding, Y. Zhang, Y. Shang, Y. Zhang, Z. Zong, J. Feng, Y. Yuan, H. Su, N. Li, N. Sukiennik, et al. (2024)
+Understanding world or predicting future? a comprehensive survey of world models.
+arXiv preprint arXiv:2411.14499.
+Cited by: [§2.3](https://arxiv.org/html/2505.04769v2#S2.SS3.p3.1).
+- [52]
+M. Ding, Z. Chen, T. Du, P. Luo, J. Tenenbaum, and C. Gan (2021)
+Dynamic visual reasoning by learning differentiable physics models from video and language.
+Advances in Neural Information Processing Systems 34, pp. 887–899.
+Cited by: [§5.2](https://arxiv.org/html/2505.04769v2#S5.SS2.SSS0.Px4.p1.1).
+- [53]
+P. Ding, J. Ma, X. Tong, B. Zou, X. Luo, Y. Fan, T. Wang, H. Lu, P. Mo, J. Liu, et al. (2025)
+Humanoid-vla: towards universal humanoid control with visual integration.
+arXiv preprint arXiv:2502.14795.
+Cited by: [Figure 6](https://arxiv.org/html/2505.04769v2#S2.F6.1.pic1.40.40.40.36.36.1.1.3),
+[item 3](https://arxiv.org/html/2505.04769v2#S2.I1.i3.p1.1),
+[§2.1](https://arxiv.org/html/2505.04769v2#S2.SS1.p2.1),
+[Table 1](https://arxiv.org/html/2505.04769v2#S3.T1.1.41.40.1.1.1),
+[Table 4](https://arxiv.org/html/2505.04769v2#S4.T4.3.10.9.2.1.1).
+- [54]
+P. Ding, H. Zhao, W. Zhang, W. Song, M. Zhang, S. Huang, N. Yang, and D. Wang (2024)
+Quar-vla: vision-language-action model for quadruped robots.
+In European Conference on Computer Vision,
+pp. 352–367.
+Cited by: [Figure 6](https://arxiv.org/html/2505.04769v2#S2.F6.1.pic1.25.25.25.21.21.1.1.3),
+[§2.1](https://arxiv.org/html/2505.04769v2#S2.SS1.p2.1),
+[§3.4.4](https://arxiv.org/html/2505.04769v2#S3.SS4.SSS4.p1.1),
+[Table 2](https://arxiv.org/html/2505.04769v2#S3.T2.15.36.20.1.1.1),
+[Table 3](https://arxiv.org/html/2505.04769v2#S3.T3.3.10.9.1.1.1).
+- [55]
+J. Donahue, L. Anne Hendricks, S. Guadarrama, M. Rohrbach, S. Venugopalan, K. Saenko, and T. Darrell (2015)
+Long-term recurrent convolutional networks for visual recognition and description.
+In Proceedings of the IEEE conference on computer vision and pattern recognition,
+pp. 2625–2634.
+Cited by: [§1](https://arxiv.org/html/2505.04769v2#S1.p1.1).
+- [56]
+H. Dong, M. Liu, K. Zhou, E. Chatzi, J. Kannala, C. Stachniss, and O. Fink (2025)
+Advances in multimodal adaptation and generalization: from traditional approaches to foundation models.
+arXiv preprint arXiv:2501.18592.
+Cited by: [§3.4.4](https://arxiv.org/html/2505.04769v2#S3.SS4.SSS4.p6.1).
+- [57]
+S. Doveh, A. Arbelle, S. Harary, E. Schwartz, R. Herzig, R. Giryes, R. Feris, R. Panda, S. Ullman, and L. Karlinsky (2023)
+Teaching structured vision & language concepts to vision & language models.
+In Proceedings of the IEEE/CVF Conference on Computer Vision and Pattern Recognition,
+pp. 2657–2668.
+Cited by: [§1](https://arxiv.org/html/2505.04769v2#S1.p1.1).
+- [58]
+D. Driess, F. Xia, M. S. Sajjadi, C. Lynch, A. Chowdhery, A. Wahid, J. Tompson, Q. Vuong, T. Yu, W. Huang, et al. (2023)
+Palm-e: an embodied multimodal language model.
+Openreview.
+Cited by: [item 3](https://arxiv.org/html/2505.04769v2#S2.I2.i3.p1.1).
+- [59]
+J. Duan, W. Pumacay, N. Kumar, Y. R. Wang, S. Tian, W. Yuan, R. Krishna, D. Fox, A. Mandlekar, and Y. Guo (2024)
+AHA: a vision-language-model for detecting and reasoning over failures in robotic manipulation.
+arXiv preprint arXiv:2410.00371.
+Cited by: [§3.1](https://arxiv.org/html/2505.04769v2#S3.SS1.p5.1).
+- [60]
+N. F. Duarte, M. Raković, J. Tasevski, M. I. Coco, A. Billard, and J. Santos-Victor (2018)
+Action anticipation: reading the intentions of humans and robots.
+IEEE Robotics and Automation Letters 3 (4), pp. 4132–4139.
+Cited by: [§1](https://arxiv.org/html/2505.04769v2#S1.p1.1).
+- [61]
+F. Ebert, Y. Yang, K. Schmeckpeper, B. Bucher, G. Georgakis, K. Daniilidis, C. Finn, and S. Levine (2021)
+Bridge data: boosting generalization of robotic skills with cross-domain datasets.
+arXiv preprint arXiv:2109.13396.
+Cited by: [§2.4](https://arxiv.org/html/2505.04769v2#S2.SS4.p3.1).
+- [62]
+C. Fan, X. Jia, Y. Sun, Y. Wang, J. Wei, Z. Gong, X. Zhao, M. Tomizuka, X. Yang, J. Yan, and M. Ding (2025)
+Interleave-vla: enhancing robot manipulation with interleaved image-text instructions.
+External Links: 2505.02152,
+[Link](https://arxiv.org/abs/2505.02152)
+Cited by: [Table 2](https://arxiv.org/html/2505.04769v2#S3.T2.15.15.3.1.1),
+[§4.2](https://arxiv.org/html/2505.04769v2#S4.SS2.p1.1).
+- [63]
+L. Fan, K. Chen, Z. Xu, M. Yuan, P. Huang, and W. Huang (2024)
+Language reasoning in vision-language-action model for robotic grasping.
+In 2024 China Automation Congress (CAC),
+pp. 6656–6661.
+Cited by: [§2.4](https://arxiv.org/html/2505.04769v2#S2.SS4.p5.1).
+- [64]
+Y. Fan, P. Ding, S. Bai, X. Tong, Y. Zhu, H. Lu, F. Dai, W. Zhao, Y. Liu, S. Huang, et al. (2025)
+Long-vla: unleashing long-horizon capability of vision language action model for robot manipulation.
+arXiv preprint arXiv:2508.19958.
+Cited by: [Figure 6](https://arxiv.org/html/2505.04769v2#S2.F6.1.pic1.49.49.49.45.45.1.1.3),
+[Table 1](https://arxiv.org/html/2505.04769v2#S3.T1.1.43.42.1.1.1),
+[Table 2](https://arxiv.org/html/2505.04769v2#S3.T2.15.43.27.1.1.1).
+- [65]
+H. Fang, Y. Liu, Y. Du, L. Du, and H. Yang (2025)
+Sqap-vla: a synergistic quantization-aware pruning framework for high-performance vision-language-action models.
+arXiv preprint arXiv:2509.09090.
+Cited by: [§5.2](https://arxiv.org/html/2505.04769v2#S5.SS2.SSS0.Px5.p1.1).
+- [66]
+Y. Fang, Y. Yang, X. Zhu, K. Zheng, G. Bertasius, D. Szafir, and M. Ding (2025)
+ReBot: scaling robot learning with real-to-sim-to-real robotic video synthesis.
+arXiv preprint arXiv:2503.14526.
+Cited by: [Table 4](https://arxiv.org/html/2505.04769v2#S4.T4.3.9.8.3.1.1),
+[item 3](https://arxiv.org/html/2505.04769v2#S5.I1.i3.p1.1).
+- [67]
+R. Firoozi, J. Tucker, S. Tian, A. Majumdar, J. Sun, W. Liu, Y. Zhu, S. Song, A. Kapoor, K. Hausman, et al. (2023)
+Foundation models in robotics: applications, challenges, and the future.
+The International Journal of Robotics Research, pp. 02783649241281508.
+Cited by: [item 3](https://arxiv.org/html/2505.04769v2#S2.I2.i3.p1.1),
+[§2.4](https://arxiv.org/html/2505.04769v2#S2.SS4.p3.1),
+[§4.1](https://arxiv.org/html/2505.04769v2#S4.SS1.p1.1).
+- [68]
+D. J. Foster, A. Block, and D. Misra (2024)
+Is behavior cloning all you need? understanding horizon in imitation learning.
+arXiv preprint arXiv:2407.15007.
+Cited by: [§2.4](https://arxiv.org/html/2505.04769v2#S2.SS4.p3.1).
+- [69]
+H. Fu, D. Zhang, Z. Zhao, J. Cui, D. Liang, C. Zhang, D. Zhang, H. Xie, B. Wang, and X. Bai (2025)
+ORION: a holistic end-to-end autonomous driving framework by vision-language instructed action generation.
+arXiv preprint arXiv:2503.19755.
+Cited by: [Figure 6](https://arxiv.org/html/2505.04769v2#S2.F6.1.pic1.33.33.33.29.29.1.1.3),
+[§3.1](https://arxiv.org/html/2505.04769v2#S3.SS1.p7.1),
+[§3.4.2](https://arxiv.org/html/2505.04769v2#S3.SS4.SSS2.p5.1),
+[§3.4](https://arxiv.org/html/2505.04769v2#S3.SS4.p1.1),
+[Table 1](https://arxiv.org/html/2505.04769v2#S3.T1.1.29.28.1.1.1),
+[Table 3](https://arxiv.org/html/2505.04769v2#S3.T3.3.9.8.1.1.1).
+- [70]
+B. Gao, Y. Liu, Y. Li, H. Li, M. Li, and W. He (2025)
+A vision-language model for predicting potential distribution land of soybean double cropping.
+Frontiers in Environmental Science 12, pp. 1515752.
+Cited by: [§3.4.5](https://arxiv.org/html/2505.04769v2#S3.SS4.SSS5.p1.1).
+- [71]
+C. Gao, Z. Liu, Z. Chi, J. Huang, X. Fei, Y. Hou, Y. Zhang, Y. Lin, Z. Fang, Z. Jiang, et al. (2025)
+VLA-os: structuring and dissecting planning representations and paradigms in vision-language-action models.
+arXiv preprint arXiv:2506.17561.
+Cited by: [§5.2](https://arxiv.org/html/2505.04769v2#S5.SS2.SSS0.Px3.p1.1).
+- [72]
+J. Gao, S. Belkhale, S. Dasari, A. Balakrishna, D. Shah, and D. Sadigh (2025)
+A taxonomy for evaluating generalist robot policies.
+arXiv preprint arXiv:2503.01238.
+Cited by: [§3.4.3](https://arxiv.org/html/2505.04769v2#S3.SS4.SSS3.p2.1).
+- [73]
+S. Gao, M. Cheng, K. Zhao, X. Zhang, M. Yang, and P. Torr (2019)
+Res2Net: a new multi-scale backbone architecture.
+IEEE TPAMI.
+Cited by: [§1](https://arxiv.org/html/2505.04769v2#S1.p2.1).
+- [74]
+K. F. Gbagbe, M. A. Cabrera, A. Alabbas, O. Alyunes, A. Lykov, and D. Tsetserukou (2024)
+Bi-vla: vision-language-action model-based system for bimanual robotic dexterous manipulations.
+In 2024 IEEE International Conference on Systems, Man, and Cybernetics (SMC),
+pp. 2864–2869.
+Cited by: [Figure 6](https://arxiv.org/html/2505.04769v2#S2.F6.1.pic1.26.26.26.22.22.1.1.3),
+[§3.4](https://arxiv.org/html/2505.04769v2#S3.SS4.p1.1),
+[Table 3](https://arxiv.org/html/2505.04769v2#S3.T3.3.13.12.1.1.1),
+[§4.2](https://arxiv.org/html/2505.04769v2#S4.SS2.p1.1),
+[Table 4](https://arxiv.org/html/2505.04769v2#S4.T4.3.3.2.3.1.1).
+- [75]
+R. Geens (2024)
+Bringing generative ai to edge devices through interoperable compute cores.
+In Flanders AI Research Day, Location: Ghent,
+Cited by: [Table 4](https://arxiv.org/html/2505.04769v2#S4.T4.3.2.1.2.1.1),
+[§4](https://arxiv.org/html/2505.04769v2#S4.p4.1).
+- [76]
+A. Ghosh, A. Acharya, S. Saha, V. Jain, and A. Chadha (2024)
+Exploring the frontier of vision-language models: a survey of current methodologies and future directions.
+arXiv preprint arXiv:2404.07214.
+Cited by: [§2.3](https://arxiv.org/html/2505.04769v2#S2.SS3.p4.1),
+[Table 4](https://arxiv.org/html/2505.04769v2#S4.T4.3.11.10.3.1.1).
+- [77]
+J. Gu, Z. Wang, J. Kuen, L. Ma, A. Shahroudy, B. Shuai, T. Liu, X. Wang, G. Wang, J. Cai, et al. (2018)
+Recent advances in convolutional neural networks.
+Pattern recognition 77, pp. 354–377.
+Cited by: [§1](https://arxiv.org/html/2505.04769v2#S1.p2.1).
+- [78]
+Q. Gu, Y. Ju, S. Sun, I. Gilitschenski, H. Nishimura, M. Itkina, and F. Shkurti (2025)
+SAFE: multitask failure detection for vision-language-action models.
+arXiv preprint arXiv:2506.09937.
+Cited by: [§5.2](https://arxiv.org/html/2505.04769v2#S5.SS2.SSS0.Px7.p1.1).
+- [79]
+Q. Gu, J. Su, and L. Yuan (2021)
+Visual affordance detection using an efficient attention convolutional neural network.
+Neurocomputing 440, pp. 36–44.
+External Links: ISSN 0925-2312,
+[Document](https://dx.doi.org/https%3A//doi.org/10.1016/j.neucom.2021.01.018)
+Cited by: [§2](https://arxiv.org/html/2505.04769v2#S2.p2.1).
+- [80]
+X. Gu, C. Wen, W. Ye, J. Song, and Y. Gao (2023)
+Seer: language instructed video prediction with latent diffusion models.
+arXiv preprint arXiv:2303.14897.
+Cited by: [Table 1](https://arxiv.org/html/2505.04769v2#S3.T1.1.9.8.1.1.1),
+[Table 2](https://arxiv.org/html/2505.04769v2#S3.T2.15.31.15.1.1.1).
+- [81]
+Z. Gu, J. Li, W. Shen, W. Yu, Z. Xie, S. McCrory, X. Cheng, A. Shamsah, R. Griffin, C. K. Liu, et al. (2025)
+Humanoid locomotion and manipulation: current progress and challenges in control, planning, and learning.
+arXiv preprint arXiv:2501.02116.
+Cited by: [item 3](https://arxiv.org/html/2505.04769v2#S2.I2.i3.p1.1).
+- [82]
+W. Guan, Q. Hu, A. Li, and J. Cheng (2025)
+Efficient vision-language-action models for embodied manipulation: a systematic survey.
+arXiv preprint arXiv:2510.17111.
+Cited by: [§4.1](https://arxiv.org/html/2505.04769v2#S4.SS1.p3.1).
+- [83]
+Y. Guo, J. Zhang, X. Chen, X. Ji, Y. Wang, Y. Hu, and J. Chen (2025)
+Improving vision-language-action model with online reinforcement learning.
+arXiv preprint arXiv:2501.16664.
+Cited by: [§2.4](https://arxiv.org/html/2505.04769v2#S2.SS4.p3.1).
+- [84]
+P. Guruprasad, H. Sikka, J. Song, Y. Wang, and P. P. Liang (2024)
+Benchmarking vision, language, & action models on robotic learning tasks.
+arXiv preprint arXiv:2411.05821.
+Cited by: [§3.4.5](https://arxiv.org/html/2505.04769v2#S3.SS4.SSS5.p1.1).
+- [85]
+S. Haldar, Z. Peng, and L. Pinto (2024)
+Baku: an efficient transformer for multi-task policy learning.
+arXiv preprint arXiv:2406.07539.
+Cited by: [§3.4.5](https://arxiv.org/html/2505.04769v2#S3.SS4.SSS5.p1.1).
+- [86]
+S. Han, M. Wang, J. Zhang, D. Li, and J. Duan (2024)
+A review of large language models: fundamental architectures, key technological evolutions, interdisciplinary technologies integration, optimization and compression techniques, applications, and challenges.
+Electronics 13 (24), pp. 5040.
+Cited by: [§2.2](https://arxiv.org/html/2505.04769v2#S2.SS2.p2.1).
+- [87]
+A. Hanson and E. Riseman (2014)
+The visions image-understanding system.
+In Advances in Computer Vision,
+pp. 1–114.
+Cited by: [§1](https://arxiv.org/html/2505.04769v2#S1.p1.1).
+- [88]
+P. Hao, C. Zhang, D. Li, X. Cao, X. Hao, S. Cui, and S. Wang (2025)
+Tla: tactile-language-action model for contact-rich manipulation.
+arXiv preprint arXiv:2503.08548.
+Cited by: [Figure 6](https://arxiv.org/html/2505.04769v2#S2.F6.1.pic1.37.37.37.33.33.1.1.3),
+[§4](https://arxiv.org/html/2505.04769v2#S4.p2.1).
+- [89]
+K. He, X. Zhang, S. Ren, and J. Sun (2016)
+Deep residual learning for image recognition.
+In iccv,
+pp. 770–778.
+Cited by: [§1](https://arxiv.org/html/2505.04769v2#S1.p2.1).
+- [90]
+F. Holldack, L. Banh, and G. Strobel (2026)
+Agentic information systems.
+Electronic Markets 36 (1), pp. 5.
+Cited by: [§5.2](https://arxiv.org/html/2505.04769v2#S5.SS2.SSS0.Px2.p1.1).
+- [91]
+Y. Hong (2025)
+Building 3d foundation models for the embodied minds.
+Ph.D. Thesis, University of California, Los Angeles.
+Cited by: [Table 4](https://arxiv.org/html/2505.04769v2#S4.T4.3.11.10.3.1.1).
+- [92]
+Z. Hou, T. Zhang, Y. Xiong, H. Duan, H. Pu, R. Tong, C. Zhao, X. Zhu, Y. Qiao, J. Dai, et al. (2025)
+Dita: scaling diffusion transformer for generalist vision-language-action policy.
+arXiv preprint arXiv:2503.19757.
+Cited by: [§4.4](https://arxiv.org/html/2505.04769v2#S4.SS4.p2.1).
+- [93]
+E. J. Hu, Y. Shen, P. Wallis, Z. Allen-Zhu, Y. Li, S. Wang, L. Wang, W. Chen, et al. (2022)
+Lora: low-rank adaptation of large language models..
+ICLR 1 (2), pp. 3.
+Cited by: [item 2](https://arxiv.org/html/2505.04769v2#S3.I1.i2.p1.1),
+[item 1](https://arxiv.org/html/2505.04769v2#S3.I2.i1.p1.1),
+[item 1](https://arxiv.org/html/2505.04769v2#S3.I3.i1.p1.1),
+[§3.1](https://arxiv.org/html/2505.04769v2#S3.SS1.p1.1),
+[§3.4.5](https://arxiv.org/html/2505.04769v2#S3.SS4.SSS5.p1.1),
+[item 1](https://arxiv.org/html/2505.04769v2#S5.I1.i1.p1.1),
+[item 4](https://arxiv.org/html/2505.04769v2#S5.I1.i4.p1.1).
+- [94]
+Y. Hu, J. Tang, X. Gong, Z. Zhou, S. Zhang, D. S. Elvitigala, F. Mueller, W. Hu, and A. J. Quigley (2025)
+Vision-based multimodal interfaces: a survey and taxonomy for enhanced context-aware system design.
+arXiv preprint arXiv:2501.13443.
+Cited by: [§3.4.4](https://arxiv.org/html/2505.04769v2#S3.SS4.SSS4.p6.1),
+[§5.2](https://arxiv.org/html/2505.04769v2#S5.SS2.SSS0.Px3.p1.1).
+- [95]
+G. Huang, Z. Liu, L. Van Der Maaten, and K. Q. Weinberger (2017)
+Densely connected convolutional networks.
+In Proceedings of the IEEE conference on computer vision and pattern recognition,
+pp. 4700–4708.
+Cited by: [§1](https://arxiv.org/html/2505.04769v2#S1.p2.1).
+- [96]
+H. Huang, F. Liu, L. Fu, T. Wu, M. Mukadam, J. Malik, K. Goldberg, and P. Abbeel (2024)
+Early fusion helps vision language action models generalize better.
+In 1st Workshop on X-Embodiment Robot Learning,
+Cited by: [§2.3](https://arxiv.org/html/2505.04769v2#S2.SS3.p4.1),
+[§3.1](https://arxiv.org/html/2505.04769v2#S3.SS1.p3.1).
+- [97]
+H. Huang, F. Liu, L. Fu, T. Wu, M. Mukadam, J. Malik, K. Goldberg, and P. Abbeel (2025)
+Otter: a vision-language-action model with text-aware visual feature extraction.
+arXiv preprint arXiv:2503.03734.
+Cited by: [Figure 6](https://arxiv.org/html/2505.04769v2#S2.F6.1.pic1.28.28.28.24.24.1.1.3),
+[Table 3](https://arxiv.org/html/2505.04769v2#S3.T3.3.16.15.1.1.1),
+[Table 4](https://arxiv.org/html/2505.04769v2#S4.T4.3.15.14.3.1.1).
+- [98]
+S. Huang, L. Dong, W. Wang, Y. Hao, S. Singhal, S. Ma, T. Lv, L. Cui, O. K. Mohammed, B. Patra, et al. (2023)
+Language is not all you need: aligning perception with language models.
+Advances in Neural Information Processing Systems 36, pp. 72096–72109.
+Cited by: [§1](https://arxiv.org/html/2505.04769v2#S1.p2.1),
+[item 1c](https://arxiv.org/html/2505.04769v2#S3.I1.i1.I1.i3.p1.1).
+- [99]
+W. Huang, Q. Gu, and N. Ye (2025)
+Decision spikeformer: spike-driven transformer for decision making.
+arXiv preprint arXiv:2504.03800.
+Cited by: [item 3](https://arxiv.org/html/2505.04769v2#S2.I2.i3.p1.1).
+- [100]
+W. Huang, C. Wang, R. Zhang, Y. Li, J. Wu, and L. Fei-Fei (2023)
+Voxposer: composable 3d value maps for robotic manipulation with language models.
+arXiv preprint arXiv:2307.05973.
+Cited by: [Figure 6](https://arxiv.org/html/2505.04769v2#S2.F6.1.pic1.11.11.11.7.7.1.1.3),
+[item 1](https://arxiv.org/html/2505.04769v2#S2.I1.i1.p1.1),
+[§2.1](https://arxiv.org/html/2505.04769v2#S2.SS1.p2.1),
+[§2.2](https://arxiv.org/html/2505.04769v2#S2.SS2.p4.1),
+[Table 1](https://arxiv.org/html/2505.04769v2#S3.T1.1.8.7.1.1.1),
+[Table 2](https://arxiv.org/html/2505.04769v2#S3.T2.15.24.8.1.1.1).
+- [101]
+Y. Huang, H. Hua, Y. Zhou, P. Jing, M. Nagireddy, I. Padhi, G. Dolcetti, Z. Xu, S. Chaudhury, A. Rawat, et al. (2025)
+Building a foundational guardrail for general agentic systems via synthetic data.
+arXiv preprint arXiv:2510.09781.
+Cited by: [§5.2](https://arxiv.org/html/2505.04769v2#S5.SS2.SSS0.Px3.p1.1).
+- [102]
+Z. Huang, F. Chen, Y. Pu, C. Lin, H. Su, and C. Gan (2023)
+Diffvl: scaling up soft body manipulation using vision-language driven differentiable physics.
+Advances in Neural Information Processing Systems 36, pp. 29875–29900.
+Cited by: [§5.2](https://arxiv.org/html/2505.04769v2#S5.SS2.SSS0.Px4.p1.1).
+- [103]
+C. Hung, Q. Sun, P. Hong, A. Zadeh, C. Li, U. Tan, N. Majumder, S. Poria, et al. (2025)
+NORA: a small open-sourced generalist vision language action model for embodied tasks.
+arXiv preprint arXiv:2504.19854.
+Cited by: [Figure 6](https://arxiv.org/html/2505.04769v2#S2.F6.1.pic1.46.46.46.42.42.1.1.3),
+[Table 1](https://arxiv.org/html/2505.04769v2#S3.T1.1.33.32.1.1.1),
+[Table 3](https://arxiv.org/html/2505.04769v2#S3.T3.3.21.20.1.1.1).
+- [104]
+B. Ikeda, M. Gramopadhye, L. Nekervis, and D. Szafir (2025)
+MARCER: multimodal augmented reality for composing and executing robot tasks.
+In 2025 20th ACM/IEEE International Conference on Human-Robot Interaction (HRI),
+pp. 529–539.
+Cited by: [§3.4.6](https://arxiv.org/html/2505.04769v2#S3.SS4.SSS6.p1.1).
+- [105]
+A. Imran and K. Gopalakrishnan (2025)
+Foundation models in robotics.
+In AI for Robotics: Toward Embodied and General Intelligence in the Physical World,
+pp. 139–210.
+Cited by: [item 2](https://arxiv.org/html/2505.04769v2#S2.I2.i2.p1.1).
+- [106]
+P. Intelligence, K. Black, N. Brown, J. Darpinian, K. Dhabalia, D. Driess, A. Esmail, M. Equi, C. Finn, N. Fusai, et al. (2025)
+Pi0.5: a vision-language-action model with open-world generalization.
+arXiv preprint arXiv:2504.16054.
+Cited by: [Table 4](https://arxiv.org/html/2505.04769v2#S4.T4.3.10.9.3.1.1).
+- [107]
+H. Jeong, H. Lee, C. Kim, and S. Shin (2024)
+A survey of robot intelligence with large language models.
+Applied Sciences 14 (19), pp. 8868.
+Cited by: [§1](https://arxiv.org/html/2505.04769v2#S1.p4.1),
+[item 1](https://arxiv.org/html/2505.04769v2#S2.I2.i1.p1.1).
+- [108]
+K. Jha, A. Doshi, P. Patel, and M. Shah (2019)
+A comprehensive review on automation in agriculture using artificial intelligence.
+Artificial Intelligence in Agriculture 2, pp. 1–12.
+Cited by: [§3.4.5](https://arxiv.org/html/2505.04769v2#S3.SS4.SSS5.p1.1).
+- [109]
+J. Jiang, W. Xiao, Z. Lin, H. Zhang, T. Ren, Y. Gao, Z. Lin, Z. Cai, L. Yang, and Z. Liu (2024)
+SOLAMI: social vision-language-action modeling for immersive interaction with 3d autonomous characters.
+arXiv preprint arXiv:2412.00174.
+Cited by: [Table 4](https://arxiv.org/html/2505.04769v2#S4.T4.3.5.4.3.1.1).
+- [110]
+J. Jiang, W. Xiao, Z. Lin, H. Zhang, T. Ren, Y. Gao, Z. Lin, Z. Cai, L. Yang, and Z. Liu (2025)
+Solami: social vision-language-action modeling for immersive interaction with 3d autonomous characters.
+In Proceedings of the Computer Vision and Pattern Recognition Conference,
+pp. 26887–26898.
+Cited by: [§5.2](https://arxiv.org/html/2505.04769v2#S5.SS2.SSS0.Px9.p1.1).
+- [111]
+S. Jiang, Z. Huang, K. Qian, Z. Luo, T. Zhu, Y. Zhong, Y. Tang, M. Kong, Y. Wang, S. Jiao, et al. (2025)
+A survey on vision-language-action models for autonomous driving.
+arXiv preprint arXiv:2506.24044.
+Cited by: [§5.2](https://arxiv.org/html/2505.04769v2#S5.SS2.SSS0.Px9.p1.1).
+- [112]
+Y. Jiang, A. Gupta, Z. Zhang, G. Wang, Y. Dou, Y. Chen, L. Fei-Fei, A. Anandkumar, Y. Zhu, and L. Fan (2022)
+Vima: general robot manipulation with multimodal prompts.
+arXiv preprint arXiv:2210.03094 2 (3), pp. 6.
+Cited by: [Figure 6](https://arxiv.org/html/2505.04769v2#S2.F6.1.pic1.8.8.8.4.4.1.1.3),
+[item 1](https://arxiv.org/html/2505.04769v2#S2.I1.i1.p1.1),
+[§2.1](https://arxiv.org/html/2505.04769v2#S2.SS1.p2.1),
+[§2.2](https://arxiv.org/html/2505.04769v2#S2.SS2.p3.1),
+[item 5](https://arxiv.org/html/2505.04769v2#S3.I2.i5.p1.1),
+[Table 1](https://arxiv.org/html/2505.04769v2#S3.T1.1.5.4.1.1.1),
+[Table 2](https://arxiv.org/html/2505.04769v2#S3.T2.15.21.5.1.1.1).
+- [113]
+Y. Jiang, R. Zhang, J. Wong, C. Wang, Y. Ze, H. Yin, C. Gokmen, S. Song, J. Wu, and L. Fei-Fei (2025)
+BEHAVIOR robot suite: streamlining real-world whole-body manipulation for everyday household activities.
+arXiv preprint arXiv:2503.05652.
+Cited by: [Table 4](https://arxiv.org/html/2505.04769v2#S4.T4.3.4.3.2.1.1),
+[§4](https://arxiv.org/html/2505.04769v2#S4.p4.1),
+[item 2](https://arxiv.org/html/2505.04769v2#S5.I1.i2.p1.1).
+- [114]
+J. Jones, O. Mees, C. Sferrazza, K. Stachowicz, P. Abbeel, and S. Levine (2025)
+Beyond sight: finetuning generalist robot policies with heterogeneous sensors via language grounding.
+arXiv preprint arXiv:2501.04693.
+Cited by: [Table 4](https://arxiv.org/html/2505.04769v2#S4.T4.3.11.10.2.1.1).
+- [115]
+S. Karamcheti, A. J. Zhai, D. P. Losey, and D. Sadigh (2021)
+Learning visually guided latent actions for assistive teleoperation.
+In Learning for dynamics and control,
+pp. 1230–1241.
+Cited by: [§2.4](https://arxiv.org/html/2505.04769v2#S2.SS4.p3.1).
+- [116]
+U. B. Karli, T. Kurumisawa, and T. Fitzgerald (2025)
+Ask before you act: token-level uncertainty for intervention in vision-language-action models.
+In Second Workshop on Out-of-Distribution Generalization in Robotics at RSS 2025,
+Cited by: [§5.2](https://arxiv.org/html/2505.04769v2#S5.SS2.SSS0.Px9.p1.1).
+- [117]
+N. Katiyar (2023)
+A model-driven framework for domain-specific adaptation of time series forecasting pipeline.
+McGill University (Canada).
+Cited by: [§2.2](https://arxiv.org/html/2505.04769v2#S2.SS2.p1.1).
+- [118]
+K. Kawaharazuka, J. Oh, J. Yamada, I. Posner, and Y. Zhu (2025)
+Vision-language-action models for robotics: a review towards real-world applications.
+IEEE Access.
+Cited by: [§5.2](https://arxiv.org/html/2505.04769v2#S5.SS2.SSS0.Px6.p1.1),
+[§5.2](https://arxiv.org/html/2505.04769v2#S5.SS2.SSS0.Px7.p1.1),
+[§5.2](https://arxiv.org/html/2505.04769v2#S5.SS2.SSS0.Px8.p1.1).
+- [119]
+C. Kelly, L. Hu, B. Yang, Y. Tian, D. Yang, C. Yang, Z. Huang, Z. Li, J. Hu, and Y. Zou (2024)
+Visiongpt: vision-language understanding agent using generalized multimodal framework.
+arXiv preprint arXiv:2403.09027.
+Cited by: [§4.3](https://arxiv.org/html/2505.04769v2#S4.SS3.p1.1).
+- [120]
+M. H. Khan, S. Asfaw, D. Iarchuk, M. A. Cabrera, L. Moreno, I. Tokmurziyev, and D. Tsetserukou (2025)
+Shake-vla: vision-language-action model-based system for bimanual robotic manipulations and liquid mixing.
+arXiv preprint arXiv:2501.06919.
+Cited by: [Table 1](https://arxiv.org/html/2505.04769v2#S3.T1.1.38.37.1.1.1),
+[Table 3](https://arxiv.org/html/2505.04769v2#S3.T3.3.26.25.1.1.1).
+- [121]
+M. J. Kim, C. Finn, and P. Liang (2025)
+Fine-tuning vision-language-action models: optimizing speed and success.
+arXiv preprint arXiv:2502.19645.
+Cited by: [item 3](https://arxiv.org/html/2505.04769v2#S2.I2.i3.p1.1),
+[item 6](https://arxiv.org/html/2505.04769v2#S3.I2.i6.p1.1),
+[item 4](https://arxiv.org/html/2505.04769v2#S3.I3.i4.p1.1),
+[Table 1](https://arxiv.org/html/2505.04769v2#S3.T1.1.26.25.1.1.1),
+[Table 2](https://arxiv.org/html/2505.04769v2#S3.T2.5.5.2.1.1),
+[item 1](https://arxiv.org/html/2505.04769v2#S5.I1.i1.p1.1),
+[item 4](https://arxiv.org/html/2505.04769v2#S5.I1.i4.p1.1),
+[§5.2](https://arxiv.org/html/2505.04769v2#S5.SS2.SSS0.Px2.p1.1).
+- [122]
+M. J. Kim, K. Pertsch, S. Karamcheti, T. Xiao, A. Balakrishna, S. Nair, R. Rafailov, E. Foster, G. Lam, P. Sanketi, et al. (2024)
+Openvla: an open-source vision-language-action model.
+arXiv preprint arXiv:2406.09246.
+Cited by: [Figure 6](https://arxiv.org/html/2505.04769v2#S2.F6.1.pic1.14.14.14.10.10.1.1.3),
+[item 3](https://arxiv.org/html/2505.04769v2#S2.I2.i3.p1.1),
+[§2.4](https://arxiv.org/html/2505.04769v2#S2.SS4.p4.1),
+[item 1a](https://arxiv.org/html/2505.04769v2#S3.I1.i1.I1.i1.p1.1),
+[item 1](https://arxiv.org/html/2505.04769v2#S3.I2.i1.p1.1),
+[item 2](https://arxiv.org/html/2505.04769v2#S3.I2.i2.p1.1),
+[item 1](https://arxiv.org/html/2505.04769v2#S3.I3.i1.p1.1),
+[§3.1](https://arxiv.org/html/2505.04769v2#S3.SS1.p1.1),
+[§3.1](https://arxiv.org/html/2505.04769v2#S3.SS1.p6.1),
+[§3.4.3](https://arxiv.org/html/2505.04769v2#S3.SS4.SSS3.p4.1),
+[Table 1](https://arxiv.org/html/2505.04769v2#S3.T1.1.11.10.1.1.1),
+[Table 2](https://arxiv.org/html/2505.04769v2#S3.T2.15.26.10.1.1.1),
+[§4.1](https://arxiv.org/html/2505.04769v2#S4.SS1.p1.1),
+[§4.2](https://arxiv.org/html/2505.04769v2#S4.SS2.p2.1),
+[§4.3](https://arxiv.org/html/2505.04769v2#S4.SS3.p1.1),
+[§4.4](https://arxiv.org/html/2505.04769v2#S4.SS4.p2.1),
+[Table 4](https://arxiv.org/html/2505.04769v2#S4.T4.3.2.1.2.1.1),
+[Table 4](https://arxiv.org/html/2505.04769v2#S4.T4.3.7.6.3.1.1),
+[§4](https://arxiv.org/html/2505.04769v2#S4.p4.1),
+[item 1](https://arxiv.org/html/2505.04769v2#S5.I1.i1.p1.1),
+[item 4](https://arxiv.org/html/2505.04769v2#S5.I1.i4.p1.1).
+- [123]
+J. Koo, T. Cho, H. Kang, E. Pyo, T. G. Oh, T. Kim, and A. J. Choi (2025)
+Retovla: reusing register tokens for spatial reasoning in vision-language-action models.
+arXiv preprint arXiv:2509.21243.
+Cited by: [Figure 6](https://arxiv.org/html/2505.04769v2#S2.F6.1.pic1.50.50.50.46.46.1.1.3),
+[Table 1](https://arxiv.org/html/2505.04769v2#S3.T1.1.44.43.1.1.1),
+[Table 2](https://arxiv.org/html/2505.04769v2#S3.T2.15.44.28.1.1.1).
+- [124]
+N. Lee, Y. Bang, H. Lovenia, S. Cahyawijaya, W. Dai, and P. Fung (2023)
+Survey of social bias in vision-language models.
+arXiv preprint arXiv:2309.14381.
+Cited by: [§4.3](https://arxiv.org/html/2505.04769v2#S4.SS3.p1.1).
+- [125]
+C. Li, J. Wen, Y. Peng, Y. Peng, F. Feng, and Y. Zhu (2025)
+PointVLA: injecting the 3d world into vision-language-action models.
+arXiv preprint arXiv:2503.07511.
+Cited by: [Figure 6](https://arxiv.org/html/2505.04769v2#S2.F6.1.pic1.29.29.29.25.25.1.1.3),
+[§2.4](https://arxiv.org/html/2505.04769v2#S2.SS4.p4.1),
+[Table 2](https://arxiv.org/html/2505.04769v2#S3.T2.15.38.22.1.1.1),
+[Table 3](https://arxiv.org/html/2505.04769v2#S3.T3.3.17.16.1.1.1),
+[Table 4](https://arxiv.org/html/2505.04769v2#S4.T4.3.14.13.3.1.1).
+- [126]
+D. Li, Y. Jin, Y. Sun, H. Yu, J. Shi, X. Hao, P. Hao, H. Liu, F. Sun, J. Zhang, et al. (2024)
+What foundation models can bring for robot learning in manipulation: a survey.
+arXiv preprint arXiv:2404.18201.
+Cited by: [item 2](https://arxiv.org/html/2505.04769v2#S2.I2.i2.p1.1).
+- [127]
+J. Li, G. Skinner, G. Yang, B. R. Quaranto, S. D. Schwaitzberg, P. C. Kim, and J. Xiong (2024)
+LLaVA-surg: towards multimodal surgical assistant via structured surgical video learning.
+arXiv preprint arXiv:2408.07981.
+Cited by: [§3.4.4](https://arxiv.org/html/2505.04769v2#S3.SS4.SSS4.p2.1).
+- [128]
+J. Li, P. Wei, W. Han, and L. Fan (2023)
+Intentqa: context-aware video intent reasoning.
+In Proceedings of the IEEE/CVF international conference on computer vision,
+pp. 11963–11974.
+Cited by: [§2.2](https://arxiv.org/html/2505.04769v2#S2.SS2.p2.1).
+- [129]
+J. Li, Y. Zhu, Z. Tang, J. Wen, M. Zhu, X. Liu, C. Li, R. Cheng, Y. Peng, and F. Feng (2024)
+Improving vision-language-action models via chain-of-affordance.
+arXiv preprint arXiv:2412.20451.
+Cited by: [item 3](https://arxiv.org/html/2505.04769v2#S2.I1.i3.p1.1),
+[§2.4](https://arxiv.org/html/2505.04769v2#S2.SS4.p5.1),
+[§3.1](https://arxiv.org/html/2505.04769v2#S3.SS1.p6.1),
+[Table 1](https://arxiv.org/html/2505.04769v2#S3.T1.1.21.20.1.1.1),
+[Table 2](https://arxiv.org/html/2505.04769v2#S3.T2.10.10.4.1.1),
+[Table 4](https://arxiv.org/html/2505.04769v2#S4.T4.3.2.1.2.1.1),
+[Table 4](https://arxiv.org/html/2505.04769v2#S4.T4.3.6.5.3.1.1),
+[§4](https://arxiv.org/html/2505.04769v2#S4.p4.1),
+[item 1](https://arxiv.org/html/2505.04769v2#S5.I1.i1.p1.1),
+[item 4](https://arxiv.org/html/2505.04769v2#S5.I1.i4.p1.1).
+- [130]
+M. Li, Z. Wang, K. He, X. Ma, and Y. Liang (2025)
+JARVIS-vla: post-training large-scale vision language models to play visual games with keyboards and mouse.
+arXiv preprint arXiv:2503.16365.
+Cited by: [Table 1](https://arxiv.org/html/2505.04769v2#S3.T1.1.36.35.1.1.1),
+[Table 3](https://arxiv.org/html/2505.04769v2#S3.T3.3.24.23.1.1.1).
+- [131]
+Q. Li, Y. Liang, Z. Wang, L. Luo, X. Chen, M. Liao, F. Wei, Y. Deng, S. Xu, Y. Zhang, et al. (2024)
+Cogact: a foundational vision-language-action model for synergizing cognition and action in robotic manipulation.
+arXiv preprint arXiv:2411.19650.
+Cited by: [Figure 6](https://arxiv.org/html/2505.04769v2#S2.F6.1.pic1.21.21.21.17.17.1.1.3),
+[item 3](https://arxiv.org/html/2505.04769v2#S2.I1.i3.p1.1),
+[item 3](https://arxiv.org/html/2505.04769v2#S3.I2.i3.p1.1),
+[§3.1](https://arxiv.org/html/2505.04769v2#S3.SS1.p11.1),
+[§3.1](https://arxiv.org/html/2505.04769v2#S3.SS1.p7.1),
+[§3.4.1](https://arxiv.org/html/2505.04769v2#S3.SS4.SSS1.p6.1),
+[§3.4.3](https://arxiv.org/html/2505.04769v2#S3.SS4.SSS3.p3.1),
+[§3.4.3](https://arxiv.org/html/2505.04769v2#S3.SS4.SSS3.p4.1),
+[§3.4.4](https://arxiv.org/html/2505.04769v2#S3.SS4.SSS4.p1.1),
+[§3.4](https://arxiv.org/html/2505.04769v2#S3.SS4.p1.1),
+[Table 1](https://arxiv.org/html/2505.04769v2#S3.T1.1.12.11.1.1.1),
+[Table 2](https://arxiv.org/html/2505.04769v2#S3.T2.15.27.11.1.1.1),
+[Table 3](https://arxiv.org/html/2505.04769v2#S3.T3.3.2.1.1.1.1),
+[Table 4](https://arxiv.org/html/2505.04769v2#S4.T4.3.12.11.3.1.1).
+- [132]
+S. Li, J. Wang, R. Dai, W. Ma, W. Y. Ng, Y. Hu, and Z. Li (2024)
+RoboNurse-vla: robotic scrub nurse system based on vision-language-action model.
+arXiv preprint arXiv:2409.19590.
+Cited by: [§3.4.1](https://arxiv.org/html/2505.04769v2#S3.SS4.SSS1.p4.1),
+[§3.4.4](https://arxiv.org/html/2505.04769v2#S3.SS4.SSS4.p1.1),
+[§3.4.4](https://arxiv.org/html/2505.04769v2#S3.SS4.SSS4.p4.1),
+[§3.4](https://arxiv.org/html/2505.04769v2#S3.SS4.p1.1),
+[Table 1](https://arxiv.org/html/2505.04769v2#S3.T1.1.15.14.1.1.1),
+[Table 2](https://arxiv.org/html/2505.04769v2#S3.T2.15.34.18.1.1.1),
+[Table 3](https://arxiv.org/html/2505.04769v2#S3.T3.3.5.4.1.1.1).
+- [133]
+S. Li, H. Wu, J. Shao, Y. Ma, Y. Gan, Y. Luo, Y. Wang, D. Nie, L. Wang, W. Wu, et al. (2025)
+Seeing the forest and the trees: query-aware tokenizer for long-video multimodal language models.
+arXiv preprint arXiv:2511.11910.
+Cited by: [§5.2](https://arxiv.org/html/2505.04769v2#S5.SS2.SSS0.Px5.p1.1).
+- [134]
+Y. Li, Z. Gong, H. Li, X. Huang, H. Kang, G. Bai, and X. Ma (2025)
+Robotic visual instruction.
+arXiv preprint arXiv:2505.00693.
+Cited by: [§3.4.3](https://arxiv.org/html/2505.04769v2#S3.SS4.SSS3.p2.1).
+- [135]
+Y. Li, Y. Deng, J. Zhang, J. Jang, M. Memmel, R. Yu, C. R. Garrett, F. Ramos, D. Fox, A. Li, et al. (2025)
+HAMSTER: hierarchical action models for open-world robot manipulation.
+arXiv preprint arXiv:2502.05485.
+Cited by: [Table 4](https://arxiv.org/html/2505.04769v2#S4.T4.3.9.8.2.1.1).
+- [136]
+Y. Li, Z. Lai, W. Bao, Z. Tan, A. Dao, K. Sui, J. Shen, D. Liu, H. Liu, and Y. Kong (2025)
+Visual large language models for generalized and specialized applications.
+arXiv preprint arXiv:2501.02765.
+Cited by: [§2.3](https://arxiv.org/html/2505.04769v2#S2.SS3.p1.1),
+[Table 4](https://arxiv.org/html/2505.04769v2#S4.T4.3.11.10.3.1.1),
+[Table 4](https://arxiv.org/html/2505.04769v2#S4.T4.3.12.11.2.1.1).
+- [137]
+Z. Li, X. Wu, H. Du, H. Nghiem, and G. Shi (2025)
+Benchmark evaluations, applications, and challenges of large vision language models: a survey.
+arXiv preprint arXiv:2501.02189 1.
+Cited by: [§1](https://arxiv.org/html/2505.04769v2#S1.p3.1),
+[§2.4](https://arxiv.org/html/2505.04769v2#S2.SS4.p3.1).
+- [138]
+Z. Liang, Y. Li, T. Yang, C. Wu, S. Mao, T. Nian, L. Pei, S. Zhou, X. Yang, J. Pang, et al. (2025)
+Discrete diffusion vla: bringing discrete diffusion to action decoding in vision-language-action policies.
+arXiv preprint arXiv:2508.20072.
+Cited by: [Figure 6](https://arxiv.org/html/2505.04769v2#S2.F6.1.pic1.52.52.52.48.48.1.1.4),
+[Table 1](https://arxiv.org/html/2505.04769v2#S3.T1.1.46.45.1.1.1),
+[Table 2](https://arxiv.org/html/2505.04769v2#S3.T2.15.46.30.1.1.1).
+- [139]
+K. Q. Lin, L. Li, D. Gao, Z. Yang, S. Wu, Z. Bai, W. Lei, L. Wang, and M. Z. Shou (2024)
+Showui: one vision-language-action model for gui visual agent.
+arXiv preprint arXiv:2411.17465.
+Cited by: [Figure 6](https://arxiv.org/html/2505.04769v2#S2.F6.1.pic1.23.23.23.19.19.1.1.3),
+[item 3](https://arxiv.org/html/2505.04769v2#S2.I1.i3.p1.1),
+[§2.1](https://arxiv.org/html/2505.04769v2#S2.SS1.p2.1),
+[§2.2](https://arxiv.org/html/2505.04769v2#S2.SS2.p5.1),
+[Table 1](https://arxiv.org/html/2505.04769v2#S3.T1.1.23.22.1.1.1),
+[Table 2](https://arxiv.org/html/2505.04769v2#S3.T2.15.29.13.1.1.1).
+- [140]
+Y. Lin, H. Zhou, M. Chen, and H. Min (2019)
+Automatic sorting system for industrial robot with 3d visual perception and natural language interaction.
+Measurement and Control 52 (1-2), pp. 100–115.
+Cited by: [§2.2](https://arxiv.org/html/2505.04769v2#S2.SS2.p1.1).
+- [141]
+H. Liu, R. Yao, W. Liu, Z. Huang, S. Shen, and J. Ma (2025)
+CoDriveVLM: vlm-enhanced urban cooperative dispatching and motion planning for future autonomous mobility on demand systems.
+External Links: 2501.06132,
+[Link](https://arxiv.org/abs/2501.06132)
+Cited by: [§2](https://arxiv.org/html/2505.04769v2#S2.p2.1).
+- [142]
+J. Liu, H. Chen, P. An, Z. Liu, R. Zhang, C. Gu, X. Li, Z. Guo, S. Chen, M. Liu, et al. (2025)
+HybridVLA: collaborative diffusion and autoregression in a unified vision-language-action model.
+arXiv preprint arXiv:2503.10631.
+Cited by: [Figure 6](https://arxiv.org/html/2505.04769v2#S2.F6.1.pic1.30.30.30.26.26.1.1.3),
+[§2.3](https://arxiv.org/html/2505.04769v2#S2.SS3.p1.1),
+[§3.1](https://arxiv.org/html/2505.04769v2#S3.SS1.p8.1),
+[Table 1](https://arxiv.org/html/2505.04769v2#S3.T1.1.32.31.1.1.1),
+[Table 2](https://arxiv.org/html/2505.04769v2#S3.T2.15.40.24.1.1.1),
+[Table 3](https://arxiv.org/html/2505.04769v2#S3.T3.3.20.19.1.1.1),
+[Table 4](https://arxiv.org/html/2505.04769v2#S4.T4.3.2.1.2.1.1),
+[§4](https://arxiv.org/html/2505.04769v2#S4.p4.1).
+- [143]
+J. Liu, M. Liu, Z. Wang, P. An, X. Li, K. Zhou, S. Yang, R. Zhang, Y. Guo, and S. Zhang (2024)
+Robomamba: efficient vision-language-action model for robotic reasoning and manipulation.
+Advances in Neural Information Processing Systems 37, pp. 40085–40110.
+Cited by: [Figure 6](https://arxiv.org/html/2505.04769v2#S2.F6.1.pic1.27.27.27.23.23.1.1.3),
+[item 2](https://arxiv.org/html/2505.04769v2#S2.I2.i2.p1.1),
+[§2.1](https://arxiv.org/html/2505.04769v2#S2.SS1.p2.1),
+[Table 1](https://arxiv.org/html/2505.04769v2#S3.T1.1.20.19.1.1.1),
+[Table 3](https://arxiv.org/html/2505.04769v2#S3.T3.3.15.14.1.1.1),
+[§4.4](https://arxiv.org/html/2505.04769v2#S4.SS4.p2.1),
+[§4.5](https://arxiv.org/html/2505.04769v2#S4.SS5.p2.1).
+- [144]
+S. Liu, S. Yang, D. Fang, S. Jia, Y. Tang, L. Su, R. Peng, Y. Yan, X. Zou, and X. Hu (2026)
+Vision-language introspection: mitigating overconfident hallucinations in mllms via interpretable bi-causal steering.
+arXiv preprint arXiv:2601.05159.
+Cited by: [§5.2](https://arxiv.org/html/2505.04769v2#S5.SS2.SSS0.Px1.p1.1).
+- [145]
+S. Liu, L. Wu, B. Li, H. Tan, H. Chen, Z. Wang, K. Xu, H. Su, and J. Zhu (2024)
+Rdt-1b: a diffusion foundation model for bimanual manipulation.
+arXiv preprint arXiv:2410.07864.
+Cited by: [Figure 6](https://arxiv.org/html/2505.04769v2#S2.F6.1.pic1.20.20.20.16.16.1.1.3),
+[item 3](https://arxiv.org/html/2505.04769v2#S3.I2.i3.p1.1),
+[item 2](https://arxiv.org/html/2505.04769v2#S3.I3.i2.p1.1),
+[Table 1](https://arxiv.org/html/2505.04769v2#S3.T1.1.19.18.1.1.1),
+[Table 2](https://arxiv.org/html/2505.04769v2#S3.T2.6.6.2.1.1),
+[§4.2](https://arxiv.org/html/2505.04769v2#S4.SS2.p1.1).
+- [146]
+Y. Liu, X. Cao, T. Chen, Y. Jiang, J. You, M. Wu, X. Wang, M. Feng, Y. Jin, and J. Chen (2025)
+A survey of embodied ai in healthcare: techniques, applications, and opportunities.
+arXiv preprint arXiv:2501.07468.
+Cited by: [§3.4.4](https://arxiv.org/html/2505.04769v2#S3.SS4.SSS4.p2.1),
+[§3.4.4](https://arxiv.org/html/2505.04769v2#S3.SS4.SSS4.p5.1).
+- [147]
+Y. Liu, X. Cao, T. Chen, Y. Jiang, J. You, M. Wu, X. Wang, M. Feng, Y. Jin, and J. Chen (2025)
+From screens to scenes: a survey of embodied ai in healthcare.
+arXiv preprint arXiv:2501.07468.
+Cited by: [§3.4.4](https://arxiv.org/html/2505.04769v2#S3.SS4.SSS4.p5.1),
+[Table 4](https://arxiv.org/html/2505.04769v2#S4.T4.3.15.14.2.1.1).
+- [148]
+Z. Liu, H. Liang, X. Huang, W. Xiong, Q. Yu, L. Sun, C. Chen, C. He, B. Cui, and W. Zhang (2024)
+Synthvlm: high-efficiency and high-quality synthetic data for vision language models.
+arXiv preprint arXiv:2407.20756.
+Cited by: [Table 4](https://arxiv.org/html/2505.04769v2#S4.T4.3.8.7.2.1.1).
+- [149]
+H. Lu, H. Li, P. S. Shahani, S. Herbers, and M. Scheutz (2025)
+Probing a vision-language-action model for symbolic states and integration into a cognitive architecture.
+arXiv preprint arXiv:2502.04558.
+Cited by: [§2.3](https://arxiv.org/html/2505.04769v2#S2.SS3.p4.1),
+[Table 4](https://arxiv.org/html/2505.04769v2#S4.T4.3.17.16.2.1.1).
+- [150]
+J. Lu, C. Clark, S. Lee, Z. Zhang, S. Khosla, R. Marten, D. Hoiem, and A. Kembhavi (2024)
+Unified-io 2: scaling autoregressive multimodal models with vision language audio and action.
+In Proceedings of the IEEE/CVF Conference on Computer Vision and Pattern Recognition,
+pp. 26439–26455.
+Cited by: [§2.3](https://arxiv.org/html/2505.04769v2#S2.SS3.p1.1).
+- [151]
+Y. Lu and Z. Liao (2023)
+Towards happy housework: scenario-based experience design for a household cleaning robotic system..
+EAI Endorsed Transactions on Scalable Information Systems 10 (3).
+Cited by: [§3.4.1](https://arxiv.org/html/2505.04769v2#S3.SS4.SSS1.p1.1),
+[§3.4.1](https://arxiv.org/html/2505.04769v2#S3.SS4.SSS1.p4.1).
+- [152]
+H. Luo, Y. Feng, W. Zhang, S. Zheng, Y. Wang, H. Yuan, J. Liu, C. Xu, Q. Jin, and Z. Lu (2025)
+Being-h0: vision-language-action pretraining from large-scale human videos.
+arXiv preprint arXiv:2507.15597.
+Cited by: [Figure 6](https://arxiv.org/html/2505.04769v2#S2.F6.1.pic1.53.53.53.49.49.1.1.3),
+[Table 1](https://arxiv.org/html/2505.04769v2#S3.T1.1.47.46.1.1.1),
+[Table 2](https://arxiv.org/html/2505.04769v2#S3.T2.15.47.31.1.1.1).
+- [153]
+J. Luo, C. Xu, J. Wu, and S. Levine (2024)
+Precise and dexterous robotic manipulation via human-in-the-loop reinforcement learning.
+arXiv preprint arXiv:2410.21845.
+Cited by: [§1](https://arxiv.org/html/2505.04769v2#S1.p2.1).
+- [154]
+H. Lyre (2024)
+”Understanding ai”: semantic grounding in large language models.
+External Links: 2402.10992,
+[Link](https://arxiv.org/abs/2402.10992)
+Cited by: [§2](https://arxiv.org/html/2505.04769v2#S2.p2.1).
+- [155]
+J. Lyu, Z. Li, X. Shi, C. Xu, Y. Wang, and H. Wang (2025)
+DyWA: dynamics-adaptive world action model for generalizable non-prehensile manipulation.
+arXiv preprint arXiv:2503.16806.
+Cited by: [§2.3](https://arxiv.org/html/2505.04769v2#S2.SS3.p4.1).
+- [156]
+Y. Ma, Z. Song, Y. Zhuang, J. Hao, and I. King (2024)
+A survey on vision-language-action models for embodied ai.
+arXiv preprint arXiv:2405.14093.
+Cited by: [§1](https://arxiv.org/html/2505.04769v2#S1.p3.1),
+[§1](https://arxiv.org/html/2505.04769v2#S1.p4.1),
+[§1](https://arxiv.org/html/2505.04769v2#S1.p5.1),
+[§3.4.3](https://arxiv.org/html/2505.04769v2#S3.SS4.SSS3.p2.1),
+[§4.2](https://arxiv.org/html/2505.04769v2#S4.SS2.p2.1),
+[Table 4](https://arxiv.org/html/2505.04769v2#S4.T4.3.16.15.2.1.1),
+[Table 4](https://arxiv.org/html/2505.04769v2#S4.T4.3.3.2.2.1.1),
+[§4](https://arxiv.org/html/2505.04769v2#S4.p4.1),
+[§5.2](https://arxiv.org/html/2505.04769v2#S5.SS2.SSS0.Px4.p1.1).
+- [157]
+I. Misra, R. Girdhar, and A. Joulin (2021)
+An end-to-end transformer model for 3d object detection.
+In ICCV,
+Cited by: [§1](https://arxiv.org/html/2505.04769v2#S1.p2.1).
+- [158]
+M. Q. Mohammed, K. L. Chung, and C. S. Chyi (2020)
+Review of deep reinforcement learning-based object grasping: techniques, open challenges, and recommendations.
+Ieee Access 8, pp. 178450–178481.
+Cited by: [§1](https://arxiv.org/html/2505.04769v2#S1.p2.1).
+- [159]
+A. Moroncelli, V. Soni, A. A. Shahid, M. Maccarini, M. Forgione, D. Piga, B. Spahiu, and L. Roveda (2024)
+Integrating reinforcement learning with foundation models for autonomous robotics: methods and perspectives.
+arXiv preprint arXiv:2410.16411.
+Cited by: [§2.4](https://arxiv.org/html/2505.04769v2#S2.SS4.p3.1),
+[item 4](https://arxiv.org/html/2505.04769v2#S3.I3.i4.p1.1).
+- [160]
+A. Mumuni and F. Mumuni (2025)
+Large language models for artificial general intelligence (agi): a survey of foundational principles and approaches.
+arXiv preprint arXiv:2501.03151.
+Cited by: [Table 4](https://arxiv.org/html/2505.04769v2#S4.T4.3.17.16.3.1.1),
+[item 6](https://arxiv.org/html/2505.04769v2#S5.I1.i6.p1.1).
+- [161]
+F. Ni, J. Hao, S. Wu, L. Kou, Y. Yuan, Z. Dong, J. Liu, M. Li, Y. Zhuang, and Y. Zheng (2024)
+Peria: perceive, reason, imagine, act via holistic language and vision planning for manipulation.
+Advances in Neural Information Processing Systems 37, pp. 17541–17571.
+Cited by: [§2.3](https://arxiv.org/html/2505.04769v2#S2.SS3.p1.1).
+- [162]
+Y. Nie, L. Li, Z. Gan, S. Wang, C. Zhu, M. Zeng, Z. Liu, M. Bansal, and L. Wang (2021)
+MLP architectures for vision-and-language modeling: an empirical study.
+arXiv preprint arXiv:2112.04453.
+Cited by: [§4.2](https://arxiv.org/html/2505.04769v2#S4.SS2.p1.1).
+- [163]
+E. Noorani, Z. Serlin, B. Price, and A. Velasquez (2025)
+From abstraction to reality: darpa’s vision for robust sim-to-real autonomy.
+arXiv preprint arXiv:2503.11007.
+Cited by: [Table 4](https://arxiv.org/html/2505.04769v2#S4.T4.3.13.12.2.1.1).
+- [164]
+M. Oquab, T. Darcet, T. Moutakanni, H. Vo, M. Szafraniec, V. Khalidov, P. Fernandez, D. Haziza, F. Massa, A. El-Nouby, et al. (2023)
+Dinov2: learning robust visual features without supervision.
+arXiv preprint arXiv:2304.07193.
+Cited by: [item 2](https://arxiv.org/html/2505.04769v2#S3.I2.i2.p1.1),
+[§3.1](https://arxiv.org/html/2505.04769v2#S3.SS1.p1.1).
+- [165]
+J. Pang, P. Zheng, J. Fan, and T. Liu (2025)
+Towards cognition-augmented human-centric assembly: a visual computation perspective.
+Robotics and Computer-Integrated Manufacturing 91, pp. 102852.
+Cited by: [§3.4.6](https://arxiv.org/html/2505.04769v2#S3.SS4.SSS6.p2.1).
+- [166]
+D. Pantalone, G. S. Faini, F. Cialdai, E. Sereni, S. Bacci, D. Bani, M. Bernini, C. Pratesi, P. Stefàno, L. Orzalesi, et al. (2021)
+Robot-assisted surgery in space: pros and cons. a review from the surgeon’s point of view.
+npj Microgravity 7 (1), pp. 56.
+Cited by: [§3.4.4](https://arxiv.org/html/2505.04769v2#S3.SS4.SSS4.p1.1).
+- [167]
+S. Park and Y. Kim (2023)
+Visual language integration: a survey and open challenges.
+Computer Science Review 48, pp. 100548.
+Cited by: [§3.4.5](https://arxiv.org/html/2505.04769v2#S3.SS4.SSS5.p1.1).
+- [168]
+S. Park, H. Kim, S. Kim, W. Jeon, J. Yang, B. Jeon, Y. Oh, and J. Choi (2025)
+Saliency-aware quantized imitation learning for efficient robotic control.
+In Proceedings of the IEEE/CVF International Conference on Computer Vision,
+pp. 13140–13150.
+Cited by: [§5.2](https://arxiv.org/html/2505.04769v2#S5.SS2.SSS0.Px5.p1.1).
+- [169]
+S. Pasas-Farmer and R. Jain (2025)
+From discovery to delivery: governance of ai in the pharmaceutical industry.
+Green Analytical Chemistry 13, pp. 100268.
+Cited by: [§5.2](https://arxiv.org/html/2505.04769v2#S5.SS2.SSS0.Px8.p1.1).
+- [170]
+D. Patel, H. Eghbalzadeh, N. Kamra, M. L. Iuzzolino, U. Jain, and R. Desai (2023)
+Pretrained language models as visual planners for human assistance.
+In Proceedings of the IEEE/CVF International Conference on Computer Vision,
+pp. 15302–15314.
+Cited by: [§4.2](https://arxiv.org/html/2505.04769v2#S4.SS2.p2.1).
+- [171]
+K. Pertsch, K. Stachowicz, B. Ichter, D. Driess, S. Nair, Q. Vuong, O. Mees, C. Finn, and S. Levine (2025)
+Fast: efficient action tokenization for vision-language-action models.
+arXiv preprint arXiv:2501.09747.
+Cited by: [§2.3](https://arxiv.org/html/2505.04769v2#S2.SS3.p5.11),
+[item 2](https://arxiv.org/html/2505.04769v2#S3.I1.i2.p1.1),
+[item 4](https://arxiv.org/html/2505.04769v2#S3.I2.i4.p1.1),
+[item 2](https://arxiv.org/html/2505.04769v2#S3.I3.i2.p1.1),
+[§3.1](https://arxiv.org/html/2505.04769v2#S3.SS1.p8.1),
+[Table 1](https://arxiv.org/html/2505.04769v2#S3.T1.1.25.24.1.1.1),
+[Table 2](https://arxiv.org/html/2505.04769v2#S3.T2.3.3.1.1.1),
+[§4.2](https://arxiv.org/html/2505.04769v2#S4.SS2.p1.1),
+[Table 4](https://arxiv.org/html/2505.04769v2#S4.T4.3.3.2.2.1.1),
+[§4](https://arxiv.org/html/2505.04769v2#S4.p4.1),
+[item 1](https://arxiv.org/html/2505.04769v2#S5.I1.i1.p1.1),
+[item 4](https://arxiv.org/html/2505.04769v2#S5.I1.i4.p1.1),
+[§5.2](https://arxiv.org/html/2505.04769v2#S5.SS2.SSS0.Px5.p1.1).
+- [172]
+A. Plaat, M. van Duijn, N. van Stein, M. Preuss, P. van der Putten, and K. J. Batenburg (2025)
+Agentic large language models, a survey.
+arXiv preprint arXiv:2503.23037.
+Cited by: [Table 4](https://arxiv.org/html/2505.04769v2#S4.T4.3.17.16.3.1.1).
+- [173]
+A. Polubarov, N. Lyubaykin, A. Derevyagin, I. Zisman, D. Tarasov, A. Nikulin, and V. Kurenkov (2025)
+Vintix: action model via in-context reinforcement learning.
+arXiv preprint arXiv:2501.19400.
+Cited by: [Table 4](https://arxiv.org/html/2505.04769v2#S4.T4.3.15.14.2.1.1).
+- [174]
+C. R. Qi, O. Litany, K. He, and L. J. Guibas (2019)
+Deep hough voting for 3d object detection in point clouds.
+In ICCV,
+Cited by: [§1](https://arxiv.org/html/2505.04769v2#S1.p2.1).
+- [175]
+D. Qu, H. Song, Q. Chen, Y. Yao, X. Ye, Y. Ding, Z. Wang, J. Gu, B. Zhao, D. Wang, et al. (2025)
+SpatialVLA: exploring spatial representations for visual-language-action model.
+arXiv preprint arXiv:2501.15830.
+Cited by: [Figure 6](https://arxiv.org/html/2505.04769v2#S2.F6.1.pic1.47.47.47.43.43.1.1.3),
+[§2.1](https://arxiv.org/html/2505.04769v2#S2.SS1.p2.1),
+[§2.4](https://arxiv.org/html/2505.04769v2#S2.SS4.p5.1),
+[Table 1](https://arxiv.org/html/2505.04769v2#S3.T1.1.34.33.1.1.1),
+[Table 3](https://arxiv.org/html/2505.04769v2#S3.T3.3.22.21.1.1.1),
+[Table 4](https://arxiv.org/html/2505.04769v2#S4.T4.3.12.11.3.1.1),
+[Table 4](https://arxiv.org/html/2505.04769v2#S4.T4.3.5.4.3.1.1),
+[§4](https://arxiv.org/html/2505.04769v2#S4.p4.1),
+[item 3](https://arxiv.org/html/2505.04769v2#S5.I1.i3.p1.1).
+- [176]
+A. Radford, J. W. Kim, C. Hallacy, A. Ramesh, G. Goh, S. Agarwal, G. Sastry, A. Askell, P. Mishkin, J. Clark, et al. (2021)
+Learning transferable visual models from natural language supervision.
+In ICML,
+Cited by: [§1](https://arxiv.org/html/2505.04769v2#S1.p1.1).
+- [177]
+A. Radford, K. Narasimhan, T. Salimans, I. Sutskever, et al. (2018)
+Improving language understanding by generative pre-training.
+Cited by: [§1](https://arxiv.org/html/2505.04769v2#S1.p1.1),
+[item 1c](https://arxiv.org/html/2505.04769v2#S3.I1.i1.I1.i3.p1.1).
+- [178]
+P. K. Rawal (2025)
+An intelligent versatile pipeline for 6d localization of industrial components in a production environment.
+Ph.D. Thesis, Fraunhofer Verlag.
+Cited by: [§2.2](https://arxiv.org/html/2505.04769v2#S2.SS2.p1.1).
+- [179]
+P. P. Ray (2023)
+ChatGPT: a comprehensive review on background, applications, key challenges, bias, ethics, limitations and future scope.
+Internet of Things and Cyber-Physical Systems 3, pp. 121–154.
+Cited by: [§3](https://arxiv.org/html/2505.04769v2#S3.p1.1).
+- [180]
+S. Raza, R. Qureshi, A. Zahid, J. Fioresi, F. Sadak, M. Saeed, R. Sapkota, A. Jain, A. Zafar, M. U. Hassan, et al. (2025)
+Who is responsible? the data, models, users or regulations? responsible generative ai for a sustainable future.
+arXiv preprint arXiv:2502.08650.
+Cited by: [Table 4](https://arxiv.org/html/2505.04769v2#S4.T4.3.17.16.3.1.1),
+[item 6](https://arxiv.org/html/2505.04769v2#S5.I1.i6.p1.1).
+- [181]
+S. Reed, K. Zolna, E. Parisotto, S. G. Colmenarejo, A. Novikov, G. Barth-Maron, M. Gimenez, Y. Sulsky, J. Kay, J. T. Springenberg, et al. (2022)
+A generalist agent.
+arXiv preprint arXiv:2205.06175.
+Cited by: [Figure 6](https://arxiv.org/html/2505.04769v2#S2.F6.1.pic1.6.6.6.2.2.1.1.3),
+[item 1](https://arxiv.org/html/2505.04769v2#S2.I1.i1.p1.1),
+[§2.1](https://arxiv.org/html/2505.04769v2#S2.SS1.p2.1),
+[Table 1](https://arxiv.org/html/2505.04769v2#S3.T1.1.4.3.1.1.1),
+[Table 2](https://arxiv.org/html/2505.04769v2#S3.T2.15.20.4.1.1.1).
+- [182]
+D. Rodriguez-Guerra, G. Sorrosal, I. Cabanes, and C. Calleja (2021)
+Human-robot interaction review: challenges and solutions for modern industrial environments.
+Ieee Access 9, pp. 108557–108578.
+Cited by: [§3.4.3](https://arxiv.org/html/2505.04769v2#S3.SS4.SSS3.p1.1).
+- [183]
+J. Rodriguez-Juan, D. Ortiz-Perez, J. Garcia-Rodriguez, D. Tomás, and G. J. Nalepa (2025)
+Integrating advanced vision-language models for context recognition in risks assessment.
+Neurocomputing 618, pp. 129131.
+Cited by: [Table 4](https://arxiv.org/html/2505.04769v2#S4.T4.3.4.3.2.1.1),
+[§4](https://arxiv.org/html/2505.04769v2#S4.p4.1),
+[item 2](https://arxiv.org/html/2505.04769v2#S5.I1.i2.p1.1).
+- [184]
+A. Roychoudhury, S. Khorshidi, S. Agrawal, and M. Bennewitz (2023)
+Perception for humanoid robots.
+Current Robotics Reports 4 (4), pp. 127–140.
+Cited by: [§3.4.1](https://arxiv.org/html/2505.04769v2#S3.SS4.SSS1.p1.1).
+- [185]
+Z. A. Sahili, I. Patras, and M. Purver (2025)
+Scaling for fairness? analyzing model size, data composition, and multilinguality in vision-language bias.
+arXiv preprint arXiv:2501.13223.
+Cited by: [Table 4](https://arxiv.org/html/2505.04769v2#S4.T4.3.5.4.2.1.1),
+[§4](https://arxiv.org/html/2505.04769v2#S4.p4.1),
+[item 6](https://arxiv.org/html/2505.04769v2#S5.I1.i6.p1.1).
+- [186]
+S. Sameni, K. Kafle, H. Tan, and S. Jenni (2024)
+Building vision-language models on solid foundations with masked distillation.
+In Proceedings of the IEEE/CVF Conference on Computer Vision and Pattern Recognition,
+pp. 14216–14226.
+Cited by: [§2.4](https://arxiv.org/html/2505.04769v2#S2.SS4.p2.1).
+- [187]
+M. Samson, B. Muraccioli, and F. Kanehiro (2025)
+Scalable, training-free visual language robotics: a modular multi-model framework for consumer-grade gpus.
+In 2025 IEEE/SICE International Symposium on System Integration (SII),
+pp. 193–198.
+Cited by: [Table 4](https://arxiv.org/html/2505.04769v2#S4.T4.3.13.12.3.1.1).
+- [188]
+S. Sanyal and K. Roy (2025)
+Asma: an adaptive safety margin algorithm for vision-language drone navigation via scene-aware control barrier functions.
+IEEE Robotics and Automation Letters.
+Cited by: [§5.2](https://arxiv.org/html/2505.04769v2#S5.SS2.SSS0.Px3.p1.1).
+- [189]
+R. Sapkota and M. Karkee (2025)
+Object detection with multimodal large vision-language models: an in-depth review.
+Available at SSRN 5233953.
+Cited by: [§1](https://arxiv.org/html/2505.04769v2#S1.p3.1).
+- [190]
+R. Sapkota, K. I. Roumeliotis, R. H. Cheppally, M. F. Calero, and M. Karkee (2025)
+A review of 3d object detection with vision-language models.
+arXiv preprint arXiv:2504.18738.
+Cited by: [§1](https://arxiv.org/html/2505.04769v2#S1.p3.1).
+- [191]
+O. Sautenkov, Y. Yaqoot, A. Lykov, M. A. Mustafa, G. Tadevosyan, A. Akhmetkazy, M. A. Cabrera, M. Martynov, S. Karaf, and D. Tsetserukou (2025)
+UAV-vla: vision-language-action system for large scale aerial mission generation.
+arXiv preprint arXiv:2501.05014.
+Cited by: [§3.4.2](https://arxiv.org/html/2505.04769v2#S3.SS4.SSS2.p8.1),
+[§3.4.5](https://arxiv.org/html/2505.04769v2#S3.SS4.SSS5.p1.1),
+[§3.4](https://arxiv.org/html/2505.04769v2#S3.SS4.p1.1),
+[Table 1](https://arxiv.org/html/2505.04769v2#S3.T1.1.30.29.1.1.1),
+[Table 2](https://arxiv.org/html/2505.04769v2#S3.T2.15.41.25.1.1.1),
+[Table 3](https://arxiv.org/html/2505.04769v2#S3.T3.3.12.11.1.1.1),
+[Table 4](https://arxiv.org/html/2505.04769v2#S4.T4.3.2.1.3.1.1).
+- [192]
+A. Schakkal, B. Zandonati, Z. Yang, and N. Azizan (2025)
+Hierarchical vision-language planning for multi-step humanoid manipulation.
+arXiv preprint arXiv:2506.22827.
+Cited by: [§5.2](https://arxiv.org/html/2505.04769v2#S5.SS2.SSS0.Px3.p1.1).
+- [193]
+S. Schmidgall, J. Cho, C. Zakka, and W. Hiesinger (2024)
+Gp-vls: a general-purpose vision language model for surgery.
+arXiv preprint arXiv:2407.19305.
+Cited by: [§3.4.4](https://arxiv.org/html/2505.04769v2#S3.SS4.SSS4.p1.1).
+- [194]
+C. Schuhmann, R. Beaumont, R. Vencu, C. Gordon, R. Wightman, M. Cherti, T. Coombes, A. Katta, C. Mullis, M. Wortsman, et al. (2022)
+Laion-5b: an open large-scale dataset for training next generation image-text models.
+Advances in neural information processing systems 35, pp. 25278–25294.
+Cited by: [item 1a](https://arxiv.org/html/2505.04769v2#S3.I1.i1.I1.i1.p1.1),
+[item 2](https://arxiv.org/html/2505.04769v2#S3.I2.i2.p1.1),
+[§3.1](https://arxiv.org/html/2505.04769v2#S3.SS1.p1.1),
+[item 3](https://arxiv.org/html/2505.04769v2#S5.I1.i3.p1.1).
+- [195]
+V. Serpiva, A. Lykov, A. Myshlyaev, M. H. Khan, A. A. Abdulkarim, O. Sautenkov, and D. Tsetserukou (2025)
+RaceVLA: vla-based racing drone navigation with human-like behaviour.
+arXiv preprint arXiv:2503.02572.
+Cited by: [Figure 6](https://arxiv.org/html/2505.04769v2#S2.F6.1.pic1.38.38.38.34.34.1.1.3),
+[§2.5](https://arxiv.org/html/2505.04769v2#S2.SS5.p1.1),
+[§4](https://arxiv.org/html/2505.04769v2#S4.p3.1).
+- [196]
+M. Shadab Siddiqui, M. Rabbi, M. J. Islam, and R. U. Ahmed (2025)
+Comparison of different controller architectures for autonomous driving and recommendations for robust and safe implementations.
+Journal of Advanced Transportation 2025 (1), pp. 9995539.
+Cited by: [§5.2](https://arxiv.org/html/2505.04769v2#S5.SS2.SSS0.Px3.p1.1).
+- [197]
+R. Shao, W. Li, L. Zhang, R. Zhang, Z. Liu, R. Chen, and L. Nie (2025)
+Large vlm-based vision-language-action models for robotic manipulation: a survey.
+arXiv preprint arXiv:2508.13073.
+Cited by: [§5.2](https://arxiv.org/html/2505.04769v2#S5.SS2.SSS0.Px5.p1.1).
+- [198]
+A. Sharshar, L. U. Khan, W. Ullah, and M. Guizani (2025)
+Vision-language models for edge networks: a comprehensive survey.
+arXiv preprint arXiv:2502.07855.
+Cited by: [Table 4](https://arxiv.org/html/2505.04769v2#S4.T4.3.17.16.2.1.1).
+- [199]
+L. X. Shi, B. Ichter, M. Equi, L. Ke, K. Pertsch, Q. Vuong, J. Tanner, A. Walling, H. Wang, N. Fusai, et al. (2025)
+Hi robot: open-ended instruction following with hierarchical vision-language-action models.
+arXiv preprint arXiv:2502.19417.
+Cited by: [Figure 6](https://arxiv.org/html/2505.04769v2#S2.F6.1.pic1.36.36.36.32.32.1.1.3),
+[§4](https://arxiv.org/html/2505.04769v2#S4.p2.1).
+- [200]
+H. Shin, H. R. Roth, M. Gao, L. Lu, Z. Xu, I. Nogues, J. Yao, D. Mollura, and R. M. Summers (2016)
+Deep convolutional neural networks for computer-aided detection: cnn architectures, dataset characteristics and transfer learning.
+IEEE transactions on medical imaging 35 (5), pp. 1285–1298.
+Cited by: [§1](https://arxiv.org/html/2505.04769v2#S1.p2.1).
+- [201]
+S. Shivadekar (2025)
+Artificial intelligence for cognitive systems: deep learning, neuro-symbolic integration, and human-centric intelligence.
+Deep Science Publishing.
+Cited by: [§5.2](https://arxiv.org/html/2505.04769v2#S5.SS2.SSS0.Px3.p1.1).
+- [202]
+M. Shridhar, L. Manuelli, and D. Fox (2022)
+Cliport: what and where pathways for robotic manipulation.
+In Conference on robot learning,
+pp. 894–906.
+Cited by: [Figure 6](https://arxiv.org/html/2505.04769v2#S2.F6.1.pic1.5.5.5.1.1.1.1.3),
+[item 1](https://arxiv.org/html/2505.04769v2#S2.I1.i1.p1.1),
+[§2.1](https://arxiv.org/html/2505.04769v2#S2.SS1.p2.1),
+[§2.2](https://arxiv.org/html/2505.04769v2#S2.SS2.p3.1),
+[§3.1](https://arxiv.org/html/2505.04769v2#S3.SS1.p11.1),
+[§3.1](https://arxiv.org/html/2505.04769v2#S3.SS1.p3.1),
+[§3.1](https://arxiv.org/html/2505.04769v2#S3.SS1.p6.1),
+[Table 1](https://arxiv.org/html/2505.04769v2#S3.T1.1.2.1.1.1.1),
+[Table 2](https://arxiv.org/html/2505.04769v2#S3.T2.15.17.1.1.1.1),
+[§3](https://arxiv.org/html/2505.04769v2#S3.p1.1).
+- [203]
+M. Shukor, D. Aubakirova, F. Capuano, P. Kooijmans, S. Palma, A. Zouitine, M. Aractingi, C. Pascal, M. Russi, A. Marafioti, et al. (2025)
+Smolvla: a vision-language-action model for affordable and efficient robotics.
+arXiv preprint arXiv:2506.01844.
+Cited by: [§5.2](https://arxiv.org/html/2505.04769v2#S5.SS2.SSS0.Px4.p1.1).
+- [204]
+W. Si, N. Wang, and C. Yang (2021)
+A review on manipulation skill acquisition through teleoperation-based learning from demonstration.
+Cognitive Computation and Systems 3 (1), pp. 1–16.
+Cited by: [§3.4.4](https://arxiv.org/html/2505.04769v2#S3.SS4.SSS4.p1.1).
+- [205]
+K. Simonyan and A. Zisserman (2014)
+Very deep convolutional networks for large-scale image recognition.
+arXiv preprint arXiv:1409.1556.
+Cited by: [§1](https://arxiv.org/html/2505.04769v2#S1.p2.1).
+- [206]
+G. Singh (2025)
+Neural object-centric scene representation and generation.
+Ph.D. Thesis, Rutgers The State University of New Jersey, School of Graduate Studies.
+Cited by: [§5.2](https://arxiv.org/html/2505.04769v2#S5.SS2.SSS0.Px1.p1.1).
+- [207]
+S. Singh, J. Singh, B. Shah, S. S. Sehra, and F. Ali (2022)
+Augmented reality and gps-based resource efficient navigation system for outdoor environments: integrating device camera, sensors, and storage.
+Sustainability 14 (19), pp. 12720.
+Cited by: [§3.4.6](https://arxiv.org/html/2505.04769v2#S3.SS4.SSS6.p1.1).
+- [208]
+M. Song, X. Deng, Z. Zhou, J. Wei, W. Guan, and L. Nie (2025)
+A survey on diffusion policy for robotic manipulation: taxonomy, analysis, and future directions.
+Authorea Preprints.
+Cited by: [Table 4](https://arxiv.org/html/2505.04769v2#S4.T4.3.13.12.3.1.1).
+- [209]
+W. Song, J. Chen, P. Ding, H. Zhao, W. Zhao, Z. Zhong, Z. Ge, J. Ma, and H. Li (2025)
+Accelerating vision-language-action model integrated with action chunking via parallel decoding.
+arXiv preprint arXiv:2503.02310.
+Cited by: [item 3](https://arxiv.org/html/2505.04769v2#S2.I2.i3.p1.1),
+[item 3a](https://arxiv.org/html/2505.04769v2#S3.I1.i3.I1.i1.p1.1),
+[item 5](https://arxiv.org/html/2505.04769v2#S3.I2.i5.p1.1),
+[item 3](https://arxiv.org/html/2505.04769v2#S3.I3.i3.p1.1).
+- [210]
+H. Sun, H. Wang, C. Ma, S. Zhang, J. Ye, X. Chen, and X. Lan (2025)
+PRISM: projection-based reward integration for scene-aware real-to-sim-to-real transfer with few demonstrations.
+arXiv preprint arXiv:2504.20520.
+Cited by: [Table 4](https://arxiv.org/html/2505.04769v2#S4.T4.3.9.8.2.1.1).
+- [211]
+J. Sun, P. Mao, L. Kong, and J. Wang (2025)
+A review of embodied grasping.
+Sensors (Basel, Switzerland) 25 (3), pp. 852.
+Cited by: [item 2](https://arxiv.org/html/2505.04769v2#S2.I2.i2.p1.1),
+[§3.4.6](https://arxiv.org/html/2505.04769v2#S3.SS4.SSS6.p2.1).
+- [212]
+L. Sun, B. Xie, Y. Liu, H. Shi, T. Wang, and J. Cao (2025)
+Geovla: empowering 3d representations in vision-language-action models.
+arXiv preprint arXiv:2508.09071.
+Cited by: [Figure 6](https://arxiv.org/html/2505.04769v2#S2.F6.1.pic1.56.56.56.52.52.1.1.3),
+[Table 1](https://arxiv.org/html/2505.04769v2#S3.T1.1.50.49.1.1.1).
+- [213]
+I. Sutskever, J. Martens, and G. E. Hinton (2011)
+Generating text with recurrent neural networks.
+In Proceedings of the 28th international conference on machine learning (ICML-11),
+pp. 1017–1024.
+Cited by: [§1](https://arxiv.org/html/2505.04769v2#S1.p1.1).
+- [214]
+A. Szot, B. Mazoure, H. Agrawal, R. D. Hjelm, Z. Kira, and A. Toshev (2024)
+Grounding multimodal large language models in actions.
+Advances in Neural Information Processing Systems 37, pp. 20198–20224.
+Cited by: [§4.3](https://arxiv.org/html/2505.04769v2#S4.SS3.p1.1).
+- [215]
+A. Taherin, J. Lin, A. Akbari, A. Akbari, P. Zhao, W. Chen, D. Kaeli, and Y. Wang (2025)
+Cross-platform scaling of vision-language-action models from edge to cloud gpus.
+arXiv preprint arXiv:2509.11480.
+Cited by: [§5.2](https://arxiv.org/html/2505.04769v2#S5.SS2.SSS0.Px7.p1.1).
+- [216]
+X. Tan, Y. Yang, P. Ye, J. Zheng, B. Bai, X. Wang, J. Hao, and T. Chen (2025)
+Think twice, act once: token-aware compression and action reuse for efficient inference in vision-language-action models.
+arXiv preprint arXiv:2505.21200.
+Cited by: [§5.2](https://arxiv.org/html/2505.04769v2#S5.SS2.SSS0.Px4.p1.1).
+- [217]
+G. R. Team, S. Abeyruwan, J. Ainslie, J. Alayrac, M. G. Arenas, T. Armstrong, A. Balakrishna, R. Baruch, M. Bauza, M. Blokzijl, et al. (2025)
+Gemini robotics: bringing ai into the physical world.
+arXiv preprint arXiv:2503.20020.
+Cited by: [§3.1](https://arxiv.org/html/2505.04769v2#S3.SS1.p8.1),
+[Table 4](https://arxiv.org/html/2505.04769v2#S4.T4.3.17.16.3.1.1).
+- [218]
+O. M. Team, D. Ghosh, H. Walke, K. Pertsch, K. Black, O. Mees, S. Dasari, J. Hejna, T. Kreiman, C. Xu, et al. (2024)
+Octo: an open-source generalist robot policy.
+arXiv preprint arXiv:2405.12213.
+Cited by: [Figure 6](https://arxiv.org/html/2505.04769v2#S2.F6.1.pic1.13.13.13.9.9.1.1.3),
+[§2.1](https://arxiv.org/html/2505.04769v2#S2.SS1.p2.1),
+[§2.2](https://arxiv.org/html/2505.04769v2#S2.SS2.p4.1),
+[item 1b](https://arxiv.org/html/2505.04769v2#S3.I1.i1.I1.i2.p1.1),
+[Table 1](https://arxiv.org/html/2505.04769v2#S3.T1.1.10.9.1.1.1),
+[Table 2](https://arxiv.org/html/2505.04769v2#S3.T2.15.23.7.1.1.1),
+[§3](https://arxiv.org/html/2505.04769v2#S3.p2.1).
+- [219]
+S. Tellex, N. Gopalan, H. Kress-Gazit, and C. Matuszek (2020)
+Robots that use language.
+Annual Review of Control, Robotics, and Autonomous Systems 3 (1), pp. 25–55.
+Cited by: [§2.2](https://arxiv.org/html/2505.04769v2#S2.SS2.p1.1).
+- [220]
+H. Tian, T. Wang, Y. Liu, X. Qiao, and Y. Li (2020)
+Computer vision technology in agricultural automation—a review.
+Information processing in agriculture 7 (1), pp. 1–19.
+Cited by: [§3.4.5](https://arxiv.org/html/2505.04769v2#S3.SS4.SSS5.p1.1).
+- [221]
+K. Tian, Y. Jiang, Z. Yuan, B. Peng, and L. Wang (2024)
+Visual autoregressive modeling: scalable image generation via next-scale prediction.
+Advances in neural information processing systems 37, pp. 84839–84865.
+Cited by: [§2.3](https://arxiv.org/html/2505.04769v2#S2.SS3.p1.1).
+- [222]
+N. Torres, C. Ulloa, I. Araya, M. Ayala, and S. Jara (2024)
+A comprehensive analysis of gender, racial, and prompt-induced biases in large language models.
+International Journal of Data Science and Analytics, pp. 1–38.
+Cited by: [§4.3](https://arxiv.org/html/2505.04769v2#S4.SS3.p1.1).
+- [223]
+H. Touvron, L. Martin, K. Stone, P. Albert, A. Almahairi, Y. Babaei, N. Bashlykov, S. Batra, P. Bhargava, S. Bhosale, et al. (2023)
+Llama 2: open foundation and fine-tuned chat models.
+arXiv preprint arXiv:2307.09288.
+Cited by: [§3.1](https://arxiv.org/html/2505.04769v2#S3.SS1.p1.1).
+- [224]
+C. Trivedi, P. Bhattacharya, V. K. Prasad, V. Patel, A. Singh, S. Tanwar, R. Sharma, S. Aluvala, G. Pau, and G. Sharma (2024)
+Explainable ai for industry 5.0: vision, architecture, and potential directions.
+IEEE Open Journal of Industry Applications.
+Cited by: [§3.4.4](https://arxiv.org/html/2505.04769v2#S3.SS4.SSS4.p5.1).
+- [225]
+L. Verbaan (2024)
+Perception and control with large language models in robotic manipulation.
+TU Delft Library.
+Cited by: [§3.4.4](https://arxiv.org/html/2505.04769v2#S3.SS4.SSS4.p1.1).
+- [226]
+K. Vinod, P. J. Ramesh, B. Chakravarthi, et al. (2025)
+SEBVS: synthetic event-based visual servoing for robot navigation and manipulation.
+arXiv preprint arXiv:2508.17643.
+Cited by: [§5.2](https://arxiv.org/html/2505.04769v2#S5.SS2.SSS0.Px4.p1.1).
+- [227]
+Q. Vuong, S. Levine, H. R. Walke, K. Pertsch, A. Singh, R. Doshi, C. Xu, J. Luo, L. Tan, D. Shah, et al. (2023)
+Open x-embodiment: robotic learning datasets and rt-x models.
+In Towards Generalist Robots: Learning Paradigms for Scalable Skill Acquisition@ CoRL2023,
+Cited by: [§2.4](https://arxiv.org/html/2505.04769v2#S2.SS4.p3.1),
+[item 1a](https://arxiv.org/html/2505.04769v2#S3.I1.i1.I1.i1.p1.1),
+[§3.1](https://arxiv.org/html/2505.04769v2#S3.SS1.p1.1),
+[Table 4](https://arxiv.org/html/2505.04769v2#S4.T4.3.12.11.3.1.1),
+[Table 4](https://arxiv.org/html/2505.04769v2#S4.T4.3.5.4.3.1.1),
+[item 3](https://arxiv.org/html/2505.04769v2#S5.I1.i3.p1.1).
+- [228]
+J. R. Waite, M. Z. Hasan, Q. Liu, Z. Jiang, C. Hegde, and S. Sarkar (2025)
+RLS3: rl-based synthetic sample selection to enhance spatial reasoning in vision-language models for indoor autonomous perception.
+In Proceedings of the ACM/IEEE 16th International Conference on Cyber-Physical Systems (with CPS-IoT Week 2025),
+ICCPS ’25, New York, NY, USA.
+External Links: ISBN 9798400714986,
+[Document](https://dx.doi.org/10.1145/3716550.3722033)
+Cited by: [§2](https://arxiv.org/html/2505.04769v2#S2.p2.1).
+- [229]
+G. Wang, L. Bai, W. J. Nah, J. Wang, Z. Zhang, Z. Chen, J. Wu, M. Islam, H. Liu, and H. Ren (2024)
+Surgical-lvlm: learning to adapt large vision-language model for grounded visual question answering in robotic surgery.
+arXiv preprint arXiv:2405.10948.
+Cited by: [§3.4.4](https://arxiv.org/html/2505.04769v2#S3.SS4.SSS4.p5.1).
+- [230]
+H. Wang, Z. Xing, W. Wu, Y. Yang, Q. Tang, M. Zhang, Y. Xu, and L. Zhu (2024)
+Non-invasive to invasive: enhancing ffa synthesis from cfp with a benchmark dataset and a novel network.
+In Proceedings of the 1st International Workshop on Multimedia Computing for Health and Medicine,
+pp. 7–15.
+Cited by: [§3.4.4](https://arxiv.org/html/2505.04769v2#S3.SS4.SSS4.p2.1).
+- [231]
+J. Wang, D. Guo, and H. Liu (2025)
+Where to learn: embodied perception learning planned by vision-language models.
+IEEE Transactions on Cognitive and Developmental Systems.
+Cited by: [§2.4](https://arxiv.org/html/2505.04769v2#S2.SS4.p3.1).
+- [232]
+S. Wang (2025)
+RoboFlamingo-plus: fusion of depth and rgb perception with vision-language models for enhanced robotic manipulation.
+arXiv preprint arXiv:2503.19510.
+Cited by: [§2.4](https://arxiv.org/html/2505.04769v2#S2.SS4.p5.1),
+[§4.2](https://arxiv.org/html/2505.04769v2#S4.SS2.p1.1).
+- [233]
+T. Wang, C. Han, J. C. Liang, W. Yang, D. Liu, L. X. Zhang, Q. Wang, J. Luo, and R. Tang (2024)
+Exploring the adversarial vulnerabilities of vision-language-action models in robotics.
+arXiv preprint arXiv:2411.13587.
+Cited by: [Table 4](https://arxiv.org/html/2505.04769v2#S4.T4.3.4.3.2.1.1),
+[Table 4](https://arxiv.org/html/2505.04769v2#S4.T4.3.8.7.3.1.1),
+[§4](https://arxiv.org/html/2505.04769v2#S4.p4.1),
+[item 2](https://arxiv.org/html/2505.04769v2#S5.I1.i2.p1.1).
+- [234]
+Y. Wang, S. Wu, Y. Zhang, S. Yan, Z. Liu, J. Luo, and H. Fei (2025)
+Multimodal chain-of-thought reasoning: a comprehensive survey.
+arXiv preprint arXiv:2503.12605.
+Cited by: [§3.4.4](https://arxiv.org/html/2505.04769v2#S3.SS4.SSS4.p2.1).
+- [235]
+Y. Wang, Q. Liu, Z. Jiang, T. Wang, J. Jiao, H. Chu, B. Gao, and H. Chen (2025)
+RAD: retrieval-augmented decision-making of meta-actions with vision-language models in autonomous driving.
+In Proceedings of the Computer Vision and Pattern Recognition Conference,
+pp. 3838–3848.
+Cited by: [§5.2](https://arxiv.org/html/2505.04769v2#S5.SS2.SSS0.Px8.p1.1).
+- [236]
+Y. Wang, X. Niu, J. Ba, Z. Su, and L. Du (2025)
+Navigating embodied intelligence: enabling technologies, security and privacy, and emerging trends.
+IEEE Internet of Things Journal.
+Cited by: [§5.2](https://arxiv.org/html/2505.04769v2#S5.SS2.SSS0.Px8.p1.1).
+- [237]
+Z. Wang, Z. Zhou, J. Song, Y. Huang, Z. Shu, and L. Ma (2024)
+Towards testing and evaluating vision-language-action models for robotic manipulation: an empirical study.
+arXiv preprint arXiv:2409.12894.
+Cited by: [§3.1](https://arxiv.org/html/2505.04769v2#S3.SS1.p6.1),
+[Table 1](https://arxiv.org/html/2505.04769v2#S3.T1.1.13.12.1.1.1),
+[Table 3](https://arxiv.org/html/2505.04769v2#S3.T3.3.3.2.1.1.1).
+- [238]
+C. Wei, C. Guo, J. Zhang, H. Shan, Y. Xu, Z. Zhang, Y. Liu, Q. Wang, C. Zhou, H. Li, et al. (2025)
+Focus: a streaming concentration architecture for efficient vision-language models.
+arXiv preprint arXiv:2512.14661.
+Cited by: [§5.2](https://arxiv.org/html/2505.04769v2#S5.SS2.SSS0.Px5.p1.1).
+- [239]
+J. Wei, S. Yuan, P. Li, Q. Hu, Z. Gan, and W. Ding (2024)
+Occllama: an occupancy-language-action generative world model for autonomous driving.
+arXiv preprint arXiv:2409.03272.
+Cited by: [Figure 6](https://arxiv.org/html/2505.04769v2#S2.F6.1.pic1.18.18.18.14.14.1.1.3),
+[item 2](https://arxiv.org/html/2505.04769v2#S2.I1.i2.p1.1),
+[§2.1](https://arxiv.org/html/2505.04769v2#S2.SS1.p2.1),
+[§2.2](https://arxiv.org/html/2505.04769v2#S2.SS2.p5.1),
+[§4](https://arxiv.org/html/2505.04769v2#S4.p3.1).
+- [240]
+J. Wen, M. Zhu, Y. Zhu, Z. Tang, J. Li, Z. Zhou, C. Li, X. Liu, Y. Peng, C. Shen, et al. (2024)
+Diffusion-vla: scaling robot foundation models via unified diffusion and autoregression.
+arXiv preprint arXiv:2412.03293.
+Cited by: [Table 2](https://arxiv.org/html/2505.04769v2#S3.T2.15.32.16.1.1.1).
+- [241]
+J. Wen, Y. Zhu, J. Li, Z. Tang, C. Shen, and F. Feng (2025)
+DexVLA: vision-language model with plug-in diffusion expert for general robot control.
+arXiv preprint arXiv:2502.05855.
+Cited by: [Figure 6](https://arxiv.org/html/2505.04769v2#S2.F6.1.pic1.39.39.39.35.35.1.1.3),
+[Table 1](https://arxiv.org/html/2505.04769v2#S3.T1.1.40.39.1.1.1),
+[Table 3](https://arxiv.org/html/2505.04769v2#S3.T3.3.29.28.1.1.1).
+- [242]
+J. Wen, Y. Zhu, J. Li, M. Zhu, Z. Tang, K. Wu, Z. Xu, N. Liu, R. Cheng, C. Shen, et al. (2025)
+Tinyvla: towards fast, data-efficient vision-language-action models for robotic manipulation.
+IEEE Robotics and Automation Letters.
+Cited by: [Figure 6](https://arxiv.org/html/2505.04769v2#S2.F6.1.pic1.44.44.44.40.40.1.1.3),
+[item 2](https://arxiv.org/html/2505.04769v2#S2.I2.i2.p1.1),
+[item 3](https://arxiv.org/html/2505.04769v2#S2.I2.i3.p1.1),
+[§3.1](https://arxiv.org/html/2505.04769v2#S3.SS1.p9.1),
+[§3.4.1](https://arxiv.org/html/2505.04769v2#S3.SS4.SSS1.p5.1),
+[§3.4](https://arxiv.org/html/2505.04769v2#S3.SS4.p1.1),
+[Table 2](https://arxiv.org/html/2505.04769v2#S3.T2.11.11.2.1.1),
+[Table 3](https://arxiv.org/html/2505.04769v2#S3.T3.3.11.10.1.1.1),
+[Table 4](https://arxiv.org/html/2505.04769v2#S4.T4.3.15.14.3.1.1),
+[Table 4](https://arxiv.org/html/2505.04769v2#S4.T4.3.16.15.3.1.1),
+[item 2](https://arxiv.org/html/2505.04769v2#S5.I1.i2.p1.1),
+[item 4](https://arxiv.org/html/2505.04769v2#S5.I1.i4.p1.1).
+- [243]
+S. Woo, S. Debnath, R. Hu, X. Chen, Z. Liu, I. S. Kweon, and S. Xie (2023)
+Convnext v2: co-designing and scaling convnets with masked autoencoders.
+In Proceedings of the IEEE/CVF conference on computer vision and pattern recognition,
+pp. 16133–16142.
+Cited by: [§2.2](https://arxiv.org/html/2505.04769v2#S2.SS2.p2.1).
+- [244]
+J. Wu, M. Zhong, S. Xing, Z. Lai, Z. Liu, Z. Chen, W. Wang, X. Zhu, L. Lu, T. Lu, et al. (2024)
+Visionllm v2: an end-to-end generalist multimodal large language model for hundreds of vision-language tasks.
+Advances in Neural Information Processing Systems 37, pp. 69925–69975.
+Cited by: [§2.2](https://arxiv.org/html/2505.04769v2#S2.SS2.p2.1).
+- [245]
+W. Wu, X. Feng, Z. Gao, and Y. Kan (2024)
+SMART: scalable multi-agent real-time motion generation via next-token prediction.
+Advances in Neural Information Processing Systems 37, pp. 114048–114071.
+Cited by: [§3.4.5](https://arxiv.org/html/2505.04769v2#S3.SS4.SSS5.p1.1).
+- [246]
+Z. Wu, Y. Zhou, X. Xu, Z. Wang, and H. Yan (2025)
+MoManipVLA: transferring vision-language-action models for general mobile manipulation.
+arXiv preprint arXiv:2503.13446.
+Cited by: [Figure 6](https://arxiv.org/html/2505.04769v2#S2.F6.1.pic1.42.42.42.38.38.1.1.3),
+[§2.1](https://arxiv.org/html/2505.04769v2#S2.SS1.p2.1),
+[§3.4.1](https://arxiv.org/html/2505.04769v2#S3.SS4.SSS1.p5.1),
+[Table 4](https://arxiv.org/html/2505.04769v2#S4.T4.3.14.13.3.1.1).
+- [247]
+T. Xiang, A. Jin, X. Zhou, M. Gui, X. Xie, S. Liu, S. Wang, S. Duang, S. Wang, Z. Lei, et al. (2025)
+VLA model-expert collaboration for bi-directional manipulation learning.
+arXiv preprint arXiv:2503.04163.
+Cited by: [§4.2](https://arxiv.org/html/2505.04769v2#S4.SS2.p1.1).
+- [248]
+J. Xiong, G. Liu, L. Huang, C. Wu, T. Wu, Y. Mu, Y. Yao, H. Shen, Z. Wan, J. Huang, et al. (2024)
+Autoregressive models in vision: a survey.
+arXiv preprint arXiv:2411.05902.
+Cited by: [§2.3](https://arxiv.org/html/2505.04769v2#S2.SS3.p1.1).
+- [249]
+D. Xu, Y. Chen, J. Wang, Y. Huang, H. Wang, Z. Jin, H. Wang, W. Yue, J. He, H. Li, et al. (2024)
+Mlevlm: improve multi-level progressive capabilities based on multimodal large language model for medical visual question answering.
+In Findings of the Association for Computational Linguistics ACL 2024,
+pp. 4977–4997.
+Cited by: [§3.4.4](https://arxiv.org/html/2505.04769v2#S3.SS4.SSS4.p7.1).
+- [250]
+F. Xu, G. Zhai, X. Kong, T. Fu, D. F. Gordon, X. An, and B. Busam (2025)
+STARE-vla: progressive stage-aware reinforcement for fine-tuning vision-language-action models.
+arXiv preprint arXiv:2512.05107.
+Cited by: [§5.2](https://arxiv.org/html/2505.04769v2#S5.SS2.SSS0.Px4.p1.1).
+- [251]
+J. Xu, Q. Sun, Q. Han, and Y. Tang (2025)
+When embodied ai meets industry 5.0: human-centered smart manufacturing.
+IEEE/CAA Journal of Automatica Sinica 12 (3), pp. 485–501.
+Cited by: [§2.3](https://arxiv.org/html/2505.04769v2#S2.SS3.p4.1),
+[Table 4](https://arxiv.org/html/2505.04769v2#S4.T4.3.2.1.3.1.1).
+- [252]
+S. Xu, Y. Wang, C. Xia, D. Zhu, T. Huang, and C. Xu (2025)
+VLA-cache: towards efficient vision-language-action model via adaptive token caching in robotic manipulation.
+arXiv preprint arXiv:2502.02175.
+Cited by: [Figure 6](https://arxiv.org/html/2505.04769v2#S2.F6.1.pic1.43.43.43.39.39.1.1.3),
+[item 1](https://arxiv.org/html/2505.04769v2#S2.I2.i1.p1.1),
+[§2.4](https://arxiv.org/html/2505.04769v2#S2.SS4.p4.1),
+[§2.5](https://arxiv.org/html/2505.04769v2#S2.SS5.p1.1),
+[§3.4.1](https://arxiv.org/html/2505.04769v2#S3.SS4.SSS1.p6.1),
+[Table 2](https://arxiv.org/html/2505.04769v2#S3.T2.15.39.23.1.1.1),
+[Table 3](https://arxiv.org/html/2505.04769v2#S3.T3.3.18.17.1.1.1),
+[Table 4](https://arxiv.org/html/2505.04769v2#S4.T4.3.14.13.3.1.1),
+[Table 4](https://arxiv.org/html/2505.04769v2#S4.T4.3.17.16.2.1.1).
+- [253]
+Y. Xu, G. Liu, R. R. Kompella, S. Hu, T. Huang, F. Ilhan, S. F. Tekin, Z. Yahn, and L. Liu (2025)
+Language-vision planner and executor for text-to-visual reasoning.
+arXiv preprint arXiv:2506.07778.
+Cited by: [§5.2](https://arxiv.org/html/2505.04769v2#S5.SS2.SSS0.Px3.p1.1).
+- [254]
+Z. Xu, K. Wu, J. Wen, J. Li, N. Liu, Z. Che, and J. Tang (2024)
+A survey on robotics with foundation models: toward embodied ai.
+arXiv preprint arXiv:2402.02385.
+Cited by: [§1](https://arxiv.org/html/2505.04769v2#S1.p5.1),
+[item 2](https://arxiv.org/html/2505.04769v2#S2.I1.i2.p1.1).
+- [255]
+H. Xue, J. Ren, W. Chen, G. Zhang, Y. Fang, G. Gu, H. Xu, and C. Lu (2025)
+Reactive diffusion policy: slow-fast visual-tactile policy learning for contact-rich manipulation.
+arXiv preprint arXiv:2503.02881.
+Cited by: [§3.4.6](https://arxiv.org/html/2505.04769v2#S3.SS4.SSS6.p1.1).
+- [256]
+G. Yang, T. Zhang, H. Hao, W. Wang, Y. Liu, D. Wang, G. Chen, Z. Cai, J. Chen, W. Su, et al. (2025)
+Vlaser: vision-language-action model with synergistic embodied reasoning.
+arXiv preprint arXiv:2510.11027.
+Cited by: [Figure 6](https://arxiv.org/html/2505.04769v2#S2.F6.1.pic1.51.51.51.47.47.1.1.3),
+[Table 1](https://arxiv.org/html/2505.04769v2#S3.T1.1.45.44.1.1.1),
+[Table 2](https://arxiv.org/html/2505.04769v2#S3.T2.15.45.29.1.1.1).
+- [257]
+R. Yang, Q. Yu, Y. Wu, R. Yan, B. Li, A. Cheng, X. Zou, Y. Fang, X. Cheng, R. Qiu, et al. (2025)
+Egovla: learning vision-language-action models from egocentric human videos.
+arXiv preprint arXiv:2507.12440.
+Cited by: [Figure 6](https://arxiv.org/html/2505.04769v2#S2.F6.1.pic1.54.54.54.50.50.1.1.3),
+[Table 1](https://arxiv.org/html/2505.04769v2#S3.T1.1.48.47.1.1.1),
+[Table 2](https://arxiv.org/html/2505.04769v2#S3.T2.15.48.32.1.1.1).
+- [258]
+R. Yang, G. Chen, C. Wen, and Y. Gao (2025)
+FP3: a 3d foundation policy for robotic manipulation.
+arXiv preprint arXiv:2503.08950.
+Cited by: [§3.1](https://arxiv.org/html/2505.04769v2#S3.SS1.p11.1).
+- [259]
+S. Yang, Y. Li, and S. Wang (2025)
+UPL-net: uncertainty-aware prompt learning network for semi-supervised action recognition.
+Neurocomputing 619, pp. 129126.
+Cited by: [§5.2](https://arxiv.org/html/2505.04769v2#S5.SS2.SSS0.Px9.p1.1).
+- [260]
+Y. Yang, Y. Wang, Z. Wen, L. Zhongwei, C. Zou, Z. Zhang, C. Wen, and L. Zhang (2025)
+EfficientVLA: training-free acceleration and compression for vision-language-action models.
+arXiv preprint arXiv:2506.10100.
+Cited by: [Figure 6](https://arxiv.org/html/2505.04769v2#S2.F6.1.pic1.57.57.57.53.53.1.1.3),
+[§3.4.3](https://arxiv.org/html/2505.04769v2#S3.SS4.SSS3.p4.1),
+[Table 1](https://arxiv.org/html/2505.04769v2#S3.T1.1.51.50.1.1.1),
+[Table 2](https://arxiv.org/html/2505.04769v2#S3.T2.15.50.34.1.1.1).
+- [261]
+Y. Yang, J. Sun, S. Kou, Y. Wang, and Z. Deng (2025)
+LoHoVLA: a unified vision-language-action model for long-horizon embodied tasks.
+arXiv preprint arXiv:2506.00411.
+Cited by: [§5.2](https://arxiv.org/html/2505.04769v2#S5.SS2.SSS0.Px3.p1.1).
+- [262]
+Y. Yang, W. Huang, Y. Wei, H. Peng, X. Jiang, H. Jiang, F. Wei, Y. Wang, H. Hu, L. Qiu, et al. (2023)
+Attentive mask clip.
+In Proceedings of the IEEE/CVF International Conference on Computer Vision,
+pp. 2771–2781.
+Cited by: [§2.4](https://arxiv.org/html/2505.04769v2#S2.SS4.p2.1).
+- [263]
+Y. Yang, J. Zhou, X. Ding, T. Huai, S. Liu, Q. Chen, Y. Xie, and L. He (2025)
+Recent advances of foundation language models-based continual learning: a survey.
+ACM Computing Surveys 57 (5), pp. 1–38.
+Cited by: [§5.2](https://arxiv.org/html/2505.04769v2#S5.SS2.SSS0.Px2.p1.1).
+- [264]
+Z. Yang, Y. Chen, J. Wang, S. Manivasagam, W. Ma, A. J. Yang, and R. Urtasun (2023)
+Unisim: a neural closed-loop sensor simulator.
+In Proceedings of the IEEE/CVF Conference on Computer Vision and Pattern Recognition,
+pp. 1389–1399.
+Cited by: [item 1b](https://arxiv.org/html/2505.04769v2#S3.I1.i1.I1.i2.p1.1),
+[§3.1](https://arxiv.org/html/2505.04769v2#S3.SS1.p1.1),
+[item 5](https://arxiv.org/html/2505.04769v2#S5.I1.i5.p1.1).
+- [265]
+Z. Yang, C. Garrett, D. Fox, T. Lozano-Pérez, and L. P. Kaelbling (2025)
+Guiding long-horizon task and motion planning with vision language models.
+In 2025 IEEE International Conference on Robotics and Automation (ICRA),
+pp. 16847–16853.
+Cited by: [§5.2](https://arxiv.org/html/2505.04769v2#S5.SS2.SSS0.Px3.p1.1).
+- [266]
+S. Ye, J. Jang, B. Jeon, S. Joo, J. Yang, B. Peng, A. Mandlekar, R. Tan, Y. Chao, B. Y. Lin, et al. (2024)
+Latent action pretraining from videos.
+arXiv preprint arXiv:2410.11758.
+Cited by: [Table 4](https://arxiv.org/html/2505.04769v2#S4.T4.3.7.6.2.1.1).
+- [267]
+Y. Ye, J. Ma, J. Cen, and Z. Lu (2025)
+Token expand-merge: training-free token compression for vision-language-action models.
+arXiv preprint arXiv:2512.09927.
+Cited by: [§5.2](https://arxiv.org/html/2505.04769v2#S5.SS2.SSS0.Px4.p1.1).
+- [268]
+Z. Yu, B. Wang, P. Zeng, H. Zhang, J. Zhang, L. Gao, J. Song, N. Sebe, and H. T. Shen (2025)
+A survey on efficient vision-language-action models.
+arXiv preprint arXiv:2510.24795.
+Cited by: [§5.2](https://arxiv.org/html/2505.04769v2#S5.SS2.SSS0.Px5.p1.1).
+- [269]
+Y. Yue, Y. Wang, B. Kang, Y. Han, S. Wang, S. Song, J. Feng, and G. Huang (2024)
+Deer-vla: dynamic inference of multimodal large language models for efficient robot execution.
+Advances in Neural Information Processing Systems 37, pp. 56619–56643.
+Cited by: [Figure 6](https://arxiv.org/html/2505.04769v2#S2.F6.1.pic1.15.15.15.11.11.1.1.3),
+[item 2](https://arxiv.org/html/2505.04769v2#S2.I1.i2.p1.1),
+[§2.1](https://arxiv.org/html/2505.04769v2#S2.SS1.p2.1),
+[§4](https://arxiv.org/html/2505.04769v2#S4.p1.1),
+[item 1](https://arxiv.org/html/2505.04769v2#S5.I1.i1.p1.1).
+- [270]
+M. Zawalski, W. Chen, K. Pertsch, O. Mees, C. Finn, and S. Levine (2024)
+Robotic control via embodied chain-of-thought reasoning.
+arXiv preprint arXiv:2407.08693.
+Cited by: [§3.1](https://arxiv.org/html/2505.04769v2#S3.SS1.p5.1).
+- [271]
+X. Zhai, B. Mustafa, A. Kolesnikov, and L. Beyer (2023)
+Sigmoid loss for language image pre-training.
+In Proceedings of the IEEE/CVF international conference on computer vision,
+pp. 11975–11986.
+Cited by: [§3.1](https://arxiv.org/html/2505.04769v2#S3.SS1.p1.1).
+- [272]
+Z. Zhan, Y. Chen, J. Zhou, Q. Lv, H. Liu, K. Wang, L. Lin, and G. Wang (2026)
+Stable language guidance for vision-language-action models.
+arXiv preprint arXiv:2601.04052.
+Cited by: [§5.2](https://arxiv.org/html/2505.04769v2#S5.SS2.SSS0.Px1.p1.1).
+- [273]
+B. Zhang, J. Li, J. Shen, Y. Cai, Y. Zhang, Y. Chen, J. Dai, J. Ji, and Y. Yang (2025)
+VLA-arena: an open-source framework for benchmarking vision-language-action models.
+arXiv preprint arXiv:2512.22539.
+Cited by: [§5.2](https://arxiv.org/html/2505.04769v2#S5.SS2.SSS0.Px7.p1.1).
+- [274]
+B. Zhang, Y. Zhang, J. Ji, Y. Lei, J. Dai, Y. Chen, and Y. Yang (2025)
+Safevla: towards safety alignment of vision-language-action model via safe reinforcement learning.
+arXiv preprint arXiv:2503.03480.
+Cited by: [Figure 6](https://arxiv.org/html/2505.04769v2#S2.F6.1.pic1.41.41.41.37.37.1.1.3),
+[item 3](https://arxiv.org/html/2505.04769v2#S2.I1.i3.p1.1),
+[§2.1](https://arxiv.org/html/2505.04769v2#S2.SS1.p2.1),
+[§4.2](https://arxiv.org/html/2505.04769v2#S4.SS2.p2.1),
+[§4](https://arxiv.org/html/2505.04769v2#S4.p3.1),
+[item 2](https://arxiv.org/html/2505.04769v2#S5.I1.i2.p1.1),
+[§5.2](https://arxiv.org/html/2505.04769v2#S5.SS2.SSS0.Px3.p1.1),
+[§5.2](https://arxiv.org/html/2505.04769v2#S5.SS2.SSS0.Px5.p1.1),
+[§5.2](https://arxiv.org/html/2505.04769v2#S5.SS2.SSS0.Px7.p1.1),
+[§5.2](https://arxiv.org/html/2505.04769v2#S5.SS2.SSS0.Px8.p1.1).
+- [275]
+D. Zhang, J. Sun, C. Hu, X. Wu, Z. Yuan, R. Zhou, F. Shen, and Q. Zhou (2025)
+Pure vision language action (vla) models: a comprehensive survey.
+arXiv preprint arXiv:2509.19012.
+Cited by: [§4.1](https://arxiv.org/html/2505.04769v2#S4.SS1.p3.1),
+[§5.2](https://arxiv.org/html/2505.04769v2#S5.SS2.SSS0.Px6.p1.1),
+[§5.2](https://arxiv.org/html/2505.04769v2#S5.SS2.SSS0.Px7.p1.1).
+- [276]
+H. Zhang, H. Yu, L. Zhao, A. Choi, Q. Bai, B. Yang, and W. Xu (2025)
+SLIM: sim-to-real legged instructive manipulation via long-horizon visuomotor learning.
+arXiv preprint arXiv:2501.09905.
+Cited by: [Table 4](https://arxiv.org/html/2505.04769v2#S4.T4.3.13.12.2.1.1).
+- [277]
+H. Zhang, N. Zantout, P. Kachana, Z. Wu, J. Zhang, and W. Wang (2024)
+VLA-3d: a dataset for 3d semantic scene understanding and navigation.
+arXiv preprint arXiv:2411.03540.
+Cited by: [§3.4.4](https://arxiv.org/html/2505.04769v2#S3.SS4.SSS4.p5.1).
+- [278]
+H. Zhang, P. Ding, S. Lyu, Y. Peng, and D. Wang (2025)
+GEVRM: goal-expressive video generation model for robust visual manipulation.
+arXiv preprint arXiv:2502.09268.
+Cited by: [§2.3](https://arxiv.org/html/2505.04769v2#S2.SS3.p4.1).
+- [279]
+J. Zhang, Y. Guo, Y. Hu, X. Chen, X. Zhu, and J. Chen (2025)
+UP-vla: a unified understanding and prediction model for embodied agent.
+arXiv preprint arXiv:2501.18867.
+Cited by: [§3.4.4](https://arxiv.org/html/2505.04769v2#S3.SS4.SSS4.p7.1),
+[Table 1](https://arxiv.org/html/2505.04769v2#S3.T1.1.37.36.1.1.1),
+[Table 3](https://arxiv.org/html/2505.04769v2#S3.T3.3.25.24.1.1.1),
+[Table 4](https://arxiv.org/html/2505.04769v2#S4.T4.3.7.6.3.1.1).
+- [280]
+J. Zhang, K. Wang, S. Wang, M. Li, H. Liu, S. Wei, Z. Wang, Z. Zhang, and H. Wang (2024)
+Uni-navid: a video-based vision-language-action model for unifying embodied navigation tasks.
+arXiv preprint arXiv:2412.06224.
+Cited by: [Figure 6](https://arxiv.org/html/2505.04769v2#S2.F6.1.pic1.16.16.16.12.12.1.1.3),
+[item 2](https://arxiv.org/html/2505.04769v2#S2.I1.i2.p1.1),
+[§2.1](https://arxiv.org/html/2505.04769v2#S2.SS1.p2.1),
+[Table 1](https://arxiv.org/html/2505.04769v2#S3.T1.1.18.17.1.1.1),
+[§4](https://arxiv.org/html/2505.04769v2#S4.p1.1).
+- [281]
+K. Zhang, Z. Yin, W. Ye, and Y. Gao (2024)
+Learning manipulation skills through robot chain-of-thought with sparse failure guidance.
+arXiv preprint arXiv:2405.13573.
+Cited by: [§3.1](https://arxiv.org/html/2505.04769v2#S3.SS1.p5.1).
+- [282]
+K. Zhang, P. Yun, J. Cen, J. Cai, D. Zhu, H. Yuan, C. Zhao, T. Feng, M. Y. Wang, Q. Chen, et al. (2025)
+Generative artificial intelligence in robotic manipulation: a survey.
+arXiv preprint arXiv:2503.03464.
+Cited by: [§2.3](https://arxiv.org/html/2505.04769v2#S2.SS3.p3.1),
+[Table 4](https://arxiv.org/html/2505.04769v2#S4.T4.3.5.4.2.1.1),
+[item 3](https://arxiv.org/html/2505.04769v2#S5.I1.i3.p1.1),
+[item 6](https://arxiv.org/html/2505.04769v2#S5.I1.i6.p1.1).
+- [283]
+R. Zhang, M. Dong, Y. Zhang, L. Heng, X. Chi, G. Dai, L. Du, D. Wang, Y. Du, and S. Zhang (2025)
+MoLe-vla: dynamic layer-skipping vision language action model via mixture-of-layers for efficient robot manipulation.
+arXiv preprint arXiv:2503.20384.
+Cited by: [Figure 6](https://arxiv.org/html/2505.04769v2#S2.F6.1.pic1.48.48.48.44.44.1.1.3),
+[Table 1](https://arxiv.org/html/2505.04769v2#S3.T1.1.35.34.1.1.1),
+[Table 2](https://arxiv.org/html/2505.04769v2#S3.T2.12.12.2.1.1),
+[Table 3](https://arxiv.org/html/2505.04769v2#S3.T3.3.23.22.1.1.1),
+[Table 4](https://arxiv.org/html/2505.04769v2#S4.T4.3.14.13.3.1.1).
+- [284]
+Z. Zhang, C. Bao, X. Pan, C. Chang, T. Igarashi, and G. Zhang (2025)
+Through the lens of privacy: exploring privacy protection in vision-language model interactions on smart glasses.
+In Proceedings of the Extended Abstracts of the CHI Conference on Human Factors in Computing Systems,
+pp. 1–8.
+Cited by: [§5.2](https://arxiv.org/html/2505.04769v2#S5.SS2.SSS0.Px8.p1.1).
+- [285]
+H. Zhao, W. Song, D. Wang, X. Tong, P. Ding, X. Cheng, and Z. Ge (2025)
+MoRE: unlocking scalability in reinforcement learning for quadruped vision-language-action models.
+arXiv preprint arXiv:2503.08007.
+Cited by: [item 3](https://arxiv.org/html/2505.04769v2#S2.I2.i3.p1.1),
+[Table 3](https://arxiv.org/html/2505.04769v2#S3.T3.3.27.26.1.1.1),
+[Table 4](https://arxiv.org/html/2505.04769v2#S4.T4.3.16.15.3.1.1).
+- [286]
+Q. Zhao, Y. Lu, M. J. Kim, Z. Fu, Z. Zhang, Y. Wu, Z. Li, Q. Ma, S. Han, C. Finn, et al. (2025)
+Cot-vla: visual chain-of-thought reasoning for vision-language-action models.
+arXiv preprint arXiv:2503.22020.
+Cited by: [§2.3](https://arxiv.org/html/2505.04769v2#S2.SS3.p1.1),
+[Table 4](https://arxiv.org/html/2505.04769v2#S4.T4.3.12.11.3.1.1),
+[Table 4](https://arxiv.org/html/2505.04769v2#S4.T4.3.15.14.3.1.1),
+[Table 4](https://arxiv.org/html/2505.04769v2#S4.T4.3.8.7.3.1.1).
+- [287]
+T. Z. Zhao, V. Kumar, S. Levine, and C. Finn (2023)
+Learning fine-grained bimanual manipulation with low-cost hardware.
+arXiv preprint arXiv:2304.13705.
+Cited by: [Figure 6](https://arxiv.org/html/2505.04769v2#S2.F6.1.pic1.9.9.9.5.5.1.1.3),
+[item 1](https://arxiv.org/html/2505.04769v2#S2.I1.i1.p1.1),
+[§2.1](https://arxiv.org/html/2505.04769v2#S2.SS1.p2.1),
+[Table 1](https://arxiv.org/html/2505.04769v2#S3.T1.1.7.6.1.1.1),
+[Table 2](https://arxiv.org/html/2505.04769v2#S3.T2.15.22.6.1.1.1).
+- [288]
+H. Zhen, X. Qiu, P. Chen, J. Yang, X. Yan, Y. Du, Y. Hong, and C. Gan (2024)
+3d-vla: a 3d vision-language-action generative world model.
+arXiv preprint arXiv:2403.09631.
+Cited by: [§2.4](https://arxiv.org/html/2505.04769v2#S2.SS4.p4.1),
+[§4.2](https://arxiv.org/html/2505.04769v2#S4.SS2.p2.1),
+[Table 4](https://arxiv.org/html/2505.04769v2#S4.T4.3.5.4.3.1.1),
+[item 3](https://arxiv.org/html/2505.04769v2#S5.I1.i3.p1.1).
+- [289]
+J. Zheng, J. Li, D. Liu, Y. Zheng, Z. Wang, Z. Ou, Y. Liu, J. Liu, Y. Zhang, and X. Zhan (2025)
+Universal actions for enhanced embodied foundation models.
+arXiv preprint arXiv:2501.10105.
+Cited by: [§3.1](https://arxiv.org/html/2505.04769v2#S3.SS1.p11.1),
+[Table 4](https://arxiv.org/html/2505.04769v2#S4.T4.3.13.12.2.1.1),
+[§5.2](https://arxiv.org/html/2505.04769v2#S5.SS2.SSS0.Px1.p1.1).
+- [290]
+J. Zheng, C. Shi, X. Cai, Q. Li, D. Zhang, C. Li, D. Yu, and Q. Ma (2026)
+Lifelong learning of large language model based agents: a roadmap.
+IEEE Transactions on Pattern Analysis and Machine Intelligence.
+Cited by: [§5.2](https://arxiv.org/html/2505.04769v2#S5.SS2.SSS0.Px9.p1.1).
+- [291]
+Y. Zhong, X. Huang, R. Li, C. Zhang, Y. Liang, Y. Yang, and Y. Chen (2025)
+DexGraspVLA: a vision-language-action framework towards general dexterous grasping.
+arXiv preprint arXiv:2502.20900.
+Cited by: [§3.1](https://arxiv.org/html/2505.04769v2#S3.SS1.p11.1),
+[§3.1](https://arxiv.org/html/2505.04769v2#S3.SS1.p8.1),
+[Table 1](https://arxiv.org/html/2505.04769v2#S3.T1.1.39.38.1.1.1),
+[Table 2](https://arxiv.org/html/2505.04769v2#S3.T2.13.13.2.1.1),
+[Table 3](https://arxiv.org/html/2505.04769v2#S3.T3.3.28.27.1.1.1).
+- [292]
+D. Zhou, Y. Zhang, Y. Wang, J. Ning, H. Ye, D. Zhan, and Z. Liu (2025)
+Learning without forgetting for vision-language models.
+IEEE Transactions on Pattern Analysis and Machine Intelligence.
+Cited by: [§5.2](https://arxiv.org/html/2505.04769v2#S5.SS2.SSS0.Px2.p1.1).
+- [293]
+X. Zhou, X. Han, F. Yang, Y. Ma, and A. C. Knoll (2025)
+OpenDriveVLA: towards end-to-end autonomous driving with large vision language action model.
+arXiv preprint arXiv:2503.23463.
+Cited by: [Figure 6](https://arxiv.org/html/2505.04769v2#S2.F6.1.pic1.32.32.32.28.28.1.1.3),
+[item 2](https://arxiv.org/html/2505.04769v2#S2.I1.i2.p1.1),
+[§3.1](https://arxiv.org/html/2505.04769v2#S3.SS1.p9.1),
+[§3.4.2](https://arxiv.org/html/2505.04769v2#S3.SS4.SSS2.p4.1),
+[§3.4](https://arxiv.org/html/2505.04769v2#S3.SS4.p1.1),
+[Table 1](https://arxiv.org/html/2505.04769v2#S3.T1.1.28.27.1.1.1),
+[Table 3](https://arxiv.org/html/2505.04769v2#S3.T3.3.8.7.1.1.1),
+[§4.5](https://arxiv.org/html/2505.04769v2#S4.SS5.p2.1).
+- [294]
+Z. Zhou, T. Cai, S. Z. Zhao, Y. Zhang, Z. Huang, B. Zhou, and J. Ma (2025)
+AutoVLA: a vision-language-action model for end-to-end autonomous driving with adaptive reasoning and reinforcement fine-tuning.
+arXiv preprint arXiv:2506.13757.
+Cited by: [§5.2](https://arxiv.org/html/2505.04769v2#S5.SS2.SSS0.Px8.p1.1).
+- [295]
+Z. Zhou, Y. Zhu, M. Zhu, J. Wen, N. Liu, Z. Xu, W. Meng, R. Cheng, Y. Peng, C. Shen, et al. (2025)
+Chatvla: unified multimodal understanding and robot control with vision-language-action model.
+arXiv preprint arXiv:2502.14420.
+Cited by: [§2.4](https://arxiv.org/html/2505.04769v2#S2.SS4.p4.1),
+[§3.4.4](https://arxiv.org/html/2505.04769v2#S3.SS4.SSS4.p7.1),
+[Table 2](https://arxiv.org/html/2505.04769v2#S3.T2.15.37.21.1.1.1),
+[Table 3](https://arxiv.org/html/2505.04769v2#S3.T3.3.14.13.1.1.1),
+[§5.2](https://arxiv.org/html/2505.04769v2#S5.SS2.SSS0.Px1.p1.1).
+- [296]
+D. H. Zhu and Y. P. Chang (2020)
+Robot with humanoid hands cooks food better? effect of robotic chef anthropomorphism on food quality prediction.
+International Journal of Contemporary Hospitality Management 32 (3), pp. 1367–1383.
+Cited by: [§3.4.1](https://arxiv.org/html/2505.04769v2#S3.SS4.SSS1.p1.1),
+[§3.4.1](https://arxiv.org/html/2505.04769v2#S3.SS4.SSS1.p4.1).
+- [297]
+M. Zhu, Y. Zhu, J. Li, Z. Zhou, J. Wen, X. Liu, C. Shen, Y. Peng, and F. Feng (2025)
+ObjectVLA: end-to-end open-world object manipulation without demonstration.
+arXiv preprint arXiv:2502.19250.
+Cited by: [Figure 6](https://arxiv.org/html/2505.04769v2#S2.F6.1.pic1.34.34.34.30.30.1.1.3),
+[§3.1](https://arxiv.org/html/2505.04769v2#S3.SS1.p11.1),
+[Table 1](https://arxiv.org/html/2505.04769v2#S3.T1.1.42.41.1.1.1),
+[§4](https://arxiv.org/html/2505.04769v2#S4.p1.1).
+- [298]
+Y. Zhu, Y. Zhou, C. Wang, Y. Cao, J. Han, L. Hou, and Hang. Xu (2024)
+UNIT: unifying image and text recognition in one vision encoder.
+In NeurIPS,
+Cited by: [§1](https://arxiv.org/html/2505.04769v2#S1.p3.1).
+- [299]
+B. Zitkovich, T. Yu, S. Xu, P. Xu, T. Xiao, F. Xia, J. Wu, P. Wohlhart, S. Welker, A. Wahid, et al. (2023)
+Rt-2: vision-language-action models transfer web knowledge to robotic control.
+In Conference on Robot Learning,
+pp. 2165–2183.
+Cited by: [§1](https://arxiv.org/html/2505.04769v2#S1.p4.1),
+[Figure 6](https://arxiv.org/html/2505.04769v2#S2.F6.1.pic1.10.10.10.6.6.1.1.3),
+[item 1](https://arxiv.org/html/2505.04769v2#S2.I1.i1.p1.1),
+[item 3](https://arxiv.org/html/2505.04769v2#S2.I2.i3.p1.1),
+[§2.1](https://arxiv.org/html/2505.04769v2#S2.SS1.p2.1),
+[§2.2](https://arxiv.org/html/2505.04769v2#S2.SS2.p4.1),
+[§2.4](https://arxiv.org/html/2505.04769v2#S2.SS4.p6.1),
+[§3.1](https://arxiv.org/html/2505.04769v2#S3.SS1.p11.1),
+[Table 2](https://arxiv.org/html/2505.04769v2#S3.T2.15.19.3.1.1.1).

@@ -1,0 +1,68 @@
+paper:
+  id: arxiv:2503.08481v2
+  title: 'PhysVLM: Enabling Visual Language Models to Understand Robotic Physical
+    Reachability'
+  authors:
+  - name: Weijie Zhou
+  - name: Manli Tao
+  - name: Chaoyang Zhao
+  - name: Haiyun Guo
+  - name: Honghui Dong
+  - name: Ming Tang
+  - name: Jinqiao Wang
+  publication:
+    type: preprint
+    venue: arXiv
+    date_published: '2025-03-11'
+    year: 2025
+  identifiers:
+    arxiv: 2503.08481v2
+  urls:
+    pdf: https://arxiv.org/pdf/2503.08481v2
+    abstract: https://arxiv.org/abs/2503.08481v2
+  content:
+    abstract: Understanding the environment and a robot's physical reachability is
+      crucial for task execution. While state-of-the-art vision-language models (VLMs)
+      excel in environmental perception, they often generate inaccurate or impractical
+      responses in embodied visual reasoning tasks due to a lack of understanding
+      of robotic physical reachability. To address this issue, we propose a unified
+      representation of physical reachability across diverse robots, i.e., Space-Physical
+      Reachability Map (S-P Map), and PhysVLM, a vision-language model that integrates
+      this reachability information into visual reasoning. Specifically, the S-P Map
+      abstracts a robot's physical reachability into a generalized spatial representation,
+      independent of specific robot configurations, allowing the model to focus on
+      reachability features rather than robot-specific parameters. Subsequently, PhysVLM
+      extends traditional VLM architectures by incorporating an additional feature
+      encoder to process the S-P Map, enabling the model to reason about physical
+      reachability without compromising its general vision-language capabilities.
+      To train and evaluate PhysVLM, we constructed a large-scale multi-robot dataset,
+      Phys100K, and a challenging benchmark, EQA-phys, which includes tasks for six
+      different robots in both simulated and real-world environments. Experimental
+      results demonstrate that PhysVLM outperforms existing models, achieving a 14\%
+      improvement over GPT-4o on EQA-phys and surpassing advanced embodied VLMs such
+      as RoboMamba and SpatialVLM on the RoboVQA-val and OpenEQA benchmarks. Additionally,
+      the S-P Map shows strong compatibility with various VLMs, and its integration
+      into GPT-4o-mini yields a 7.1\% performance improvement.
+    keywords:
+    - cs.RO
+    - cs.CV
+    language: en
+    citation: 'Weijie Zhou et al.. (2025). PhysVLM: Enabling Visual Language Models
+      to Understand Ro.... arXiv:2503.08481v2.'
+  workflow:
+    status: unread
+    priority: normal
+    date_added: '2025-03-11'
+  relations:
+    tags: []
+    categories:
+    - cs.RO
+    - cs.CV
+    primary_category: cs.RO
+    related: []
+  bibtex: "@misc{zhou20252503,\n  author = {Zhou, Weijie and Tao, Manli and Zhao,\
+    \ Chaoyang and Guo, Haiyun and Dong, Honghui and Tang, Ming and Wang, Jinqiao},\n\
+    \  title = {PhysVLM: Enabling Visual Language Models to Understand Robotic Physical\
+    \ Reachability},\n  year = {2025},\n  eprint = {2503.08481},\n  archivePrefix\
+    \ = {arXiv},\n  primaryClass = {cs.RO},\n  url = {https://arxiv.org/abs/2503.08481v2},\n\
+    }"

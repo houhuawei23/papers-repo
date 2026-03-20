@@ -1,0 +1,177 @@
+paper:
+  id: arxiv:2403.12945v2
+  title: "DROID: A Large-Scale In-The-Wild Robot Manipulation Dataset"
+  authors:
+    - name: Alexander Khazatsky
+    - name: Karl Pertsch
+    - name: Suraj Nair
+    - name: Ashwin Balakrishna
+    - name: Sudeep Dasari
+    - name: Siddharth Karamcheti
+    - name: Soroush Nasiriany
+    - name: Mohan Kumar Srirama
+    - name: Lawrence Yunliang Chen
+    - name: Kirsty Ellis
+    - name: Peter David Fagan
+    - name: Joey Hejna
+    - name: Masha Itkina
+    - name: Marion Lepert
+    - name: Yecheng Jason Ma
+    - name: Patrick Tree Miller
+    - name: Jimmy Wu
+    - name: Suneel Belkhale
+    - name: Shivin Dass
+    - name: Huy Ha
+    - name: Arhan Jain
+    - name: Abraham Lee
+    - name: Youngwoon Lee
+    - name: Marius Memmel
+    - name: Sungjae Park
+    - name: Ilija Radosavovic
+    - name: Kaiyuan Wang
+    - name: Albert Zhan
+    - name: Kevin Black
+    - name: Cheng Chi
+    - name: Kyle Beltran Hatch
+    - name: Shan Lin
+    - name: Jingpei Lu
+    - name: Jean Mercat
+    - name: Abdul Rehman
+    - name: Pannag R Sanketi
+    - name: Archit Sharma
+    - name: Cody Simpson
+    - name: Quan Vuong
+    - name: Homer Rich Walke
+    - name: Blake Wulfe
+    - name: Ted Xiao
+    - name: Jonathan Heewon Yang
+    - name: Arefeh Yavary
+    - name: Tony Z. Zhao
+    - name: Christopher Agia
+    - name: Rohan Baijal
+    - name: Mateo Guaman Castro
+    - name: Daphne Chen
+    - name: Qiuyu Chen
+    - name: Trinity Chung
+    - name: Jaimyn Drake
+    - name: Ethan Paul Foster
+    - name: Jensen Gao
+    - name: Vitor Guizilini
+    - name: David Antonio Herrera
+    - name: Minho Heo
+    - name: Kyle Hsu
+    - name: Jiaheng Hu
+    - name: Muhammad Zubair Irshad
+    - name: Donovon Jackson
+    - name: Charlotte Le
+    - name: Yunshuang Li
+    - name: Kevin Lin
+    - name: Roy Lin
+    - name: Zehan Ma
+    - name: Abhiram Maddukuri
+    - name: Suvir Mirchandani
+    - name: Daniel Morton
+    - name: Tony Nguyen
+    - name: Abigail O'Neill
+    - name: Rosario Scalise
+    - name: Derick Seale
+    - name: Victor Son
+    - name: Stephen Tian
+    - name: Emi Tran
+    - name: Andrew E. Wang
+    - name: Yilin Wu
+    - name: Annie Xie
+    - name: Jingyun Yang
+    - name: Patrick Yin
+    - name: Yunchu Zhang
+    - name: Osbert Bastani
+    - name: Glen Berseth
+    - name: Jeannette Bohg
+    - name: Ken Goldberg
+    - name: Abhinav Gupta
+    - name: Abhishek Gupta
+    - name: Dinesh Jayaraman
+    - name: Joseph J Lim
+    - name: Jitendra Malik
+    - name: Roberto Martín-Martín
+    - name: Subramanian Ramamoorthy
+    - name: Dorsa Sadigh
+    - name: Shuran Song
+    - name: Jiajun Wu
+    - name: Michael C. Yip
+    - name: Yuke Zhu
+    - name: Thomas Kollar
+    - name: Sergey Levine
+    - name: Chelsea Finn
+  publication:
+    type: preprint
+    venue: arXiv
+    date_published: "2024-03-19"
+    year: 2024
+  identifiers:
+    arxiv: 2403.12945v2
+  urls:
+    pdf: https://arxiv.org/pdf/2403.12945v2
+    abstract: https://arxiv.org/abs/2403.12945v2
+  content:
+    abstract:
+      "The creation of large, diverse, high-quality robot manipulation datasets
+      is an important stepping stone on the path toward more capable and robust robotic
+      manipulation policies. However, creating such datasets is challenging: collecting
+      robot manipulation data in diverse environments poses logistical and safety
+      challenges and requires substantial investments in hardware and human labour.
+      As a result, even the most general robot manipulation policies today are mostly
+      trained on data collected in a small number of environments with limited scene
+      and task diversity. In this work, we introduce DROID (Distributed Robot Interaction
+      Dataset), a diverse robot manipulation dataset with 76k demonstration trajectories
+      or 350 hours of interaction data, collected across 564 scenes and 84 tasks by
+      50 data collectors in North America, Asia, and Europe over the course of 12
+      months. We demonstrate that training with DROID leads to policies with higher
+      performance and improved generalization ability. We open source the full dataset,
+      policy learning code, and a detailed guide for reproducing our robot hardware
+      setup."
+    keywords:
+      - cs.RO
+    language: en
+    citation:
+      "Alexander Khazatsky et al.. (2024). DROID: A Large-Scale In-The-Wild
+      Robot Manipulation Dataset. arXiv:2403.12945v2."
+  workflow:
+    status: unread
+    priority: normal
+    date_added: "2024-03-19"
+  relations:
+    tags: [VLA, Dataset]
+    categories:
+      - cs.RO
+    primary_category: cs.RO
+    related: []
+  bibtex:
+    "@misc{khazatsky20242403,\n  author = {Khazatsky, Alexander and Pertsch,\
+    \ Karl and Nair, Suraj and Balakrishna, Ashwin and Dasari, Sudeep and Karamcheti,\
+    \ Siddharth and Nasiriany, Soroush and Srirama, Mohan Kumar and Chen, Lawrence\
+    \ Yunliang and Ellis, Kirsty and Fagan, Peter David and Hejna, Joey and Itkina,\
+    \ Masha and Lepert, Marion and Ma, Yecheng Jason and Miller, Patrick Tree and\
+    \ Wu, Jimmy and Belkhale, Suneel and Dass, Shivin and Ha, Huy and Jain, Arhan\
+    \ and Lee, Abraham and Lee, Youngwoon and Memmel, Marius and Park, Sungjae and\
+    \ Radosavovic, Ilija and Wang, Kaiyuan and Zhan, Albert and Black, Kevin and Chi,\
+    \ Cheng and Hatch, Kyle Beltran and Lin, Shan and Lu, Jingpei and Mercat, Jean\
+    \ and Rehman, Abdul and Sanketi, Pannag R and Sharma, Archit and Simpson, Cody\
+    \ and Vuong, Quan and Walke, Homer Rich and Wulfe, Blake and Xiao, Ted and Yang,\
+    \ Jonathan Heewon and Yavary, Arefeh and Zhao, Tony Z. and Agia, Christopher and\
+    \ Baijal, Rohan and Castro, Mateo Guaman and Chen, Daphne and Chen, Qiuyu and\
+    \ Chung, Trinity and Drake, Jaimyn and Foster, Ethan Paul and Gao, Jensen and\
+    \ Guizilini, Vitor and Herrera, David Antonio and Heo, Minho and Hsu, Kyle and\
+    \ Hu, Jiaheng and Irshad, Muhammad Zubair and Jackson, Donovon and Le, Charlotte\
+    \ and Li, Yunshuang and Lin, Kevin and Lin, Roy and Ma, Zehan and Maddukuri, Abhiram\
+    \ and Mirchandani, Suvir and Morton, Daniel and Nguyen, Tony and O'Neill, Abigail\
+    \ and Scalise, Rosario and Seale, Derick and Son, Victor and Tian, Stephen and\
+    \ Tran, Emi and Wang, Andrew E. and Wu, Yilin and Xie, Annie and Yang, Jingyun\
+    \ and Yin, Patrick and Zhang, Yunchu and Bastani, Osbert and Berseth, Glen and\
+    \ Bohg, Jeannette and Goldberg, Ken and Gupta, Abhinav and Gupta, Abhishek and\
+    \ Jayaraman, Dinesh and Lim, Joseph J and Malik, Jitendra and Martín-Martín, Roberto\
+    \ and Ramamoorthy, Subramanian and Sadigh, Dorsa and Song, Shuran and Wu, Jiajun\
+    \ and Yip, Michael C. and Zhu, Yuke and Kollar, Thomas and Levine, Sergey and\
+    \ Finn, Chelsea},\n  title = {DROID: A Large-Scale In-The-Wild Robot Manipulation\
+    \ Dataset},\n  year = {2024},\n  eprint = {2403.12945},\n  archivePrefix = {arXiv},\n\
+    \  primaryClass = {cs.RO},\n  url = {https://arxiv.org/abs/2403.12945v2},\n}"

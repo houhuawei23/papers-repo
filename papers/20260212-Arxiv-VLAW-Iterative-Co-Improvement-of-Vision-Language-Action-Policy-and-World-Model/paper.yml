@@ -1,0 +1,69 @@
+paper:
+  id: arxiv:2602.12063v2
+  title:
+    "VLAW: Iterative Co-Improvement of Vision-Language-Action Policy and World
+    Model"
+  authors:
+    - name: Yanjiang Guo
+      affiliation: Stanford University, Tsinghua University
+    - name: Tony Lee
+      affiliation: Stanford University
+    - name: Lucy Xiaoyang Shi
+      affiliation: Stanford University
+    - name: Jianyu Chen
+      affiliation: Tsinghua University
+    - name: Percy Liang
+      affiliation: Stanford University
+    - name: Chelsea Finn
+      affiliation: Stanford University
+  publication:
+    type: preprint
+    venue: arXiv
+    date_published: "2026-02-12"
+    year: 2026
+  identifiers:
+    arxiv: 2602.12063v2
+  urls:
+    pdf: https://arxiv.org/pdf/2602.12063v2
+    abstract: https://arxiv.org/abs/2602.12063v2
+  content:
+    abstract:
+      "The goal of this paper is to improve the performance and reliability
+      of vision-language-action (VLA) models through iterative online interaction.
+      Since collecting policy rollouts in the real world is expensive, we investigate
+      whether a learned simulator-specifically, an action-conditioned video generation
+      model-can be used to generate additional rollout data. Unfortunately, existing
+      world models lack the physical fidelity necessary for policy improvement: they
+      are predominantly trained on demonstration datasets that lack coverage of many
+      different physical interactions (particularly failure cases) and struggle to
+      accurately model small yet critical physical details in contact-rich object
+      manipulation. We propose a simple iterative improvement algorithm that uses
+      real-world roll-out data to improve the fidelity of the world model, which can
+      then, in turn, be used to generate supplemental synthetic data for improving
+      the VLA model. In our experiments on a real robot, we use this approach to improve
+      the performance of a state-of-the-art VLA model on multiple downstream tasks.
+      We achieve a 39.2% absolute success rate improvement over the base policy and
+      11.6% improvement from training with the generated synthetic rollouts. Videos
+      can be found at this anonymous website: https://sites.google.com/view/vla-w"
+    keywords:
+      - cs.RO
+    language: en
+    citation:
+      "Yanjiang Guo et al.. (2026). VLAW: Iterative Co-Improvement of Vision-Language-Action
+      .... arXiv:2602.12063v2."
+  workflow:
+    status: unread
+    priority: normal
+    date_added: "2026-02-12"
+  relations:
+    tags: [VLA, World Model]
+    categories:
+      - cs.RO
+    primary_category: cs.RO
+    related: []
+  bibtex:
+    "@misc{guo20262602,\n  author = {Guo, Yanjiang and Lee, Tony and Shi, Lucy\
+    \ Xiaoyang and Chen, Jianyu and Liang, Percy and Finn, Chelsea},\n  title = {VLAW:\
+    \ Iterative Co-Improvement of Vision-Language-Action Policy and World Model},\n\
+    \  year = {2026},\n  eprint = {2602.12063},\n  archivePrefix = {arXiv},\n  primaryClass\
+    \ = {cs.RO},\n  url = {https://arxiv.org/abs/2602.12063v2},\n}"

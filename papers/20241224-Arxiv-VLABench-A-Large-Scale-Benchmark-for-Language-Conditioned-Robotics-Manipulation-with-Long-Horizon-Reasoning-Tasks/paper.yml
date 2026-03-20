@@ -1,0 +1,80 @@
+paper:
+  id: arxiv:2412.18194v1
+  title:
+    "VLABench: A Large-Scale Benchmark for Language-Conditioned Robotics Manipulation
+    with Long-Horizon Reasoning Tasks"
+  authors:
+    - name: Shiduo Zhang
+    - name: Zhe Xu
+    - name: Peiju Liu
+    - name: Xiaopeng Yu
+    - name: Yuan Li
+    - name: Qinghui Gao
+    - name: Zhaoye Fei
+    - name: Zhangyue Yin
+    - name: Zuxuan Wu
+    - name: Yu-Gang Jiang
+    - name: Xipeng Qiu
+  publication:
+    type: preprint
+    venue: arXiv
+    date_published: "2024-12-24"
+    year: 2024
+  identifiers:
+    arxiv: 2412.18194v1
+  urls:
+    pdf: https://arxiv.org/pdf/2412.18194v1
+    abstract: https://arxiv.org/abs/2412.18194v1
+  content:
+    abstract:
+      'General-purposed embodied agents are designed to understand the users''
+      natural instructions or intentions and act precisely to complete universal tasks.
+      Recently, methods based on foundation models especially Vision-Language-Action
+      models (VLAs) have shown a substantial potential to solve language-conditioned
+      manipulation (LCM) tasks well. However, existing benchmarks do not adequately
+      meet the needs of VLAs and relative algorithms. To better define such general-purpose
+      tasks in the context of LLMs and advance the research in VLAs, we present VLABench,
+      an open-source benchmark for evaluating universal LCM task learning. VLABench
+      provides 100 carefully designed categories of tasks, with strong randomization
+      in each category of task and a total of 2000+ objects. VLABench stands out from
+      previous benchmarks in four key aspects: 1) tasks requiring world knowledge
+      and common sense transfer, 2) natural language instructions with implicit human
+      intentions rather than templates, 3) long-horizon tasks demanding multi-step
+      reasoning, and 4) evaluation of both action policies and language model capabilities.
+      The benchmark assesses multiple competencies including understanding of mesh\&texture,
+      spatial relationship, semantic instruction, physical laws, knowledge transfer
+      and reasoning, etc. To support the downstream finetuning, we provide high-quality
+      training data collected via an automated framework incorporating heuristic skills
+      and prior information. The experimental results indicate that both the current
+      state-of-the-art pretrained VLAs and the workflow based on VLMs face challenges
+      in our tasks.'
+    keywords:
+      - cs.RO
+      - cs.AI
+      - cs.CL
+      - cs.CV
+    language: en
+    citation:
+      "Shiduo Zhang et al.. (2024). VLABench: A Large-Scale Benchmark for
+      Language-Conditione.... arXiv:2412.18194v1."
+  workflow:
+    status: unread
+    priority: normal
+    date_added: "2024-12-24"
+  relations:
+    tags: [VLA, Dataset, Benchmark]
+    categories:
+      - cs.RO
+      - cs.AI
+      - cs.CL
+      - cs.CV
+    primary_category: cs.RO
+    related: []
+  bibtex:
+    "@misc{zhang20242412,\n  author = {Zhang, Shiduo and Xu, Zhe and Liu, Peiju\
+    \ and Yu, Xiaopeng and Li, Yuan and Gao, Qinghui and Fei, Zhaoye and Yin, Zhangyue\
+    \ and Wu, Zuxuan and Jiang, Yu-Gang and Qiu, Xipeng},\n  title = {VLABench: A\
+    \ Large-Scale Benchmark for Language-Conditioned Robotics Manipulation with Long-Horizon\
+    \ Reasoning Tasks},\n  year = {2024},\n  eprint = {2412.18194},\n  archivePrefix\
+    \ = {arXiv},\n  primaryClass = {cs.RO},\n  url = {https://arxiv.org/abs/2412.18194v1},\n\
+    }"

@@ -1,0 +1,68 @@
+paper:
+  id: arxiv:2506.10100v1
+  title:
+    "EfficientVLA: Training-Free Acceleration and Compression for Vision-Language-Action
+    Models"
+  authors:
+    - name: Yantai Yang
+    - name: Yuhao Wang
+    - name: Zichen Wen
+    - name: Luo Zhongwei
+    - name: Chang Zou
+    - name: Zhipeng Zhang
+    - name: Chuan Wen
+    - name: Linfeng Zhang
+  publication:
+    type: preprint
+    venue: arXiv
+    date_published: "2025-06-11"
+    year: 2025
+  identifiers:
+    arxiv: 2506.10100v1
+  urls:
+    pdf: https://arxiv.org/pdf/2506.10100v1
+    abstract: https://arxiv.org/abs/2506.10100v1
+  content:
+    abstract:
+      "Vision-Language-Action (VLA) models, particularly diffusion-based architectures,
+      demonstrate transformative potential for embodied intelligence but are severely
+      hampered by high computational and memory demands stemming from extensive inherent
+      and inference-time redundancies. While existing acceleration efforts often target
+      isolated inefficiencies, such piecemeal solutions typically fail to holistically
+      address the varied computational and memory bottlenecks across the entire VLA
+      pipeline, thereby limiting practical deployability. We introduce EfficientVLA,
+      a structured and training-free inference acceleration framework that systematically
+      eliminates these barriers by cohesively exploiting multifaceted redundancies.
+      EfficientVLA synergistically integrates three targeted strategies: (1) pruning
+      of functionally inconsequential layers from the language module, guided by an
+      analysis of inter-layer redundancies; (2) optimizing the visual processing pathway
+      through a task-aware strategy that selects a compact, diverse set of visual
+      tokens, balancing task-criticality with informational coverage; and (3) alleviating
+      temporal computational redundancy within the iterative diffusion-based action
+      head by strategically caching and reusing key intermediate features. We apply
+      our method to a standard VLA model CogACT, yielding a 1.93X inference speedup
+      and reduces FLOPs to 28.9%, with only a 0.6% success rate drop in the SIMPLER
+      benchmark."
+    keywords:
+      - cs.CV
+    language: en
+    citation:
+      "Yantai Yang et al.. (2025). EfficientVLA: Training-Free Acceleration
+      and Compression .... arXiv:2506.10100v1."
+  workflow:
+    status: unread
+    priority: normal
+    date_added: "2025-06-11"
+  relations:
+    tags: [VLA]
+    categories:
+      - cs.CV
+    primary_category: cs.CV
+    related: []
+  bibtex:
+    "@misc{yang20252506,\n  author = {Yang, Yantai and Wang, Yuhao and Wen,\
+    \ Zichen and Zhongwei, Luo and Zou, Chang and Zhang, Zhipeng and Wen, Chuan and\
+    \ Zhang, Linfeng},\n  title = {EfficientVLA: Training-Free Acceleration and Compression\
+    \ for Vision-Language-Action Models},\n  year = {2025},\n  eprint = {2506.10100},\n\
+    \  archivePrefix = {arXiv},\n  primaryClass = {cs.CV},\n  url = {https://arxiv.org/abs/2506.10100v1},\n\
+    }"

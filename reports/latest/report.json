@@ -1,0 +1,337 @@
+{
+  "stats": {
+    "total_dirs": 18,
+    "with_paper_yml": 18,
+    "without_paper_yml": 0,
+    "file_type_counts": {
+      "paper_yml": 18,
+      "with_notes": 1,
+      "with_trans": 17
+    },
+    "venue_distribution": {
+      "TechRxiv": 1,
+      "arXiv": 17
+    },
+    "year_distribution": {
+      "2026": 7,
+      "2021": 2,
+      "2023": 1,
+      "2024": 2,
+      "2025": 6
+    },
+    "tag_distribution": {
+      "CLIP": 1,
+      "VLA": 13,
+      "Dataset": 2,
+      "Benchmark": 2,
+      "NVIDIA": 2,
+      "Survey": 2,
+      "World Model": 3,
+      "Reinforcement Learning": 1,
+      "Performance": 1
+    },
+    "with_notes": 1,
+    "with_trans": 17,
+    "hidden_dirs": 1,
+    "naming_inconsistencies": [
+      {
+        "dir": ".20260318-TechArxiv-Towards-Generalist-Embodied-AI_-A-Survey-on-World-Models-for-VLA-Agents_parsed",
+        "issues": [
+          "隐藏目录（以 . 开头）",
+          "疑似临时解析目录"
+        ]
+      },
+      {
+        "dir": "20240319-Arxiv-DROID-A-Large-Scale-In-The-Wild-Robot-Manipulation-Dataset-httpsdroid-datasetgithubio",
+        "issues": [
+          "目录名含 URL 或异常片段"
+        ]
+      }
+    ],
+    "duplicates": [],
+    "missing_fields": [],
+    "parse_failures": []
+  },
+  "entries": [
+    {
+      "dir_name": ".20260318-TechArxiv-Towards-Generalist-Embodied-AI_-A-Survey-on-World-Models-for-VLA-Agents_parsed",
+      "dir_path": "/home/hhw/Desktop/00_Personal/papers-repo/papers/.20260318-TechArxiv-Towards-Generalist-Embodied-AI_-A-Survey-on-World-Models-for-VLA-Agents_parsed",
+      "title": "Towards Generalist Embodied AI: A Survey on World Models for VLA Agents",
+      "year": 2026,
+      "venue": "TechRxiv",
+      "arxiv_id": null,
+      "tags": [],
+      "has_notes": false,
+      "has_trans": false,
+      "naming_issues": [
+        "隐藏目录（以 . 开头）",
+        "疑似临时解析目录"
+      ],
+      "parse_errors": []
+    },
+    {
+      "dir_name": "20210226-ICML2021-CLIP-Learning-Transferable-Visual-Models-From-Natural-Language-Supervision",
+      "dir_path": "/home/hhw/Desktop/00_Personal/papers-repo/papers/20210226-ICML2021-CLIP-Learning-Transferable-Visual-Models-From-Natural-Language-Supervision",
+      "title": "Learning Transferable Visual Models From Natural Language Supervision",
+      "year": 2021,
+      "venue": "arXiv",
+      "arxiv_id": "2103.00020",
+      "tags": [
+        "CLIP"
+      ],
+      "has_notes": false,
+      "has_trans": true,
+      "naming_issues": [],
+      "parse_errors": []
+    },
+    {
+      "dir_name": "20210924-PMLR-CLIPort-What-and-Where-Pathways-for-Robotic-Manipulation",
+      "dir_path": "/home/hhw/Desktop/00_Personal/papers-repo/papers/20210924-PMLR-CLIPort-What-and-Where-Pathways-for-Robotic-Manipulation",
+      "title": "CLIPort: What and Where Pathways for Robotic Manipulation",
+      "year": 2021,
+      "venue": "arXiv",
+      "arxiv_id": "2109.12098",
+      "tags": [
+        "VLA"
+      ],
+      "has_notes": false,
+      "has_trans": true,
+      "naming_issues": [],
+      "parse_errors": []
+    },
+    {
+      "dir_name": "20230728-Arxiv-RT-2-Vision-Language-Action-Models-Transfer-Web-Knowledge-to-Robotic-Control",
+      "dir_path": "/home/hhw/Desktop/00_Personal/papers-repo/papers/20230728-Arxiv-RT-2-Vision-Language-Action-Models-Transfer-Web-Knowledge-to-Robotic-Control",
+      "title": "RT-2: Vision-Language-Action Models Transfer Web Knowledge to Robotic Control",
+      "year": 2023,
+      "venue": "arXiv",
+      "arxiv_id": "2307.15818",
+      "tags": [
+        "VLA"
+      ],
+      "has_notes": false,
+      "has_trans": true,
+      "naming_issues": [],
+      "parse_errors": []
+    },
+    {
+      "dir_name": "20240319-Arxiv-DROID-A-Large-Scale-In-The-Wild-Robot-Manipulation-Dataset-httpsdroid-datasetgithubio",
+      "dir_path": "/home/hhw/Desktop/00_Personal/papers-repo/papers/20240319-Arxiv-DROID-A-Large-Scale-In-The-Wild-Robot-Manipulation-Dataset-httpsdroid-datasetgithubio",
+      "title": "DROID: A Large-Scale In-The-Wild Robot Manipulation Dataset",
+      "year": 2024,
+      "venue": "arXiv",
+      "arxiv_id": "2403.12945",
+      "tags": [
+        "VLA",
+        "Dataset"
+      ],
+      "has_notes": false,
+      "has_trans": true,
+      "naming_issues": [
+        "目录名含 URL 或异常片段"
+      ],
+      "parse_errors": []
+    },
+    {
+      "dir_name": "20241224-Arxiv-VLABench-A-Large-Scale-Benchmark-for-Language-Conditioned-Robotics-Manipulation-with-Long-Horizon-Reasoning-Tasks",
+      "dir_path": "/home/hhw/Desktop/00_Personal/papers-repo/papers/20241224-Arxiv-VLABench-A-Large-Scale-Benchmark-for-Language-Conditioned-Robotics-Manipulation-with-Long-Horizon-Reasoning-Tasks",
+      "title": "VLABench: A Large-Scale Benchmark for Language-Conditioned Robotics Manipulation with Long-Horizon Reasoning Tasks",
+      "year": 2024,
+      "venue": "arXiv",
+      "arxiv_id": "2412.18194",
+      "tags": [
+        "VLA",
+        "Dataset",
+        "Benchmark"
+      ],
+      "has_notes": false,
+      "has_trans": true,
+      "naming_issues": [],
+      "parse_errors": []
+    },
+    {
+      "dir_name": "20250311-Arxiv-PhysVLM-Enabling-Visual-Language-Models-to-Understand-Robotic-Physical-Reachability",
+      "dir_path": "/home/hhw/Desktop/00_Personal/papers-repo/papers/20250311-Arxiv-PhysVLM-Enabling-Visual-Language-Models-to-Understand-Robotic-Physical-Reachability",
+      "title": "PhysVLM: Enabling Visual Language Models to Understand Robotic Physical Reachability",
+      "year": 2025,
+      "venue": "arXiv",
+      "arxiv_id": "2503.08481",
+      "tags": [],
+      "has_notes": false,
+      "has_trans": true,
+      "naming_issues": [],
+      "parse_errors": []
+    },
+    {
+      "dir_name": "20250318-Arxiv-GR00T-N1-An-Open-Foundation-Model-for-Generalist-Humanoid-Robots",
+      "dir_path": "/home/hhw/Desktop/00_Personal/papers-repo/papers/20250318-Arxiv-GR00T-N1-An-Open-Foundation-Model-for-Generalist-Humanoid-Robots",
+      "title": "GR00T N1: An Open Foundation Model for Generalist Humanoid Robots",
+      "year": 2025,
+      "venue": "arXiv",
+      "arxiv_id": "2503.14734",
+      "tags": [
+        "VLA",
+        "NVIDIA"
+      ],
+      "has_notes": false,
+      "has_trans": true,
+      "naming_issues": [],
+      "parse_errors": []
+    },
+    {
+      "dir_name": "20250507-Arxiv-Vision-Language-Action-VLA-Models-Concepts-Progress-Applications-and-Challenges",
+      "dir_path": "/home/hhw/Desktop/00_Personal/papers-repo/papers/20250507-Arxiv-Vision-Language-Action-VLA-Models-Concepts-Progress-Applications-and-Challenges",
+      "title": "Vision-Language-Action (VLA) Models: Concepts, Progress, Applications and Challenges",
+      "year": 2025,
+      "venue": "arXiv",
+      "arxiv_id": "2505.04769",
+      "tags": [
+        "VLA",
+        "Survey"
+      ],
+      "has_notes": false,
+      "has_trans": true,
+      "naming_issues": [],
+      "parse_errors": []
+    },
+    {
+      "dir_name": "20250611-Arxiv-EfficientVLA-Training-Free-Acceleration-and-Compression-for-Vision-Language-Action-Models",
+      "dir_path": "/home/hhw/Desktop/00_Personal/papers-repo/papers/20250611-Arxiv-EfficientVLA-Training-Free-Acceleration-and-Compression-for-Vision-Language-Action-Models",
+      "title": "EfficientVLA: Training-Free Acceleration and Compression for Vision-Language-Action Models",
+      "year": 2025,
+      "venue": "arXiv",
+      "arxiv_id": "2506.10100",
+      "tags": [
+        "VLA"
+      ],
+      "has_notes": false,
+      "has_trans": true,
+      "naming_issues": [],
+      "parse_errors": []
+    },
+    {
+      "dir_name": "20251011-Arxiv-Ctrl-World-A-Controllable-Generative-World-Model-for-Robot-Manipulation",
+      "dir_path": "/home/hhw/Desktop/00_Personal/papers-repo/papers/20251011-Arxiv-Ctrl-World-A-Controllable-Generative-World-Model-for-Robot-Manipulation",
+      "title": "Ctrl-World: A Controllable Generative World Model for Robot Manipulation",
+      "year": 2025,
+      "venue": "arXiv",
+      "arxiv_id": "2510.10125",
+      "tags": [
+        "VLA",
+        "World Model"
+      ],
+      "has_notes": false,
+      "has_trans": true,
+      "naming_issues": [],
+      "parse_errors": []
+    },
+    {
+      "dir_name": "20251020-Arxiv-Efficient-Vision-Language-Action-Models-for-Embodied-Manipulation-A-Systematic-Survey",
+      "dir_path": "/home/hhw/Desktop/00_Personal/papers-repo/papers/20251020-Arxiv-Efficient-Vision-Language-Action-Models-for-Embodied-Manipulation-A-Systematic-Survey",
+      "title": "Efficient Vision-Language-Action Models for Embodied Manipulation: A Systematic Survey",
+      "year": 2025,
+      "venue": "arXiv",
+      "arxiv_id": "2510.17111",
+      "tags": [
+        "VLA",
+        "Survey"
+      ],
+      "has_notes": false,
+      "has_trans": true,
+      "naming_issues": [],
+      "parse_errors": []
+    },
+    {
+      "dir_name": "20260126-Arxiv-TERM-Bench-Trustworthy-Evaluation-of-Robotic-Manipulation-A-New-Benchmark-and-AutoEval-Methods",
+      "dir_path": "/home/hhw/Desktop/00_Personal/papers-repo/papers/20260126-Arxiv-TERM-Bench-Trustworthy-Evaluation-of-Robotic-Manipulation-A-New-Benchmark-and-AutoEval-Methods",
+      "title": "Trustworthy Evaluation of Robotic Manipulation: A New Benchmark and AutoEval Methods",
+      "year": 2026,
+      "venue": "arXiv",
+      "arxiv_id": "2601.18723",
+      "tags": [
+        "VLA",
+        "Benchmark"
+      ],
+      "has_notes": false,
+      "has_trans": true,
+      "naming_issues": [],
+      "parse_errors": []
+    },
+    {
+      "dir_name": "20260212-Arxiv-GigaBrain-05M-a-VLA-That-Learns-From-World-Model-Based-Reinforcement-Learning",
+      "dir_path": "/home/hhw/Desktop/00_Personal/papers-repo/papers/20260212-Arxiv-GigaBrain-05M-a-VLA-That-Learns-From-World-Model-Based-Reinforcement-Learning",
+      "title": "GigaBrain-0.5M*: a VLA That Learns From World Model-Based Reinforcement Learning",
+      "year": 2026,
+      "venue": "arXiv",
+      "arxiv_id": "2602.12099",
+      "tags": [
+        "VLA",
+        "World Model",
+        "Reinforcement Learning"
+      ],
+      "has_notes": false,
+      "has_trans": true,
+      "naming_issues": [],
+      "parse_errors": []
+    },
+    {
+      "dir_name": "20260212-Arxiv-VLAW-Iterative-Co-Improvement-of-Vision-Language-Action-Policy-and-World-Model",
+      "dir_path": "/home/hhw/Desktop/00_Personal/papers-repo/papers/20260212-Arxiv-VLAW-Iterative-Co-Improvement-of-Vision-Language-Action-Policy-and-World-Model",
+      "title": "VLAW: Iterative Co-Improvement of Vision-Language-Action Policy and World Model",
+      "year": 2026,
+      "venue": "arXiv",
+      "arxiv_id": "2602.12063",
+      "tags": [
+        "VLA",
+        "World Model"
+      ],
+      "has_notes": true,
+      "has_trans": true,
+      "naming_issues": [],
+      "parse_errors": []
+    },
+    {
+      "dir_name": "20260220-Arxiv-How-Fast-Can-I-Run-My-VLA-Demystifying-VLA-Inference-Performance-with-VLA-Perf",
+      "dir_path": "/home/hhw/Desktop/00_Personal/papers-repo/papers/20260220-Arxiv-How-Fast-Can-I-Run-My-VLA-Demystifying-VLA-Inference-Performance-with-VLA-Perf",
+      "title": "How Fast Can I Run My VLA? Demystifying VLA Inference Performance with VLA-Perf",
+      "year": 2026,
+      "venue": "arXiv",
+      "arxiv_id": "2602.18397",
+      "tags": [
+        "VLA",
+        "Performance",
+        "NVIDIA"
+      ],
+      "has_notes": false,
+      "has_trans": true,
+      "naming_issues": [],
+      "parse_errors": []
+    },
+    {
+      "dir_name": "20260316-Arxiv-260315031-Attention-Residuals",
+      "dir_path": "/home/hhw/Desktop/00_Personal/papers-repo/papers/20260316-Arxiv-260315031-Attention-Residuals",
+      "title": "Attention Residuals",
+      "year": 2026,
+      "venue": "arXiv",
+      "arxiv_id": "2603.15031",
+      "tags": [],
+      "has_notes": false,
+      "has_trans": true,
+      "naming_issues": [],
+      "parse_errors": []
+    },
+    {
+      "dir_name": "20260317-Arxiv-Efficient-Reasoning-on-the-Edge",
+      "dir_path": "/home/hhw/Desktop/00_Personal/papers-repo/papers/20260317-Arxiv-Efficient-Reasoning-on-the-Edge",
+      "title": "Efficient Reasoning on the Edge",
+      "year": 2026,
+      "venue": "arXiv",
+      "arxiv_id": "2603.16867",
+      "tags": [],
+      "has_notes": false,
+      "has_trans": true,
+      "naming_issues": [],
+      "parse_errors": []
+    }
+  ]
+}
