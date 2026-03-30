@@ -1,0 +1,64 @@
+paper:
+  id: arxiv:2503.12838v1
+  title: 'DreamLayer: Simultaneous Multi-Layer Generation via Diffusion Mode'
+  authors:
+  - name: Junjia Huang
+  - name: Pengxiang Yan
+  - name: Jinhang Cai
+  - name: Jiyang Liu
+  - name: Zhao Wang
+  - name: Yitong Wang
+  - name: Xinglong Wu
+  - name: Guanbin Li
+  publication:
+    type: preprint
+    venue: arXiv
+    date_published: '2025-03-17'
+    year: 2025
+  identifiers:
+    arxiv: 2503.12838v1
+  urls:
+    pdf: https://arxiv.org/pdf/2503.12838v1
+    abstract: https://arxiv.org/abs/2503.12838v1
+  content:
+    abstract: Text-driven image generation using diffusion models has recently gained
+      significant attention. To enable more flexible image manipulation and editing,
+      recent research has expanded from single image generation to transparent layer
+      generation and multi-layer compositions. However, existing approaches often
+      fail to provide a thorough exploration of multi-layer structures, leading to
+      inconsistent inter-layer interactions, such as occlusion relationships, spatial
+      layout, and shadowing. In this paper, we introduce DreamLayer, a novel framework
+      that enables coherent text-driven generation of multiple image layers, by explicitly
+      modeling the relationship between transparent foreground and background layers.
+      DreamLayer incorporates three key components, i.e., Context-Aware Cross-Attention
+      (CACA) for global-local information exchange, Layer-Shared Self-Attention (LSSA)
+      for establishing robust inter-layer connections, and Information Retained Harmonization
+      (IRH) for refining fusion details at the latent level. By leveraging a coherent
+      full-image context, DreamLayer builds inter-layer connections through attention
+      mechanisms and applies a harmonization step to achieve seamless layer fusion.
+      To facilitate research in multi-layer generation, we construct a high-quality,
+      diverse multi-layer dataset including 400k samples. Extensive experiments and
+      user studies demonstrate that DreamLayer generates more coherent and well-aligned
+      layers, with broad applicability, including latent-space image editing and image-to-layer
+      decomposition.
+    keywords:
+    - cs.CV
+    language: en
+    citation: 'Junjia Huang et al.. (2025). DreamLayer: Simultaneous Multi-Layer Generation
+      via Diffu.... arXiv:2503.12838v1.'
+  workflow:
+    status: unread
+    priority: normal
+    date_added: '2025-03-17'
+  relations:
+    tags: []
+    categories:
+    - cs.CV
+    primary_category: cs.CV
+    related: []
+  bibtex: "@misc{huang20252503,\n  author = {Huang, Junjia and Yan, Pengxiang and\
+    \ Cai, Jinhang and Liu, Jiyang and Wang, Zhao and Wang, Yitong and Wu, Xinglong\
+    \ and Li, Guanbin},\n  title = {DreamLayer: Simultaneous Multi-Layer Generation\
+    \ via Diffusion Mode},\n  year = {2025},\n  eprint = {2503.12838},\n  archivePrefix\
+    \ = {arXiv},\n  primaryClass = {cs.CV},\n  url = {https://arxiv.org/abs/2503.12838v1},\n\
+    }"
