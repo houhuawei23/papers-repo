@@ -1,0 +1,58 @@
+paper:
+  id: arxiv:2507.00435
+  title: ': Where Robotic Manipulation Meets Structured and Scalable Evaluation'
+  authors:
+  - name: Yi Ru Wang
+  - name: Carter Ung
+  - name: Grant Tannert
+  - name: Jiafei Duan
+  - name: Josephine Li
+  - name: Amy Le
+  - name: Rishabh Oswal
+  - name: Markus Grotz
+  - name: Wilbert Pumacay
+  - name: Yuquan Deng
+  - name: Ranjay Krishna
+  - name: Dieter Fox
+  - name: Siddhartha Srinivasa
+  publication:
+    type: preprint
+    venue: arXiv
+    date_published: '2025-07-01'
+    year: 2025
+  identifiers:
+    arxiv: '2507.00435'
+  content:
+    abstract: Abstract We present RoboEval , a simulation benchmark and structured
+      evaluation framework designed to reveal the limitations of current bimanual
+      manipulation policies. While prior benchmarks report only binary task success,
+      we show that such metrics often conceal critical weaknesses in policy behavior—such
+      as poor coordination, slipping during grasping, or asymmetric arm usage. RoboEval
+      introduces a suite of tiered, semantically grounded tasks decomposed into skill-specific
+      stages, with variations that systematically challenge spatial, physical, and
+      coordination capabilities. Tasks are paired with fine-grained diagnostic metrics
+      and 3000+ human demonstrations to support imitation learning. Our experiments
+      reveal that policies with similar success rates diverge in how tasks are executed
+      – some struggle with alignment, others with temporally consistent bimanual control.
+      We find that behavioral metrics correlate with success in over half of task-metric
+      pairs, and remain informative even when binary success saturates. By pinpointing
+      when and how policies fail, RoboEval enables a deeper, more actionable understanding
+      of robotic manipulation – and highlights the need for evaluation tools that
+      go beyond success alone.
+    language: en
+    citation: 'Yi Ru Wang et al.. (2025). : Where Robotic Manipulation Meets Structured
+      and Scalabl.... arXiv:2507.00435.'
+  workflow:
+    status: unread
+    priority: normal
+    date_added: '2025-07-01'
+  relations:
+    tags: []
+    categories: []
+    related: []
+  bibtex: "@misc{wang20252507,\n  author = {Wang, Yi Ru and Ung, Carter and Tannert,\
+    \ Grant and Duan, Jiafei and Li, Josephine and Le, Amy and Oswal, Rishabh and\
+    \ Grotz, Markus and Pumacay, Wilbert and Deng, Yuquan and Krishna, Ranjay and\
+    \ Fox, Dieter and Srinivasa, Siddhartha},\n  title = {: Where Robotic Manipulation\
+    \ Meets Structured and Scalable Evaluation},\n  year = {2025},\n  eprint = {2507.00435},\n\
+    \  archivePrefix = {arXiv},\n}"

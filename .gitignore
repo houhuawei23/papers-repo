@@ -1,7 +1,7 @@
 # Large files (optional, uncomment if needed)
 *.pdf
 *.zip
-
+**/.**
 
 # Python
 __pycache__/
@@ -52,3 +52,6 @@ Thumbs.db
 *.local
 
 
+
+# Academic Extension Cache
+.vscode/academic-cache

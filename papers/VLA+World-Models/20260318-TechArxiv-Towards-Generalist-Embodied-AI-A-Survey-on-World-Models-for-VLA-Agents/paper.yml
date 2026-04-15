@@ -1,0 +1,15 @@
+paper:
+  id: techrxiv:176948355.54623875
+  title: "Towards Generalist Embodied AI: A Survey on World Models for VLA Agents"
+  authors:
+    - name: Wentao Tan
+  publication:
+    type: preprint
+    venue: TechRxiv
+    date_published: '2026-03-18'
+    year: 2026
+  identifiers:
+    techrxiv: 176948355.54623875
+  urls:
+    abstract: https://doi.org/10.36227/techrxiv.176948355.54623875/v1
+    github: https://github.com/FutureTwT/awesome-world-models-for-vla-agents

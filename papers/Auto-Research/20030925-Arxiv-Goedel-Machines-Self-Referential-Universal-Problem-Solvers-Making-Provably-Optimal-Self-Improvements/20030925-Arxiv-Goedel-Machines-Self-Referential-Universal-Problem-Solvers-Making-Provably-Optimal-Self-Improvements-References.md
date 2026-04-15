@@ -1,0 +1,65 @@
+## References
+
+- [1] W. Banzhaf, P. Nordin, R. E. Keller, and F. D. Francone. Genetic Programming – An Introduction. Morgan Kaufmann Publishers, San Francisco, CA, USA, 1998.
+- [2] R. Bellman. Adaptive Control Processes. Princeton University Press, 1961.
+- [3] M. Blum. A machine-independent theory of the complexity of recursive functions. Journal of the ACM, 14(2):322–336, 1967.
+- [4] M. Blum. On effective procedures for speeding up algorithms. Journal of the ACM, 18(2):290–305, 1971.
+- [5] G. Cantor. Über eine Eigenschaft des Inbegriffes aller reellen algebraischen Zahlen. Crelle’s Journal für Mathematik, 77:258–263, 1874.
+- [6] G. J. Chaitin. A theory of program size formally identical to information theory. Journal of the ACM, 22:329–340, 1975.
+- [7] W. F. Clocksin and C. S. Mellish. Programming in Prolog (3rd ed.). Springer-Verlag, 1987.
+- [8] N. L. Cramer. A representation for the adaptive generation of simple sequential programs. In J.J. Grefenstette, editor, Proceedings of an International Conference on Genetic Algorithms and Their Applications, Carnegie-Mellon University, July 24-26, 1985, Hillsdale NJ, 1985. Lawrence Erlbaum Associates.
+- [9] F. Crick and C. Koch. Consciousness and neuroscience. Cerebral Cortex, 8:97–107, 1998.
+- [10] M. C. Fitting. First-Order Logic and Automated Theorem Proving. Graduate Texts in Computer Science. Springer-Verlag, Berlin, 2nd edition, 1996.
+- [11] K. Gödel. Über formal unentscheidbare Sätze der Principia Mathematica und verwandter Systeme I. Monatshefte für Mathematik und Physik, 38:173–198, 1931.
+- [12] W. Heisenberg. Über den anschaulichen Inhalt der quantentheoretischen Kinematik und Mechanik. Zeitschrift für Physik, 33:879–893, 1925.
+- [13] S. Hochreiter, A. S. Younger, and P. R. Conwell. Learning to learn using gradient descent. In Lecture Notes on Comp. Sci. 2130, Proc. Intl. Conf. on Artificial Neural Networks (ICANN-2001), pages 87–94. Springer: Berlin, Heidelberg, 2001.
+- [14] D. R. Hofstadter. Gödel, Escher, Bach: an Eternal Golden Braid. Basic Books, 1979.
+- [15] J. H. Holland. Properties of the bucket brigade. In Proceedings of an International Conference on Genetic Algorithms. Lawrence Erlbaum, Hillsdale, NJ, 1985.
+- [16] M. Hutter. Towards a universal theory of artificial intelligence based on algorithmic probability and sequential decisions. Proceedings of the 12^th European Conference on Machine Learning (ECML-2001), pages 226–238, 2001. (On J. Schmidhuber’s SNF grant 20-61847).
+- [17] M. Hutter. The fastest and shortest algorithm for all well-defined problems. International Journal of Foundations of Computer Science, 13(3):431–443, 2002. (On J. Schmidhuber’s SNF grant 20-61847).
+- [18] M. Hutter. Self-optimizing and Pareto-optimal policies in general environments based on Bayes-mixtures. In J. Kivinen and R. H. Sloan, editors, Proceedings of the 15th Annual Conference on Computational Learning Theory (COLT 2002), Lecture Notes in Artificial Intelligence, pages 364–379, Sydney, Australia, 2002. Springer. (On J. Schmidhuber’s SNF grant 20-61847).
+- [19] M. Hutter. Universal Artificial Intelligence: Sequential Decisions based on Algorithmic Probability. Springer, Berlin, 2004. (On J. Schmidhuber’s SNF grant 20-61847).
+- [20] L. P. Kaelbling, M. L. Littman, and A. W. Moore. Reinforcement learning: a survey. Journal of AI research, 4:237–285, 1996.
+- [21] A. N. Kolmogorov. Grundbegriffe der Wahrscheinlichkeitsrechnung. Springer, Berlin, 1933.
+- [22] A. N. Kolmogorov. Three approaches to the quantitative definition of information. Problems of Information Transmission, 1:1–11, 1965.
+- [23] D. Lenat. Theory formation by heuristic search. Machine Learning, 21, 1983.
+- [24] L. A. Levin. Universal sequential search problems. Problems of Information Transmission, 9(3):265–266, 1973.
+- [25] L. A. Levin. Laws of information (nongrowth) and aspects of the foundation of probability theory. Problems of Information Transmission, 10(3):206–210, 1974.
+- [26] L. A. Levin. Randomness conservation inequalities: Information and independence in mathematical theories. Information and Control, 61:15–37, 1984.
+- [27] M. Li and P. M. B. Vitányi. An Introduction to Kolmogorov Complexity and its Applications (2nd edition). Springer, 1997.
+- [28] L. Löwenheim. Über Möglichkeiten im Relativkalkül. Mathematische Annalen, 76:447–470, 1915.
+- [29] C. H. Moore and G. C. Leach. FORTH - a language for interactive computing, 1970.
+- [30] R. Penrose. Shadows of the mind. Oxford University Press, 1994.
+- [31] K. R. Popper. All Life Is Problem Solving. Routledge, London, 1999.
+- [32] H. G. Rice. Classes of recursively enumerable sets and their decision problems. Trans. Amer. Math. Soc., 74:358–366, 1953.
+- [33] A. L. Samuel. Some studies in machine learning using the game of checkers. IBM Journal on Research and Development, 3:210–229, 1959.
+- [34] J. Schmidhuber. Evolutionary principles in self-referential learning. Diploma thesis, Institut für Informatik, Technische Universität München, 1987.
+- [35] J. Schmidhuber. Reinforcement learning in Markovian and non-Markovian environments. In D. S. Lippman, J. E. Moody, and D. S. Touretzky, editors, Advances in Neural Information Processing Systems 3 (NIPS 3), pages 500–506. Morgan Kaufmann, 1991.
+- [36] J. Schmidhuber. A self-referential weight matrix. In Proceedings of the International Conference on Artificial Neural Networks, Amsterdam, pages 446–451. Springer, 1993.
+- [37] J. Schmidhuber. On learning how to learn learning strategies. Technical Report FKI-198-94, Fakultät für Informatik, Technische Universität München, 1994. See [55, 53].
+- [38] J. Schmidhuber. Discovering solutions with low Kolmogorov complexity and high generalization capability. In A. Prieditis and S. Russell, editors, Machine Learning: Proceedings of the Twelfth International Conference, pages 488–496. Morgan Kaufmann Publishers, San Francisco, CA, 1995.
+- [39] J. Schmidhuber. A computer scientist’s view of life, the universe, and everything. In C. Freksa, M. Jantzen, and R. Valk, editors, Foundations of Computer Science: Potential - Theory - Cognition, volume 1337, pages 201–208. Lecture Notes in Computer Science, Springer, Berlin, 1997.
+- [40] J. Schmidhuber. Discovering neural nets with low Kolmogorov complexity and high generalization capability. Neural Networks, 10(5):857–873, 1997.
+- [41] J. Schmidhuber. Algorithmic theories of everything. Technical Report IDSIA-20-00, quant-ph/0011122, IDSIA, Manno (Lugano), Switzerland, 2000. Sections 1-5: see [42]; Section 6: see [43].
+- [42] J. Schmidhuber. Hierarchies of generalized Kolmogorov complexities and nonenumerable universal measures computable in the limit. International Journal of Foundations of Computer Science, 13(4):587–612, 2002.
+- [43] J. Schmidhuber. The Speed Prior: a new simplicity measure yielding near-optimal computable predictions. In J. Kivinen and R. H. Sloan, editors, Proceedings of the 15th Annual Conference on Computational Learning Theory (COLT 2002), Lecture Notes in Artificial Intelligence, pages 216–228. Springer, Sydney, Australia, 2002.
+- [44] J. Schmidhuber. Bias-optimal incremental problem solving. In S. Becker, S. Thrun, and K. Obermayer, editors, Advances in Neural Information Processing Systems 15 (NIPS 15), pages 1571–1578, Cambridge, MA, 2003. MIT Press.
+- [45] J. Schmidhuber. Gödel machines: self-referential universal problem solvers making provably optimal self-improvements. Technical Report IDSIA-19-03, arXiv:cs.LO/0309048, IDSIA, Manno-Lugano, Switzerland, 2003.
+- [46] J. Schmidhuber. Towards solving the grand problem of AI. In P. Quaresma, A. Dourado, E. Costa, and J. F. Costa, editors, Soft Computing and complex systems, pages 77–97. Centro Internacional de Mathematica, Coimbra, Portugal, 2003. Based on [52].
+- [47] J. Schmidhuber. Gödel machine home page, with frequently asked questions, 2004. http://www.idsia.ch/~juergen/goedelmachine.html.
+- [48] J. Schmidhuber. Optimal ordered problem solver. Machine Learning, 54:211–254, 2004.
+- [49] J. Schmidhuber. Completely self-referential optimal reinforcement learners. In W. Duch, J. Kacprzyk, E. Oja, and S. Zadrozny, editors, Artificial Neural Networks: Biological Inspirations - ICANN 2005, LNCS 3697, pages 223–233. Springer-Verlag Berlin Heidelberg, 2005. Plenary talk.
+- [50] J. Schmidhuber. Gödel machines: Towards a technical justification of consciousness. In D. Kudenko, D. Kazakov, and E. Alonso, editors, Adaptive Agents and Multi-Agent Systems III (LNCS 3394), pages 1–23. Springer Verlag, 2005.
+- [51] J. Schmidhuber. Gödel machines: fully self-referential optimal universal problem solvers. In B. Goertzel and C. Pennachin, editors, Artificial General Intelligence. Springer Verlag, in press, 2006.
+- [52] J. Schmidhuber. The new AI: General & sound & relevant for physics. In B. Goertzel and C. Pennachin, editors, Artificial General Intelligence. Springer, in press, 2006. Also available as TR IDSIA-04-03, cs.AI/0302012.
+- [53] J. Schmidhuber, J. Zhao, and N. Schraudolph. Reinforcement learning with self-modifying policies. In S. Thrun and L. Pratt, editors, Learning to learn, pages 293–309. Kluwer, 1997.
+- [54] J. Schmidhuber, J. Zhao, and M. Wiering. Simple principles of metalearning. Technical Report IDSIA-69-96, IDSIA, 1996. See [55, 53].
+- [55] J. Schmidhuber, J. Zhao, and M. Wiering. Shifting inductive bias with success-story algorithm, adaptive Levin search, and incremental self-improvement. Machine Learning, 28:105–130, 1997.
+- [56] T. Skolem. Logisch-kombinatorische Untersuchungen über Erfüllbarkeit oder Beweisbarkeit mathematischer Sätze nebst einem Theorem über dichte Mengen. Skrifter utgit av Videnskapsselskapet in Kristiania, I, Mat.-Nat. Kl., N4:1–36, 1919.
+- [57] R. J. Solomonoff. A formal theory of inductive inference. Part I. Information and Control, 7:1–22, 1964.
+- [58] R. J. Solomonoff. Complexity-based induction systems. IEEE Transactions on Information Theory, IT-24(5):422–432, 1978.
+- [59] R. J. Solomonoff. Progress in incremental machine learning—Preliminary Report for NIPS 2002 Workshop on Universal Learners and Optimal Search; revised Sept 2003. Technical Report IDSIA-16-03, IDSIA, Lugano, 2003.
+- [60] R. Sutton and A. Barto. Reinforcement learning: An introduction. Cambridge, MA, MIT Press, 1998.
+- [61] A. M. Turing. On computable numbers, with an application to the Entscheidungsproblem. Proceedings of the London Mathematical Society, Series 2, 41:230–267, 1936.
+- [62] D. H. Wolpert and W. G. Macready. No free lunch theorems for search. IEEE Transactions on Evolutionary Computation, 1, 1997.
+- [63] K. Zuse. Rechnender Raum. Friedrich Vieweg & Sohn, Braunschweig, 1969. English translation: Calculating Space, MIT Technical Translation AZT-70-164-GEMIT, Massachusetts Institute of Technology (Proj. MAC), Cambridge, Mass. 02139, Feb. 1970.

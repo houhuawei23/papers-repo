@@ -1,0 +1,73 @@
+paper:
+  id: arxiv:2603.22281v1
+  title: 'ThinkJEPA: Empowering Latent World Models with Large Vision-Language Reasoning
+    Model'
+  authors:
+  - name: Haichao Zhang
+  - name: Yijiang Li
+  - name: Shwai He
+  - name: Tushar Nagarajan
+  - name: Mingfei Chen
+  - name: Jianglin Lu
+  - name: Ang Li
+  - name: Yun Fu
+  publication:
+    type: preprint
+    venue: arXiv
+    date_published: '2026-03-23'
+    year: 2026
+  identifiers:
+    arxiv: 2603.22281v1
+  urls:
+    pdf: https://arxiv.org/pdf/2603.22281v1
+    abstract: https://arxiv.org/abs/2603.22281v1
+  content:
+    abstract: 'Recent progress in latent world models (e.g., V-JEPA2) has shown promising
+      capability in forecasting future world states from video observations. Nevertheless,
+      dense prediction from a short observation window limits temporal context and
+      can bias predictors toward local, low-level extrapolation, making it difficult
+      to capture long-horizon semantics and reducing downstream utility. Vision--language
+      models (VLMs), in contrast, provide strong semantic grounding and general knowledge
+      by reasoning over uniformly sampled frames, but they are not ideal as standalone
+      dense predictors due to compute-driven sparse sampling, a language-output bottleneck
+      that compresses fine-grained interaction states into text-oriented representations,
+      and a data-regime mismatch when adapting to small action-conditioned datasets.
+      We propose a VLM-guided JEPA-style latent world modeling framework that combines
+      dense-frame dynamics modeling with long-horizon semantic guidance via a dual-temporal
+      pathway: a dense JEPA branch for fine-grained motion and interaction cues, and
+      a uniformly sampled VLM \emph{thinker} branch with a larger temporal stride
+      for knowledge-rich guidance. To transfer the VLM''s progressive reasoning signals
+      effectively, we introduce a hierarchical pyramid representation extraction module
+      that aggregates multi-layer VLM representations into guidance features compatible
+      with latent prediction. Experiments on hand-manipulation trajectory prediction
+      show that our method outperforms both a strong VLM-only baseline and a JEPA-predictor
+      baseline, and yields more robust long-horizon rollout behavior.'
+    keywords:
+    - cs.CV
+    - cs.AI
+    - cs.CL
+    - cs.LG
+    - cs.RO
+    language: en
+    citation: 'Haichao Zhang et al.. (2026). ThinkJEPA: Empowering Latent World Models
+      with Large Visi.... arXiv:2603.22281v1.'
+  workflow:
+    status: unread
+    priority: normal
+    date_added: '2026-03-23'
+  relations:
+    tags: []
+    categories:
+    - cs.CV
+    - cs.AI
+    - cs.CL
+    - cs.LG
+    - cs.RO
+    primary_category: cs.CV
+    related: []
+  bibtex: "@misc{zhang20262603,\n  author = {Zhang, Haichao and Li, Yijiang and He,\
+    \ Shwai and Nagarajan, Tushar and Chen, Mingfei and Lu, Jianglin and Li, Ang and\
+    \ Fu, Yun},\n  title = {ThinkJEPA: Empowering Latent World Models with Large Vision-Language\
+    \ Reasoning Model},\n  year = {2026},\n  eprint = {2603.22281},\n  archivePrefix\
+    \ = {arXiv},\n  primaryClass = {cs.CV},\n  url = {https://arxiv.org/abs/2603.22281v1},\n\
+    }"

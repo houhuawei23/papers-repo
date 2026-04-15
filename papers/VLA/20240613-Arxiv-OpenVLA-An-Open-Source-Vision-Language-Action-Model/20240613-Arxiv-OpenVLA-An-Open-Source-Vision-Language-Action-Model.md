@@ -1,0 +1,294 @@
+# Title: OpenVLA: An Open-Source Vision-Language-Action Model
+
+- ArXiv: 2406.09246
+- Authors: Moo Jin Kim, Karl Pertsch, Siddharth Karamcheti, Ted Xiao, Ashwin Balakrishna, Suraj Nair, Rafael Rafailov, Ethan Foster, Grace Lam, Pannag Sanketi, Quan Vuong, Thomas Kollar, Benjamin Burchfiel, Russ Tedrake, Dorsa Sadigh, Sergey Levine, Percy Liang, Chelsea Finn
+- Sections: 41
+- Estimated tokens: 65.0k
+
+## Contents
+
+- [Abstract](#abstract)
+- [1 Introduction](#1-introduction)
+- [2 Related Work](#2-related-work)
+  - [Visually-Conditioned Language Models](#visually-conditioned-language-models)
+  - [Generalist Robot Policies](#generalist-robot-policies)
+  - [Vision-Language-Action Models](#vision-language-action-models)
+- [3 The OpenVLA Model](#3-the-openvla-model)
+  - [3.1 Preliminaries: Vision-Language Models](#31-preliminaries-vision-language-models)
+  - [3.2 OpenVLA Training Procedure](#32-openvla-training-procedure)
+  - [3.3 Training Data](#33-training-data)
+  - [3.4 OpenVLA Design Decisions](#34-openvla-design-decisions)
+  - [3.5 Infrastructure for Training and Inference](#35-infrastructure-for-training-and-inference)
+- [4 The OpenVLA Codebase](#4-the-openvla-codebase)
+- [5 Experiments](#5-experiments)
+  - [5.1 Direct Evaluations on Multiple Robot Platforms](#51-direct-evaluations-on-multiple-robot-platforms)
+  - [5.2 Data-Efficient Adaptation to New Robot Setups](#52-data-efficient-adaptation-to-new-robot-setups)
+  - [5.3 Parameter-Efficient Fine-Tuning](#53-parameter-efficient-fine-tuning)
+  - [5.4 Memory-Efficient Inference via Quantization](#54-memory-efficient-inference-via-quantization)
+- [6 Discussion and Limitations](#6-discussion-and-limitations)
+  - [Acknowledgments](#acknowledgments)
+
+## Abstract
+
+Large policies pretrained on a combination of Internet-scale vision-language data and diverse robot demonstrations have the potential to change how we teach robots new skills: rather than training new behaviors from scratch, we can fine-tune such vision-language-action (VLA) models to obtain robust, generalizable policies for visuomotor control. Yet, widespread adoption of VLAs for robotics has been challenging as 1) existing VLAs are largely closed and inaccessible to the public, and 2) prior work fails to explore methods for efficiently fine-tuning VLAs for new tasks, a key component for adoption. Addressing these challenges, we introduce OpenVLA, a 7B-parameter open-source VLA trained on a diverse collection of 970k real-world robot demonstrations. OpenVLA builds on a Llama 2 language model combined with a visual encoder that fuses pretrained features from DINOv2 and SigLIP. As a product of the added data diversity and new model components, OpenVLA demonstrates strong results for generalist manipulation, outperforming closed models such as RT-2-X (55B) by 16.5% in absolute task success rate across 29 tasks and multiple robot embodiments, with 7x fewer parameters. We further show that we can effectively fine-tune OpenVLA for new settings, with especially strong generalization results in multi-task environments involving multiple objects and strong language grounding abilities, and outperform expressive from-scratch imitation learning methods such as Diffusion Policy by 20.4% We also explore compute efficiency; as a separate contribution, we show that OpenVLA can be fine-tuned on consumer GPUs via modern low-rank adaptation methods and served efficiently via quantization without a hit to downstream success rate. Finally, we release model checkpoints, fine-tuning notebooks, and our PyTorch codebase with built-in support for training VLAs at scale on Open X-Embodiment datasets.
+
+<a id="section-1"></a>
+
+## 1 Introduction
+
+A key weakness of learned policies for robotic manipulation is their inability to generalize beyond their training data: while existing policies trained for individual skills or language instructions have the capacity to extrapolate behaviors to new initial conditions such as object positions or lighting [[2], [3]], they lack robustness to scene distractors or novel objects [[4], [5]] and struggle to execute unseen task instructions [[6], [7]]. Yet beyond robotics, existing foundation models for vision and language such as CLIP [[8]], SigLIP [[9]], and Llama 2 [[10]] are capable of these types of generalization and more, stemming from the priors captured by their Internet-scale pretraining datasets. While reproducing this scale of pretraining for robotics is still an open challenge — even the largest robot manipulation datasets [[1], [11]] only have 100K to 1M examples – this imbalance suggests an opportunity: using existing foundation models for vision and language as a core building block for training robotic policies that can generalize to objects, scenes, and tasks beyond their training data.
+
+Towards this goal, existing work has explored integrating pretrained language and vision-language models for robotic representation learning [[12], [13], [14]] and as a component in modular systems for task planning and execution [[15], [16]]. More recently, they have been used for directly learning vision-language-action models [VLAs; [7], [1], [17], [18]] for control. VLAs provide a direct instantiation of using pretrained vision-and-language foundation models for robotics, directly fine-tuning visually-conditioned language models (VLMs) such as PaLI [[19], [20]] to generate robot control actions. By building off of strong foundation models trained on Internet-scale data, VLAs such as RT-2 [[7]] demonstrate impressive robustness results, as well as an ability to generalize to novel objects and tasks, setting a new standard for generalist robot policies. Yet, there are two key reasons preventing the widespread use of existing VLAs: 1) current models [[7], [1], [17], [18]] are closed, with limited visibility into model architecture, training procedures, and data mixture, and 2) existing works do not provide best practices for deploying and adapting VLAs to new robots, environments, and tasks — especially on commodity hardware (e.g., consumer-grade GPUs). We argue that to develop a rich foundation for future research and development, robotics needs open-source, generalist VLAs that support effective fine-tuning and adaptation, akin to the existing ecosystem around open-source language models [[21], [22], [23], [24]].
+
+To this end, we introduce OpenVLA, a 7B-parameter open-source VLA that establishes a new state of the art for generalist robot manipulation policies.(^1^11OpenVLA uses multiple pretrained model components: SigLIP [[9]] and DinoV2 [[25]] vision encoders and a Llama 2 [[10]] language model backbone. For all three models, weights are open, but not their training data or code. We release training data, code and model weights for reproducing OpenVLA on top of these components.) OpenVLA consists of a pretrained visually-conditioned language model backbone that captures visual features at multiple granularities, fine-tuned on a large, diverse dataset of 970k robot manipulation trajectories from the Open-X Embodiment [[1]] dataset — a dataset that spans a wide range of robot embodiments, tasks, and scenes. As a product of increased data diversity and new model components, OpenVLA outperforms the 55B-parameter RT-2-X model [[7], [1]], the prior state-of-the-art VLA, by 16.5% absolute success rate across 29 evaluation tasks on the WidowX and Google Robot embodiments. We additionally investigate efficient fine-tuning strategies for VLAs, a new contribution not explored in prior work, across 7 diverse manipulation tasks spanning behaviors from object pick-and-place to cleaning a table. We find that fine-tuned OpenVLA policies clearly outperform fine-tuned pretrained policies such as Octo [[5]]. Compared to from-scratch imitation learning with diffusion policies [[3]], fine-tuned OpenVLA shows substantial improvement on tasks involving grounding language to behavior in multi-task settings with multiple objects. Following these results, we are the first to demonstrate the effectiveness of compute-efficient fine-tuning methods leveraging low-rank adaptation [LoRA; [26]] and model quantization [[27]] to facilitate adapting OpenVLA models on consumer-grade GPUs instead of large server nodes without compromising performance. As a final contribution, we open-source all models, deployment and fine-tuning notebooks, and the OpenVLA codebase for training VLAs at scale, with the hope that these resources enable future work exploring and adapting VLAs for robotics.
+
+<a id="section-2"></a>
+
+## 2 Related Work
+
+- [Visually-Conditioned Language Models](#visually-conditioned-language-models)
+- [Generalist Robot Policies](#generalist-robot-policies)
+- [Vision-Language-Action Models](#vision-language-action-models)
+
+##### Visually-Conditioned Language Models
+
+Visually-conditioned language models (VLMs), which are trained on Internet-scale data to generate natural language from input image(s) and language prompts, have been adopted for myriad applications from visual question answering [[28], [29], [30], [31]] to object localization [[32], [33]]. One of the key advances fueling recent VLMs are model architectures that bridge features from pretrained vision encoders [[8], [9], [25]] with pretrained language models [[10], [23], [34], [35], [36]], directly building on advances in both computer vision and natural language modelling to create powerful multimodal models. While early work explored various architectures for cross-attending between vision and language features [[37], [38], [39], [40], [41]], new open-source VLMs [[42], [43], [20], [44]] have converged on a simpler “patch-as-token” approach, in which patch features from pretrained visual transformers are treated as tokens, and are then projected into the input space of a language model. This simplicity makes it easy to repurpose existing tools for training language models at scale for VLM training. We employ these tools in our work to scale VLA training, and specifically use VLMs from Karamcheti et al. [[44]] as our pretrained backbone, as they are trained from multi-resolution visual features, fusing low-level spatial information from DINOv2 [[25]] with higher-level semantics from SigLIP [[9]] to aid in visual generalization.
+
+##### Generalist Robot Policies
+
+A recent trend in robotics works towards training multi-task “generalist” robot policies [[45], [46], [47], [6], [2], [48], [49]] on large diverse robot datasets [[50], [51], [45], [52], [53], [54], [55], [6], [2], [56], [49], [11], [1]], spanning many different robot embodiments [[57], [53], [58], [59], [60], [61], [62], [63], [64], [65], [1], [5], [66]]. Notably, Octo [[5]] trains a generalist policy that can control multiple robots out-of-the-box and allows for flexible fine-tuning to new robot setups. A key difference between these approaches and OpenVLA is the model architecture. Prior works like Octo typically compose pretrained components such as language embeddings or visual encoders with additional model components initialized from scratch [[6], [2], [5]], learning to “stitch” them together during the course of policy training. Unlike these works, OpenVLA adopts a more end-to-end approach, directly fine-tuning VLMs to generate robot actions by treating them as tokens in the language model vocabulary. Our experimental evaluation shows that this simple yet scalable pipeline substantially boosts performance and generalization ability over prior generalist policies.
+
+##### Vision-Language-Action Models
+
+A number of works have explored the use of VLMs for robotics, e.g., for visual state representations [[12], [13]], object detection [[67]], high-level planning [[16]], and for providing a feedback signal [[68], [69], [70], [71]]. Others integrate VLMs directly into end-to-end visuomotor manipulation policies [[14], [15]], but incorporate significant structure into the policy architecture or require calibrated cameras, which limits their applicability. A number of recent works have explored similar recipes to ours and directly fine-tuned large pretrained VLMs for predicting robot actions [[7], [1], [72], [73], [17], [18], [74]]. Such models are often referred to as vision-language-action models (VLAs), since they fuse robot control actions directly into VLM backbones. This has three key benefits: (1) it performs alignment of pretrained vision and language components on a large, Internet-scale vision-language dataset, (2) the use of a generic architecture, not custom-made for robot control, allows us to leverage the scalable infrastructure underlying modern VLM training [[75], [76], [77]] and scale to training billion-parameter policies with minimal code modifications, and (3) it provides a direct pathway for robotics to benefit from the rapid improvements in VLMs. Existing works on VLAs either focus on training and evaluating in single robot or simulated setups [[72], [73], [78], [74]] and thus lack generality, or are closed and do not support efficient fine-tuning to new robot setups [[7], [1], [17], [18]].
+
+Most closely related, RT-2-X [[1]] trains a 55B-parameter VLA policy on the Open X-Embodiment dataset and demonstrates state-of-the-art generalist manipulation policy performance. However, our work differs from RT-2-X in multiple important aspects: (1) by combining a strong open VLM backbone with a richer robot pretraining dataset, OpenVLA outperforms RT-2-X in our experiments while being an order of magnitude smaller; (2) we thoroughly investigate fine-tuning of OpenVLA models to new target setups, while RT-2-X does not investigate the fine-tuning setting; (3) we are the first to demonstrate the effectiveness of modern parameter-efficient fine-tuning and quantization approaches for VLAs; and (4) OpenVLA is the first generalist VLA that is open-source and thus supports future research on VLA training, data mixtures, objectives, and inference.
+
+<a id="section-3"></a>
+
+## 3 The OpenVLA Model
+
+We introduce the OpenVLA model, a 7B-parameter vision-language-action model (VLA) trained on 970k robot demonstrations from the Open X-Embodiment dataset [[1]]. There are many, largely unexplored, questions around best practices for developing VLA models, e.g., what are the best model backbones, datasets, and hyperparameters to use for training. Below, we detail our approach for developing OpenVLA and summarize our key learnings. Concretely, we first provide a brief overview of modern VLMs, which form the backbone of OpenVLA ([Section 3.1](#section-3-1)); then describe our basic training recipe and dataset ([Section 3.2](#section-3-2) and [Section 3.3](#section-3-3)); discuss key design decisions ([Section 3.4](#section-3-4)); and provide details of the used infrastructure for training and inference ([Section 3.5](#section-3-5)).
+
+<a id="figure-1"></a>
+
+![openvla_teaser](images/openvla_teaser.png)
+
+> Figure 1: OpenVLA model architecture. Given an image observation and a language instruction, the model predicts 7-dimensional robot control actions. The architecture consists of three key components: (1) a vision encoder that concatenates Dino V2 [[25]] and SigLIP [[79]] features, (2) a projector that maps visual features to the language embedding space, and (3) the LLM backbone, a Llama 2 7B-parameter large language model [[10]].
+
+- [3.1 Preliminaries: Vision-Language Models](#31-preliminaries-vision-language-models)
+- [3.2 OpenVLA Training Procedure](#32-openvla-training-procedure)
+- [3.3 Training Data](#33-training-data)
+- [3.4 OpenVLA Design Decisions](#34-openvla-design-decisions)
+- [3.5 Infrastructure for Training and Inference](#35-infrastructure-for-training-and-inference)
+
+<a id="section-3-1"></a>
+
+### 3.1 Preliminaries: Vision-Language Models
+
+The architecture of most recent VLMs [[42], [43], [20], [44]] consists of three main parts (see [Fig. 1](#figure-1)): (1) a visual encoder that maps image inputs to a number of “image patch embeddings”, (2) a projector that takes the output embeddings of the visual encoder and maps them into the input space of a language model, and (3) a large language model (LLM) backbone. During VLM training, the model is trained end-to-end with a next text token prediction objective on paired or interleaved vision and language data curated from various Internet sources.
+
+In this work, we build on the Prismatic-7B VLM [[44]]. Prismatic follows the same standard architecture described above, with a 600M-parameter visual encoder, a small 2-layer MLP projector, and a 7B-parameter Llama 2 language model backbone [[10]]. Notably, Prismatic uses a _two-part_ visual encoder, consisting of pretrained SigLIP [[79]] and DinoV2 [[25]] models. Input image patches are passed separately through both encoders and the resulting feature vectors are concatenated channel-wise. In contrast to the more commonly used vision encoders such as CLIP- [[80]] or SigLIP-only encoders, the addition of DinoV2 features has been shown to be helpful for improved spatial reasoning [[44]], which can be particularly helpful for robot control.
+
+SigLIP, DinoV2, and Llama 2 do not release details about their training data, which likely consists of trillions of tokens of Internet-sourced image-text, image-only, and text-only data respectively. The Prismatic VLM is fine-tuned on top of these components using the LLaVA 1.5 data mixture [[43]], which contains a total of approximately 1M image-text and text-only data samples from open-source datasets [[81], [82], [29], [83], [42]].
+
+<a id="section-3-2"></a>
+
+### 3.2 OpenVLA Training Procedure
+
+To train OpenVLA, we fine-tune a pretrained Prismatic-7B VLM backbone for robot action prediction (see [Fig. 1](#figure-1)). We formulate the action prediction problem as a “vision-language” task, where an input observation image and a natural language task instruction are mapped to a string of predicted robot actions [[7]]. To enable the VLM’s language model backbone to predict robot actions, we represent the actions in the output space of the LLM by mapping continuous robot actions to discrete tokens used by the language model’s tokenizer. Following Brohan et al. [[7]], we discretize each dimension of the robot actions separately into one of 256 bins. For each action dimension, we set the bin width to uniformly divide the interval between the 1^st and 99^th quantile of the actions in the training data. Using quantiles instead of the min-max bounds Brohan et al. [[7]] used allows us to ignore outlier actions in the data that could otherwise drastically expand the discretization interval and reduce the effective granularity of our action discretization.
+
+Using this discretization, we obtain N discrete integers $\in[0\dots 255]$ for an $N$-dimensional robot action. Unfortunately, the tokenizer used by OpenVLA’s language backbone, the Llama tokenizer [[10]], only reserves 100 “special tokens” for tokens newly introduced during fine-tuning, which is too few for the 256 tokens of our action discretization. Instead, we again opt for simplicity and follow Brohan et al. [[7]]’s approach by simply overwriting the 256 _least used_ tokens in the Llama tokenizer’s vocabulary (which corresponds to the last 256 tokens) with our action tokens. Once the actions are processed into a sequence of tokens, OpenVLA is trained with a standard next-token prediction objective, evaluating the cross-entropy loss on the predicted action tokens only. We discuss key design decisions for implementing this training procedure in [Section 3.4](#section-3-4). Next, we describe the robot dataset we use for OpenVLA training.
+
+<a id="section-3-3"></a>
+
+### 3.3 Training Data
+
+The goal in constructing the OpenVLA training dataset is to capture a large diversity of robot embodiments, scenes, and tasks. This enables the final model to control various robots out of the box _and_ admits efficient fine-tuning to new robot setups. We leverage the Open X-Embodiment dataset [[1]] (OpenX) as a base to curate our training dataset. The full OpenX dataset, at the time of writing, consists of more than 70 individual robot datasets, with more than 2M robot trajectories, that were pooled into a coherent and easy-to-use data format in a large community effort. To make training on this data practical, we apply multiple steps of data curation to the raw dataset.
+
+The goals of this curation are to ensure (1) a coherent input and output space across all training datasets, and (2) a balanced mix of embodiments, tasks, and scenes in the final training mixture.(^2^22Octo [[5]] demonstrated training across datasets with heterogeneous sensory inputs. While very promising, we leave an investigation of VLA training across heterogeneous sensor modalities and action spaces to future work.) To address (1), we follow [[1], [5]] and restrict our training dataset to contain only manipulation datasets with at least one 3^rd person camera and use single-arm end-effector control. For (2), we leverage the data mixture weights of Octo [[5]] for all datasets that pass the first round of filtering. Octo heuristically down-weights or removes less diverse datasets and up-weights datasets with larger task and scene diversity; see Octo Model Team et al. [[5]] for details.
+
+We also experimented with incorporating a few additional datasets into our training mixture that were added to the OpenX dataset since the release of Octo, including the DROID dataset [[11]], although at a conservative mixture weight of 10%. In practice, we found that the action token accuracy on DROID remained low throughout training, suggesting a larger mixture weight or model may be required to fit its diversity in the future. To not jeopardize the quality of the final model, we removed DROID from the data mixture for the final third of training. We provide a complete overview of the used datasets and mixture weights in [Appendix A](#appendix-a).
+
+<a id="section-3-4"></a>
+
+### 3.4 OpenVLA Design Decisions
+
+When developing the OpenVLA model, we explored various design decisions in smaller-scale experiments before starting the final model training run. Concretely, we trained and evaluated OpenVLA models on BridgeData V2 [[6]] for our initial experiments, instead of training on the full OpenX mixture, to increase iteration speed and reduce computational cost. We summarize key learnings from these explorations below.
+
+VLM Backbone. Initially, we experimented with multiple VLM backbones. Apart from Prismatic [[44]], we tested fine-tuning IDEFICS-1 [[84]] and LLaVA [[85]] for robot action prediction. We found that LLaVA and IDEFICS-1 performed comparably on tasks with only one object in the scene, but LLaVA demonstrated stronger language grounding in tasks that involved multiple objects in the scene and required the policy to manipulate the _correct_ object, i.e., the object specified in the language instruction. Concretely, LLaVA improved upon IDEFICS-1 by 35% in absolute success rate, averaged across five language grounding tasks in a BridgeData V2 sink environment. The fine-tuned Prismatic VLM policy achieved further improvements, outperforming the LLaVA policy by roughly 10% in absolute success rate across both simple single-object tasks and multi-object, language grounding tasks. We attribute this performance delta to improved spatial reasoning capabilities afforded by the fused SigLIP-DinoV2 backbones (see [Section 3.1](#section-3-1)). In addition to the performance enhancements, Prismatic also provides a modular and easy-to-use codebase, so we ultimately chose it to be the backbone for the OpenVLA model.
+
+Image Resolution. The resolution of input images has significant impact on the computational requirements of VLA training, since higher-resolution images result in more image patch tokens and thus longer context lengths that quadratically increase training compute. We compared VLAs with $224\times 224$px and $384\times 384$px inputs, but found no performance difference in our evaluations, while the latter takes 3x longer to train. We thus opt for a resolution of $224\times 224$px for the final OpenVLA model. Note that on many VLM benchmarks, increased resolution does improve performance [[44], [86], [87]], but we did not see this trend (yet) for VLAs.
+
+Fine-Tuning Vision Encoder. Prior work on VLMs found that freezing vision encoders during VLM training typically leads to higher performance [[44]]. Intuitively, a frozen vision encoder may better preserve the robust features learned from its Internet-scale pretraining. However, we found fine-tuning the vision encoder during VLA training to be crucial for good VLA performance. We hypothesize that the pretrained vision backbone may not capture sufficient fine-grained spatial details about important parts of the scene to enable precise robotic control.
+
+Training Epochs. Typical LLM or VLM training runs complete at most one or two epochs through their training dataset. In contrast, we found it important for VLA training to iterate through the training dataset significantly more times, with real robot performance continually increasing until training action token accuracy surpasses 95%. Our final training run completes 27 epochs through its training dataset.
+
+Learning Rate. We swept the learning rate across multiple orders of magnitude for VLA training, and achieved the best results using a fixed learning rate of 2e-5 (the same learning rate used during VLM pretraining [[44]]). We did not find learning rate warmup to provide benefits.
+
+<a id="section-3-5"></a>
+
+### 3.5 Infrastructure for Training and Inference
+
+The final OpenVLA model is trained on a cluster of 64 A100 GPUs for 14 days, or a total of 21,500 A100-hours, using a batch size of 2048. During inference, OpenVLA requires 15GB of GPU memory when loaded in bfloat16 precision (i.e., without quantization) and runs at approximately 6Hz on one NVIDIA RTX 4090 GPU (without compilation, speculative decoding, or other inference speed-up tricks). We can further reduce the memory footprint of OpenVLA during inference via quantization, without compromising performance in real-world robotics tasks, as shown in [Section 5.4](#section-5-4). We report inference speed on various consumer- and server-grade GPUs in [Fig. 5](#figure-5). For convenience, we implement a remote VLA inference server to allow real-time remote streaming of action predictions to the robot – removing the requirement of having access to a powerful local compute device to control the robot. We release this remote inference solution as part of our open-source code release ([Section 4](#section-4)).
+
+<a id="section-4"></a>
+
+## 4 The OpenVLA Codebase
+
+Along with our model, we release the OpenVLA codebase, a modular PyTorch codebase for training VLA models (see [https://openvla.github.io](https://openvla.github.io)). It scales from fine-tuning VLAs on individual GPUs to training billion-parameter VLAs on multi-node GPU clusters, and supports modern techniques for large transformer model training such as automatic mixed precision (AMP, PyTorch [[75]]), FlashAttention [[76]], and fully sharded data parallelism (FSDP, Zhao et al. [[77]]). Out of the box, the OpenVLA codebase has full support for training on the Open X dataset, integrates with HuggingFace’s [[21]] AutoModel class, and supports LoRA fine-tuning [[26]] and quantized model inference [[88], [27]].
+
+<a id="section-5"></a>
+
+## 5 Experiments
+
+The goal of our experimental evaluations is to test OpenVLA’s ability to serve as a powerful multi-robot control policy out of the box, as well as be a good initialization for fine-tuning to new robot tasks. Concretely, we aim to answer the following questions:
+
+- 1. How does OpenVLA compare to prior generalist robot policies, when evaluating on multiple robots and various types of generalization?
+- 2. Can OpenVLA be effectively fine-tuned on a new robot setup and task, and how does it compare to state-of-the-art data-efficient imitation learning approaches?
+- 3. Can we use parameter-efficient fine-tuning and quantization to reduce the computational requirements for training and inference of OpenVLA models and make them more accessible? What are the performance-compute trade-offs?
+
+- [5.1 Direct Evaluations on Multiple Robot Platforms](#51-direct-evaluations-on-multiple-robot-platforms)
+- [5.2 Data-Efficient Adaptation to New Robot Setups](#52-data-efficient-adaptation-to-new-robot-setups)
+- [5.3 Parameter-Efficient Fine-Tuning](#53-parameter-efficient-fine-tuning)
+- [5.4 Memory-Efficient Inference via Quantization](#54-memory-efficient-inference-via-quantization)
+
+<a id="section-5-1"></a>
+
+### 5.1 Direct Evaluations on Multiple Robot Platforms
+
+<a id="figure-2"></a>
+
+![openvla_teaser](images/openvla_teaser.png)
+
+> Figure 2: BridgeData V2 WidowX robot evaluation tasks and results. We evaluate OpenVLA and prior state-of-the-art generalist robot policies on a comprehensive suite of tasks covering several axes of generalization, as well as tasks that specifically assess language conditioning ability. OpenVLA achieves highest overall performance and even outperforms closed-source model RT-2-X in all categories except for semantic generalization. Average success rates $\pm$ StdErr are computed across 170 total rollouts per approach. See [Table 4](#table-4) for detailed results.
+
+Robot Setups and Tasks. We evaluate OpenVLA’s performance “out-of-the-box” on two robot embodiments: the WidowX robot from the BridgeData V2 evaluations [[6]] (see LABEL:fig:teaser, left) and the mobile manipulation robot from the RT-1 and RT-2 evaluations [[2], [7]] (“Google robot”; see LABEL:fig:teaser, middle). Both platforms have been extensively used in prior works for evaluating generalist robot policies [[2], [7], [1], [5]]. We define a comprehensive set of evaluation tasks in each environment that covers various axes of generalization, such as visual (unseen backgrounds, distractor objects, colors/appearances of objects); motion (unseen object positions/orientations); physical (unseen object sizes/shapes); and semantic (unseen target objects, instructions, and concepts from the Internet) generalization. We also assess language conditioning ability in scenes with multiple objects, testing whether the policy can manipulate the correct target object, as specified in the user’s prompt. See bottom row of [Fig. 2](#figure-2) and [Fig. 3](#figure-3) for example task images in the BridgeData V2 and Google robot evaluations, respectively. Overall, we evaluated each method in 170 rollouts (17 tasks with 10 trials each) for BridgeData V2 experiments and 60 rollouts (12 tasks with 5 trials each) for Google robot experiments. A detailed breakdown of all tasks and how they differ from the training data is in [Appendix B](#appendix-b). All evaluations in this and the following sections are conducted as A/B evaluations, using the same tasks with the same sets of initial robot and object states, to ensure fair comparison.
+
+Comparisons. We compare OpenVLA’s performance to three prior generalist manipulation policies: RT-1-X [[1]], RT-2-X [[1]], and Octo [[5]]. RT-1-X (35M parameters) and Octo (93M parameters) are transformer policies trained from scratch on subsets of the OpenX dataset; Octo is the state-of-the-art model among open-source manipulation policies. RT-2-X (55B parameters) is a state-of-the-art, closed-source VLA that leverages Internet-pretrained vision and language backbones.
+
+The results are summarized in [Fig. 2](#figure-2) for BridgeData V2 evaluations and [Fig. 3](#figure-3) for Google robot evaluations (per-task breakdown in Appendix, [Table 4](#table-4) and [Table 6](#table-6)). We find that both RT-1-X and Octo struggle on the tested tasks, often failing to manipulate the correct object, especially when distractors are present, and in some cases causing the robot to wave its arm around aimlessly. Note that our evaluations test even larger degrees of generalization than the evaluations performed in those prior works to challenge the Internet-pretrained VLA models. Thus, lower performance of models without Internet pretraining is expected. RT-2-X clearly outperforms both RT-1-X and Octo, demonstrating the benefits of large, pretrained VLMs for robotics.
+
+<a id="figure-3"></a>
+
+![openvla_model](images/openvla_model.png)
+
+> Figure 3: Google robot evaluation results. We evaluate generalist robot policies on in-distribution and out-of-distribution (OOD) tasks on the mobile manipulator used in RT-1 and RT-2 evaluations [[2], [7]]. We find that OpenVLA and RT-2-X attain comparable performance and significantly outperform RT-1-X and Octo overall. Average success rates $\pm$ StdErr are computed across 60 total rollouts per approach. See [Table 6](#table-6) for detailed results.
+
+Notably, OpenVLA performs comparably to RT-2-X on Google robot evaluations and significantly outperforms RT-2-X on BridgeData V2 evaluations despite being an order of magnitude smaller (7B vs. 55B parameters). Qualitatively, we find that both RT-2-X and OpenVLA exhibit markedly more robust behaviors than the other tested models, such as approaching the correct object when distractor objects are present, properly orienting the robot’s end-effector to align with the orientation of the target object, and even recovering from mistakes such as insecurely grasping objects (see [https://openvla.github.io](https://openvla.github.io) for qualitative rollout examples). RT-2-X achieves higher performance in semantic generalization tasks, as shown in [Fig. 2](#figure-2), which is expected given that it uses larger-scale Internet pretraining data and is co-fine-tuned with both robot action data and Internet pretraining data to better preserve the pretraining knowledge, rather than being fine-tuned solely on robot data, like OpenVLA. However, OpenVLA performs comparably or better in all other task categories in both BridgeData V2 and Google robot evaluations. The performance difference can be attributed to a combination of factors: we curated a much larger training dataset for OpenVLA with 970k trajectories (vs. 350k for RT-2-X); we performed more careful cleaning of the training dataset and, e.g., filtered out all-zero actions in the Bridge dataset (see [Appendix C](#appendix-c) for a detailed discussion); and OpenVLA uses a fused vision encoder that combines pretrained semantic _and_ spatial features. See [Appendix D](#appendix-d) for ablation analyses of these components.
+
+<a id="section-5-2"></a>
+
+### 5.2 Data-Efficient Adaptation to New Robot Setups
+
+While prior works mainly focused on directly evaluating VLAs “out-of-the-box” [[16], [7], [1]], effective _fine-tuning_ of VLA models to new tasks and robot setups is largely unexplored, yet is key for their widespread adoption. In this section, we investigate OpenVLA’s ability to be quickly adapted to a new _real-world_ robot setup. (See [Appendix E](#appendix-e) for fine-tuning experiments in simulation.)
+
+Robot setups and tasks. We test a simple fine-tuning recipe for the OpenVLA model: full fine-tuning of all model parameters, using small datasets with 10–150 demonstrations of a target task (see [Fig. 4](#figure-4); we explore parameter-efficient fine-tuning approaches in [Section 5.3](#section-5-3)). We test OpenVLA in two setups: Franka-Tabletop, a stationary, table-mounted Franka Emika Panda 7-DoF robot arm; and Franka-DROID, the Franka robot arm setup from the recently released DROID dataset [[11]], mounted on a movable standing desk. The setups use 5Hz and 15 Hz non-blocking controllers, respectively. We choose Franka robot arms as the target embodiment for our fine-tuning experiments since they are widely used in the robot learning community and thus a likely “target” of OpenVLA fine-tuning. We test on setups with different control frequencies to test OpenVLA’s applicability to a range of use cases.
+
+<a id="figure-4"></a>
+
+![openvla_teaser](images/openvla_teaser.png)
+
+> Figure 4: Adapting to new robot setups. We evaluate the state-of-the-art Diffusion Policy trained from scratch on seven Franka Emika Panda tasks (10–150 demonstrations each), as well as generalist robot policies Octo and OpenVLA fine-tuned on the same data. Diffusion Policy exhibits strong performance on narrow single-instruction tasks, while Octo and OpenVLA perform better on diverse fine-tuning tasks involving multiple instructions and distractor objects. Overall, OpenVLA achieves highest aggregate performance across both setups, suggesting that it is an effective default for learning a policy on a downstream task. Average success rates $\pm$ StdErr are computed across 129 rollouts per approach (99 for Franka-Tabletop tasks and 30 for Franka-DROID tasks). See [Table 7](#table-7) for detailed results.
+
+Comparisons. We compare to Diffusion Policy [[3]], a state-of-the-art data-efficient imitation learning approach, trained from scratch. We also compare to Diffusion Policy (matched), a version of Diffusion Policy that matches the input and output specifications of OpenVLA.(^3^33The full Diffusion Policy uses a two-step observation history with both images and proprioceptive state, and performs receding horizon control by predicting a chunk of $T$ future actions and executing the first $X$ actions in open-loop fashion before predicting the next chunk (for 15Hz control, we set $T=16,X=8$ like in the DROID prior work [[11]]; for 5Hz control, we reduce the chunk sizes to $T=8,X=3$). It is also the only method in [Section 5.2](#section-5-2) that predicts _absolute_ Cartesian coordinates to control the robot; all other methods use _relative_ position control. Diffusion Policy (matched) uses a single image as input, has no proprioceptive information and no observation history, and predicts a single relative position control action without action chunking.) Additionally, we evaluate Octo [[5]] fine-tuned on the target dataset, since it is currently the best generalist policy that supports fine-tuning (fine-tuning of RT-2-X is not supported through its inference API). We also fine-tune OpenVLA on the same target dataset, and the resulting policy is denoted by OpenVLA. Finally, as an ablation experiment, we compare to OpenVLA (scratch), where we directly fine-tune the underlying base Prismatic VLM on the target robot setup – rather than fine-tuning the OpenX-pretrained OpenVLA model – to assess the benefit of large-scale robot pretraining.
+
+We present the results in [Fig. 4](#figure-4) (per-task breakdown in Appendix, [Table 7](#table-7)). We find that both versions of Diffusion Policy are competitive with or outperform the generalist policies Octo and OpenVLA on narrower single-instruction tasks like “Put Carrot in Bowl” and “Pour Corn into Pot”, but the pretrained generalist policies perform better in more diverse fine-tuning tasks that involve multiple objects in the scene and require language conditioning. OpenX pretraining for Octo and OpenVLA enables the models to better adapt to these more diverse tasks where language grounding is important; we see evidence for this in the lower performance of OpenVLA (scratch).
+
+Overall, we find that OpenVLA achieves the highest average performance. Notably, most prior works achieve strong performance only in _either_ narrow single-instruction _or_ diverse multi-instruction tasks, resulting in widely varying success rates. OpenVLA is the only approach that achieves at least 50% success rate across all tested tasks, suggesting that it can be a strong default option for imitation learning tasks, particularly if they involve a diverse set of language instructions. For narrower but highly dexterous tasks, Diffusion Policy still shows smoother and more precise trajectories; incorporating action chunking and temporal smoothing, as implemented in Diffusion Policy, may help OpenVLA attain the same level of dexterity and may be a promising direction for future work (see [Section 6](#section-6) for a detailed discussion of current limitations).
+
+<a id="section-5-3"></a>
+
+### 5.3 Parameter-Efficient Fine-Tuning
+
+The full fine-tuning runs of OpenVLA in the previous section used 8 A100 GPUs for 5-15 hours per task (depending on the dataset size) to achieve high performance. While this is substantially less compute than what is required for VLA pretraining, in this section we explore even more compute- and parameter-efficient fine-tuning approaches and investigate their effectiveness.
+
+<a id="table-1"></a>
+
+> Table 1: Parameter-efficient fine-tuning evaluation. LoRA fine-tuning achieves the best performance-compute trade-off, matching full fine-tuning performance while training only 1.4% of the model parameters. Mean success $\pm$ StdErr computed across 33 rollouts per approach on select Franka-Tabletop tasks (see [Table 8](#table-8) for details). ^∗: Sharded across 2 GPUs with FSDP [[77]].
+
+| Strategy        | Success Rate     | Train Params ($\times 10^{6}$) | VRAM (batch 16) |
+| --------------- | ---------------- | ------------------------------ | --------------- |
+| Strategy        | Success Rate     | Train Params ($\times 10^{6}$) | VRAM (batch 16) |
+| Strategy        | Success Rate     | Train Params ($\times 10^{6}$) | VRAM (batch 16) |
+| Strategy        | Success Rate     | Train Params ($\times 10^{6}$) | VRAM (batch 16) |
+| Full FT         | 69.7 $\pm$ 7.2 % | 7,188.1                        | 163.3 GB\*      |
+| Full FT         | 69.7 $\pm$ 7.2 % | 7,188.1                        | 163.3 GB\*      |
+| Full FT         | 69.7 $\pm$ 7.2 % | 7,188.1                        | 163.3 GB\*      |
+| Full FT         | 69.7 $\pm$ 7.2 % | 7,188.1                        | 163.3 GB\*      |
+| Last layer only | 30.3 $\pm$ 6.1 % | 465.1                          | 51.4 GB         |
+| Last layer only | 30.3 $\pm$ 6.1 % | 465.1                          | 51.4 GB         |
+| Last layer only | 30.3 $\pm$ 6.1 % | 465.1                          | 51.4 GB         |
+| Last layer only | 30.3 $\pm$ 6.1 % | 465.1                          | 51.4 GB         |
+| Frozen vision   | 47.0 $\pm$ 6.9 % | 6,760.4                        | 156.2 GB\*      |
+| Frozen vision   | 47.0 $\pm$ 6.9 % | 6,760.4                        | 156.2 GB\*      |
+| Frozen vision   | 47.0 $\pm$ 6.9 % | 6,760.4                        | 156.2 GB\*      |
+| Frozen vision   | 47.0 $\pm$ 6.9 % | 6,760.4                        | 156.2 GB\*      |
+| Sandwich        | 62.1 $\pm$ 7.9 % | 914.2                          | 64.0 GB         |
+| Sandwich        | 62.1 $\pm$ 7.9 % | 914.2                          | 64.0 GB         |
+| Sandwich        | 62.1 $\pm$ 7.9 % | 914.2                          | 64.0 GB         |
+| Sandwich        | 62.1 $\pm$ 7.9 % | 914.2                          | 64.0 GB         |
+| LoRA, rank=32   | 68.2 $\pm$ 7.5%  | 97.6                           | 59.7 GB         |
+| LoRA, rank=32   | 68.2 $\pm$ 7.5%  | 97.6                           | 59.7 GB         |
+| LoRA, rank=32   | 68.2 $\pm$ 7.5%  | 97.6                           | 59.7 GB         |
+| LoRA, rank=32   | 68.2 $\pm$ 7.5%  | 97.6                           | 59.7 GB         |
+| rank=64         | 68.2 $\pm$ 7.8%  | 195.2                          | 60.5 GB         |
+| rank=64         | 68.2 $\pm$ 7.8%  | 195.2                          | 60.5 GB         |
+| rank=64         | 68.2 $\pm$ 7.8%  | 195.2                          | 60.5 GB         |
+| rank=64         | 68.2 $\pm$ 7.8%  | 195.2                          | 60.5 GB         |
+
+Concretely, we compare the following fine-tuning approaches: full fine-tuning updates all weights during fine-tuning, as described in [Section 5.2](#section-5-2); last layer only fine-tunes only the last layer of OpenVLA’s transformer backbone and the token embedding matrix; frozen vision freezes the vision encoder but fine-tunes all other weights; sandwich fine-tuning unfreezes the vision encoder, token embedding matrix, and last layer; and LoRA uses the popular low-rank adaptation technique of Hu et al. [[26]] with multiple rank values $r$, applied to all linear layers of the model.
+
+We report fine-tuning success rates across multiple Franka-Tabletop tasks, as well as training parameter count and GPU memory requirements, in [Table 1](#table-1).(^4^44In [Section 5.3](#section-5-3) and [Section 5.4](#section-5-4), we experiment with a version of the OpenVLA model that is pretrained with a smaller robot data mixture (the same OpenX dataset mixture as Octo) and has a slightly smaller architecture which only uses a SigLIP [[79]] vision backbone instead of the fused DinoSigLIP encoder. We find that this simpler architecture still achieves strong performance in both fine-tuning tasks and “out-of-the-box” tasks.) We find that only fine-tuning the network’s last layer or freezing the vision encoder leads to poor performance, suggesting that further adaptation of the visual features to the target scene is crucial. In contrast, “sandwich fine-tuning” achieves better performance since it fine-tunes the vision encoder, and it consumes less GPU memory since it does not fine-tune the full LLM backbone. Lastly, LoRA achieves the best trade-off between performance and training memory consumption, outperforming “sandwich fine-tuning” and matching full fine-tuning performance while fine-tuning only 1.4% of the parameters. We find that the LoRA rank has negligible effect on policy performance and thus recommend using a default rank of $r=32$. With LoRA, we can fine-tune OpenVLA on a new task within 10-15 hours on a _single_ A100 GPU – an 8x reduction in compute compared to full fine-tuning.
+
+<a id="section-5-4"></a>
+
+### 5.4 Memory-Efficient Inference via Quantization
+
+<a id="figure-5"></a>
+
+![openvla_teaser](images/openvla_teaser.png)
+
+> Figure 5: OpenVLA inference speed for various GPUs. Both bfloat16 and int4 quantization achieve high throughput, especially on GPUs with Ada Lovelace architecture (RTX 4090, H100). Further speed-ups are possible with modern LLM inference frameworks like TensorRT-LLM [[89]]. $\spadesuit$: Model sharded across two GPUs to fit.
+
+| Precision | Bridge Success  | VRAM    |
+| --------- | --------------- | ------- |
+| Precision | Bridge Success  | VRAM    |
+| Precision | Bridge Success  | VRAM    |
+| bfloat16  | 71.3 $\pm$ 4.8% | 16.8 GB |
+| bfloat16  | 71.3 $\pm$ 4.8% | 16.8 GB |
+| bfloat16  | 71.3 $\pm$ 4.8% | 16.8 GB |
+| int8      | 58.1 $\pm$ 5.1% | 10.2 GB |
+| int8      | 58.1 $\pm$ 5.1% | 10.2 GB |
+| int8      | 58.1 $\pm$ 5.1% | 10.2 GB |
+| int4      | 71.9 $\pm$ 4.7% | 7.0 GB  |
+| int4      | 71.9 $\pm$ 4.7% | 7.0 GB  |
+| int4      | 71.9 $\pm$ 4.7% | 7.0 GB  |
+
+> Table: Table 2: Performance with quantized inference. 4-bit quantization matches the performance of bfloat16 inference (our default approach) while reducing the GPU memory footprint by more than half. Mean success $\pm$ StdErr computed across 8 representative BridgeData V2 tasks [[6]] and 80 rollouts per approach (see [Table 5](#table-5) for details).
+
+OpenVLA, a 7B-parameter model, consumes more memory at inference time than prior open-source generalist policies such as Octo, which has $<$100M parameters. We follow best-practices from LLM serving by saving and loading OpenVLA in bfloat16 precision for inference (our default approach), which cuts the memory footprint in half, allowing us to serve OpenVLA on GPUs with only 16GB of GPU memory. In this section, we test whether we can further reduce the required memory for policy inference and broaden accessibility of VLA policies, by using modern quantization techniques developed for serving LLMs [[88], [27]]. These approaches load the weights of the network at lower precision, thereby trading off reduced memory requirements for potentially reduced inference speed and accuracy.
+
+Concretely, we investigate serving the OpenVLA model with 8-bit and 4-bit precision on 8 representative BridgeData V2 tasks. We report memory footprint and rollout performance in [Table 2](#table-2). We also report achievable control frequencies on various consumer- and server-grade GPUs in [Fig. 5](#figure-5). We observe that 8-bit quantization slows down inference across most GPUs, due to the overhead of the added quantization operations. 4-bit inference achieves higher throughput, since reduced GPU memory transfer compensates for the quantization overhead.
+
+As a result of the reduced inference speed, we observe a substantial performance decrease with 8-bit quantization: on the A5000 GPU we use for our evaluations, we can only run the model at 1.2Hz, which significantly changes the system dynamics compared to the training dataset for the 5Hz non-blocking controller used in the BridgeData V2 tasks.(^5^55We attribute the performance loss to low inference speed, since both 8-bit and 4-bit quantization achieve comparable token accuracy to bfloat16 inference when evaluated offline on training data. See [Section D.4](https://arxiv.org/html/2406.09246v3#A4.SS4) for supporting details.) Notably, 4-bit quantization results in similar performance as bfloat16 half-precision inference despite requiring less than half the amount of GPU memory. 4-bit quantized models can run at 3Hz on the A5000, thus more closely matching the system dynamics during data collection.
+
+<a id="section-6"></a>
+
+## 6 Discussion and Limitations
+
+In this work, we presented OpenVLA, a state-of-the-art, open-source vision-language-action model that obtains strong performance for cross-embodiment robot control out-of-the-box. We also demonstrated that OpenVLA can be easily adapted to new robot setups via parameter-efficient fine-tuning techniques.
+
+The current OpenVLA model has several limitations. First, it currently only supports single-image observations. In reality, real-world robot setups are heterogeneous, with a wide range of possible sensory inputs [[5]]. Expanding OpenVLA to support multiple image and proprioceptive inputs as well as observation history is an important avenue for future work. Exploring the use of VLMs pretrained on _interleaved_ image and text data may facilitate such flexible-input VLA fine-tuning.
+
+Secondly, improving the inference throughput of OpenVLA is critical to enable VLA control for high-frequency control setups such as ALOHA [[90]], which runs at 50Hz. This will also enable testing VLAs on more dexterous, bi-manual manipulation tasks than what we investigated in this work. Exploring the use of action chunking or alternative inference-time optimization techniques such as speculative decoding [[91]] offer potential remedies.
+
+Additionally, there is room for further performance improvements. While OpenVLA outperforms prior generalist policies, it does not yet offer very high reliability on the tested tasks, typically achieving <90% success rate.
+
+Finally, due to compute limitations, many VLA design questions remain underexplored: What effect does the size of the base VLM have on VLA performance? Does co-training on robot action prediction data and Internet-scale vision-language data substantially improve VLA performance? What visual features are best-suited for VLA models? We hope that the release of the OpenVLA model and codebase will enable the community to jointly investigate these questions.
+
+- [Acknowledgments](#acknowledgments)
+
+#### Acknowledgments
+
+We are grateful to the Toyota Research Institute for providing significant funding and compute resources required to carry out this research. We also thank the Stanford Center for Research on Foundation Models for providing additional compute resources and Google DeepMind for alpha access to the RT-2-X API for our evaluations. We acknowledge additional support from Volkswagen, Physical Intelligence, ONR grants N00014-22-1-2621 and N00014-22-1-2293, the National Science Foundation through IIS-2246811, and DARPA ANSR.

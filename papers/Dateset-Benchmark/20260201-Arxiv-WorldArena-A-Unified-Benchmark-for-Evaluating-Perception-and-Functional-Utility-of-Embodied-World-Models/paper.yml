@@ -1,0 +1,78 @@
+paper:
+  id: arxiv:2602.08971
+  title: 'WorldArena: A Unified Benchmark for Evaluating Perception and Functional
+    Utility of Embodied World Models'
+  authors:
+  - name: Yu Shang
+  - name: Zhuohang Li
+  - name: Yiding Ma
+  - name: Weikang Su
+  - name: Xin Jin
+  - name: Ziyou Wang
+  - name: Lei Jin
+  - name: Xin Zhang
+  - name: Yinzhou Tang
+  - name: Haisheng Su
+  - name: Chen Gao
+  - name: Wei Wu
+  - name: Xihui Liu
+  - name: Dhruv Shah
+  - name: Zhaoxiang Zhang
+  - name: Zhibo Chen
+  - name: Jun Zhu
+  - name: Yonghong Tian
+  - name: Tat-Seng Chua
+  - name: Wenwu Zhu
+  - name: Yong Li
+  publication:
+    type: preprint
+    venue: arXiv
+    date_published: '2026-02-01'
+    year: 2026
+  identifiers:
+    arxiv: '2602.08971'
+  content:
+    abstract: 'Abstract While world models have emerged as a cornerstone of embodied
+      intelligence by enabling agents to reason about environmental dynamics through
+      action-conditioned prediction, their evaluation remains fragmented.
+
+      Current evaluation of embodied world models has largely focused on perceptual
+      fidelity (e.g., video generation quality), overlooking the functional utility
+      of these models in downstream decision-making tasks.
+
+      In this work, we introduce WorldArena, a unified benchmark designed to systematically
+      evaluate embodied world models across both perceptual and functional dimensions.
+      WorldArena assesses models through three dimensions: video perception quality,
+      measured with 16 metrics across six sub-dimensions; embodied task functionality,
+      which evaluates world models as data engines, policy evaluators, and action
+      planners integrating with subjective human evaluation.
+
+      Furthermore, we propose EWMScore, a holistic metric integrating multi-dimensional
+      performance into a single interpretable index.
+
+      Through extensive experiments on 14 representative models, we reveal a significant
+      perception–functionality gap, showing that high visual quality does not necessarily
+      translate into strong embodied task capability.
+
+      WorldArena benchmark with the public leaderboard is released at https://world-arena.ai
+      , providing a framework for tracking progress toward truly functional world
+      models in embodied AI.'
+    language: en
+    citation: 'Yu Shang et al.. (2026). WorldArena: A Unified Benchmark for Evaluating
+      Perception.... arXiv:2602.08971.'
+  workflow:
+    status: unread
+    priority: normal
+    date_added: '2026-02-01'
+  relations:
+    tags: []
+    categories: []
+    related: []
+  bibtex: "@misc{shang20262602,\n  author = {Shang, Yu and Li, Zhuohang and Ma, Yiding\
+    \ and Su, Weikang and Jin, Xin and Wang, Ziyou and Jin, Lei and Zhang, Xin and\
+    \ Tang, Yinzhou and Su, Haisheng and Gao, Chen and Wu, Wei and Liu, Xihui and\
+    \ Shah, Dhruv and Zhang, Zhaoxiang and Chen, Zhibo and Zhu, Jun and Tian, Yonghong\
+    \ and Chua, Tat-Seng and Zhu, Wenwu and Li, Yong},\n  title = {WorldArena: A Unified\
+    \ Benchmark for Evaluating Perception and Functional Utility of Embodied World\
+    \ Models},\n  year = {2026},\n  eprint = {2602.08971},\n  archivePrefix = {arXiv},\n\
+    }"

@@ -1,0 +1,47 @@
+paper:
+  id: arxiv:2402.10877v7
+  title: Robust agents learn causal world models
+  authors:
+  - name: Jonathan Richens
+  - name: Tom Everitt
+  publication:
+    type: preprint
+    venue: arXiv
+    date_published: '2024-02-16'
+    year: 2024
+  identifiers:
+    arxiv: 2402.10877v7
+  urls:
+    pdf: https://arxiv.org/pdf/2402.10877v7
+    abstract: https://arxiv.org/abs/2402.10877v7
+  content:
+    abstract: It has long been hypothesised that causal reasoning plays a fundamental
+      role in robust and general intelligence. However, it is not known if agents
+      must learn causal models in order to generalise to new domains, or if other
+      inductive biases are sufficient. We answer this question, showing that any agent
+      capable of satisfying a regret bound under a large set of distributional shifts
+      must have learned an approximate causal model of the data generating process,
+      which converges to the true causal model for optimal agents. We discuss the
+      implications of this result for several research areas including transfer learning
+      and causal inference.
+    keywords:
+    - cs.AI
+    - cs.LG
+    language: en
+    citation: Jonathan Richens and Tom Everitt. (2024). Robust agents learn causal
+      world models. arXiv:2402.10877v7.
+  workflow:
+    status: unread
+    priority: normal
+    date_added: '2024-02-16'
+  relations:
+    tags: []
+    categories:
+    - cs.AI
+    - cs.LG
+    primary_category: cs.AI
+    related: []
+  bibtex: "@misc{richens20242402,\n  author = {Richens, Jonathan and Everitt, Tom},\n\
+    \  title = {Robust agents learn causal world models},\n  year = {2024},\n  eprint\
+    \ = {2402.10877},\n  archivePrefix = {arXiv},\n  primaryClass = {cs.AI},\n  url\
+    \ = {https://arxiv.org/abs/2402.10877v7},\n}"

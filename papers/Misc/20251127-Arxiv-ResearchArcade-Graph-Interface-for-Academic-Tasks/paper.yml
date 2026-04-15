@@ -1,0 +1,62 @@
+paper:
+  id: arxiv:2511.22036v1
+  title: 'ResearchArcade: Graph Interface for Academic Tasks'
+  authors:
+  - name: Jingjun Xu
+  - name: Chongshan Lin
+  - name: Haofei Yu
+  - name: Tao Feng
+  - name: Jiaxuan You
+  publication:
+    type: preprint
+    venue: arXiv
+    date_published: '2025-11-27'
+    year: 2025
+  identifiers:
+    arxiv: 2511.22036v1
+  urls:
+    pdf: https://arxiv.org/pdf/2511.22036v1
+    abstract: https://arxiv.org/abs/2511.22036v1
+  content:
+    abstract: 'Academic research generates diverse data sources, and as researchers
+      increasingly use machine learning to assist research tasks, a crucial question
+      arises: Can we build a unified data interface to support the development of
+      machine learning models for various academic tasks? Models trained on such a
+      unified interface can better support human researchers throughout the research
+      process, eventually accelerating knowledge discovery. In this work, we introduce
+      ResearchArcade, a graph-based interface that connects multiple academic data
+      sources, unifies task definitions, and supports a wide range of base models
+      to address key academic challenges. ResearchArcade utilizes a coherent multi-table
+      format with graph structures to organize data from different sources, including
+      academic corpora from ArXiv and peer reviews from OpenReview, while capturing
+      information with multiple modalities, such as text, figures, and tables. ResearchArcade
+      also preserves temporal evolution at both the manuscript and community levels,
+      supporting the study of paper revisions as well as broader research trends over
+      time. Additionally, ResearchArcade unifies diverse academic task definitions
+      and supports various models with distinct input requirements. Our experiments
+      across six academic tasks demonstrate that combining cross-source and multi-modal
+      information enables a broader range of tasks, while incorporating graph structures
+      consistently improves performance over baseline methods. This highlights the
+      effectiveness of ResearchArcade and its potential to advance research progress.'
+    keywords:
+    - cs.CL
+    - cs.LG
+    language: en
+    citation: 'Jingjun Xu et al.. (2025). ResearchArcade: Graph Interface for Academic
+      Tasks. arXiv:2511.22036v1.'
+  workflow:
+    status: unread
+    priority: normal
+    date_added: '2025-11-27'
+  relations:
+    tags: []
+    categories:
+    - cs.CL
+    - cs.LG
+    primary_category: cs.CL
+    related: []
+  bibtex: "@misc{xu20252511,\n  author = {Xu, Jingjun and Lin, Chongshan and Yu, Haofei\
+    \ and Feng, Tao and You, Jiaxuan},\n  title = {ResearchArcade: Graph Interface\
+    \ for Academic Tasks},\n  year = {2025},\n  eprint = {2511.22036},\n  archivePrefix\
+    \ = {arXiv},\n  primaryClass = {cs.CL},\n  url = {https://arxiv.org/abs/2511.22036v1},\n\
+    }"

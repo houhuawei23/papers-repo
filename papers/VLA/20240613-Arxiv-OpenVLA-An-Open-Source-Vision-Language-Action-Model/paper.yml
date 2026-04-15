@@ -1,0 +1,95 @@
+paper:
+  id: arxiv:2406.09246v3
+  title: 'OpenVLA: An Open-Source Vision-Language-Action Model'
+  authors:
+  - name: Moo Jin Kim
+  - name: Karl Pertsch
+  - name: Siddharth Karamcheti
+    orcid: 0000-0003-2153-2455
+  - name: Ted Xiao
+  - name: Ashwin Balakrishna
+    orcid: 0000-0002-3508-7850
+  - name: Suraj Nair
+    orcid: 0000-0002-3999-2436
+  - name: Rafael Rafailov
+  - name: Ethan Foster
+    orcid: 0000-0002-8228-1875
+  - name: Grace Lam
+    orcid: 0000-0001-7508-8666
+  - name: Pannag Sanketi
+  - name: Quan Vuong
+    orcid: 0009-0009-1829-9614
+  - name: Thomas Kollar
+    orcid: 0000-0003-2598-8118
+  - name: Benjamin Burchfiel
+    orcid: 0000-0001-7332-6712
+  - name: Russ Tedrake
+  - name: Dorsa Sadigh
+    orcid: 0000-0002-7802-9183
+  - name: Sergey Levine
+    orcid: 0000-0001-6764-2743
+  - name: Percy Liang
+    orcid: 0000-0002-0458-6139
+  - name: Chelsea Finn
+    orcid: 0000-0001-6298-0874
+  publication:
+    type: preprint
+    venue: arXiv
+    date_published: '2024-06-13'
+    year: 2024
+  identifiers:
+    arxiv: 2406.09246v3
+    openalex_work: https://openalex.org/W4399695759
+  urls:
+    pdf: https://arxiv.org/pdf/2406.09246v3
+    abstract: https://arxiv.org/abs/2406.09246v3
+  content:
+    abstract: 'Large policies pretrained on a combination of Internet-scale vision-language
+      data and diverse robot demonstrations have the potential to change how we teach
+      robots new skills: rather than training new behaviors from scratch, we can fine-tune
+      such vision-language-action (VLA) models to obtain robust, generalizable policies
+      for visuomotor control. Yet, widespread adoption of VLAs for robotics has been
+      challenging as 1) existing VLAs are largely closed and inaccessible to the public,
+      and 2) prior work fails to explore methods for efficiently fine-tuning VLAs
+      for new tasks, a key component for adoption. Addressing these challenges, we
+      introduce OpenVLA, a 7B-parameter open-source VLA trained on a diverse collection
+      of 970k real-world robot demonstrations. OpenVLA builds on a Llama 2 language
+      model combined with a visual encoder that fuses pretrained features from DINOv2
+      and SigLIP. As a product of the added data diversity and new model components,
+      OpenVLA demonstrates strong results for generalist manipulation, outperforming
+      closed models such as RT-2-X (55B) by 16.5% in absolute task success rate across
+      29 tasks and multiple robot embodiments, with 7x fewer parameters. We further
+      show that we can effectively fine-tune OpenVLA for new settings, with especially
+      strong generalization results in multi-task environments involving multiple
+      objects and strong language grounding abilities, and outperform expressive from-scratch
+      imitation learning methods such as Diffusion Policy by 20.4%. We also explore
+      compute efficiency; as a separate contribution, we show that OpenVLA can be
+      fine-tuned on consumer GPUs via modern low-rank adaptation methods and served
+      efficiently via quantization without a hit to downstream success rate. Finally,
+      we release model checkpoints, fine-tuning notebooks, and our PyTorch codebase
+      with built-in support for training VLAs at scale on Open X-Embodiment datasets.'
+    keywords:
+    - cs.RO
+    - cs.LG
+    language: en
+    citation: 'Moo Jin Kim et al.. (2024). OpenVLA: An Open-Source Vision-Language-Action
+      Model. arXiv:2406.09246v3.'
+  workflow:
+    status: unread
+    priority: normal
+    date_added: '2024-06-13'
+  relations:
+    tags: []
+    categories:
+    - cs.RO
+    - cs.LG
+    primary_category: cs.RO
+    related: []
+  bibtex: "@misc{kim20242406,\n  author = {Kim, Moo Jin and Pertsch, Karl and Karamcheti,\
+    \ Siddharth and Xiao, Ted and Balakrishna, Ashwin and Nair, Suraj and Rafailov,\
+    \ Rafael and Foster, Ethan and Lam, Grace and Sanketi, Pannag and Vuong, Quan\
+    \ and Kollar, Thomas and Burchfiel, Benjamin and Tedrake, Russ and Sadigh, Dorsa\
+    \ and Levine, Sergey and Liang, Percy and Finn, Chelsea},\n  title = {OpenVLA:\
+    \ An Open-Source Vision-Language-Action Model},\n  year = {2024},\n  eprint =\
+    \ {2406.09246},\n  archivePrefix = {arXiv},\n  primaryClass = {cs.RO},\n  url\
+    \ = {https://arxiv.org/abs/2406.09246v3},\n}"

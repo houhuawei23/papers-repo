@@ -1,0 +1,82 @@
+paper:
+  id: arxiv:2603.00084v2
+  title: 'DeepXiv-SDK: An Agentic Data Interface for Scientific Literature'
+  authors:
+  - name: Hongjin Qian
+  - name: Ziyi Xia
+  - name: Ze Liu
+  - name: Jianlyu Chen
+  - name: Kun Luo
+    orcid: 0000-0001-6526-4304
+  - name: Minghao Qin
+  - name: Chaofan Li
+  - name: Lei Xiong
+    orcid: 0000-0003-4551-4411
+  - name: Junwei Lan
+  - name: Sen Wang
+  - name: Zhengyang Liang
+  - name: Yingxia Shao
+  - name: Defu Lian
+  - name: Zheng Liu
+  publication:
+    type: preprint
+    venue: arXiv
+    date_published: '2026-02-14'
+    year: 2026
+  identifiers:
+    arxiv: 2603.00084v2
+    openalex_work: https://openalex.org/W7133356168
+  urls:
+    pdf: https://arxiv.org/pdf/2603.00084v2
+    abstract: https://arxiv.org/abs/2603.00084v2
+  content:
+    abstract: "LLM-agents are increasingly used to accelerate the progress of scientific\
+      \ research. Yet a persistent bottleneck is data access: agents not only lack\
+      \ readily available tools for retrieval, but also have to work with unstrcutured,\
+      \ human-centric data on the Internet, such as HTML web-pages and PDF files,\
+      \ leading to excessive token consumption, limit working efficiency, and brittle\
+      \ evidence look-up. This gap motivates the development of \\textit{an agentic\
+      \ data interface}, which is designed to enable agents to access and utilize\
+      \ scientific literature in a more effective, efficient, and cost-aware manner.\n\
+      \  In this paper, we introduce DeepXiv-SDK, which offers a three-layer agentic\
+      \ data interface for scientific literature. 1) Data Layer, which transforms\
+      \ unstructured, human-centric data into normalized and structured representations\
+      \ in JSON format, improving data usability and enabling progressive accessibility\
+      \ of the data. 2) Service Layer, which presents readily available tools for\
+      \ data access and ad-hoc retrieval. It also enables a rich form of agent usage,\
+      \ including CLI, MCP, and Python SDK. 3) Application Layer, which creates a\
+      \ built-in agent, packaging basic tools from the service layer to support complex\
+      \ data access demands.\n  DeepXiv-SDK currently supports the complete ArXiv\
+      \ corpus, and is synchronized daily to incorporate new releases. It is designed\
+      \ to extend to all common open-access corpora, such as PubMed Central, bioRxiv,\
+      \ medRxiv, and chemRxiv. We release RESTful APIs, an open-source Python SDK,\
+      \ and a web demo showcasing deep search and deep research workflows. DeepXiv-SDK\
+      \ is free to use with registration."
+    keywords:
+    - cs.DL
+    - cs.AI
+    - cs.CL
+    - cs.IR
+    language: en
+    citation: 'Hongjin Qian et al.. (2026). DeepXiv-SDK: An Agentic Data Interface
+      for Scientific Lit.... arXiv:2603.00084v2.'
+  workflow:
+    status: unread
+    priority: normal
+    date_added: '2026-02-14'
+  relations:
+    tags: []
+    categories:
+    - cs.DL
+    - cs.AI
+    - cs.CL
+    - cs.IR
+    primary_category: cs.DL
+    related: []
+  bibtex: "@misc{qian20262603,\n  author = {Qian, Hongjin and Xia, Ziyi and Liu, Ze\
+    \ and Chen, Jianlyu and Luo, Kun and Qin, Minghao and Li, Chaofan and Xiong, Lei\
+    \ and Lan, Junwei and Wang, Sen and Liang, Zhengyang and Shao, Yingxia and Lian,\
+    \ Defu and Liu, Zheng},\n  title = {DeepXiv-SDK: An Agentic Data Interface for\
+    \ Scientific Literature},\n  year = {2026},\n  eprint = {2603.00084},\n  archivePrefix\
+    \ = {arXiv},\n  primaryClass = {cs.DL},\n  url = {https://arxiv.org/abs/2603.00084v2},\n\
+    }"

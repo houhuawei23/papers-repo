@@ -1,0 +1,45 @@
+<a id="section-7"></a>
+
+## 7 Author Contributions
+
+- DataFlow Team: Project Team
+- Bohan Zeng: Core Contributor; Defines the scope of world model tasks and designs the OpenWorldLib framework.
+- Daili Hua: Core Contributor; Develops the pipeline for interactive video/audio generation and reasoning tasks in OpenWorldLib.
+- Kaixin Zhu: Core Contributor; Develops the pipeline for 3D generation tasks in OpenWorldLib.
+- Yifan Dai: Core Contributor; Develops the pipeline for VLA and reasoning tasks in OpenWorldLib.
+- Bozhou Li: Core Contributor; Develops the pipeline for VLA and reasoning tasks in OpenWorldLib.
+- Yuran Wang: Core Contributor; Develops the pipeline for interactive video generation tasks in OpenWorldLib.
+- Chengzhuo Tong: Core Contributor; Develops the pipeline for interactive video generation tasks in OpenWorldLib.
+- Yifan Yang: Core Contributor; Develops the pipeline for simulator and 3D generation tasks in OpenWorldLib.
+- Mingkun Chang: Core Contributor; Develops the pipeline for interactive video generation tasks in OpenWorldLib.
+- Jianbin Zhao: Core Contributor; Develops the pipeline for 3D generation tasks in OpenWorldLib.
+- Zhou Liu: Contributor; Designs world model task demonstrations and promotes the framework.
+- Hao Liang: Contributor; Guides the design of the OpenWorldLib framework.
+- Xiaochen Ma: Contributor; Guides configuration optimization of the OpenWorldLib framework.
+- Ruichuan An: Contributor; Provides knowledge assistance for world model-related tasks.
+- Junbo Niu: Contributor; Provides technical guidance on world model reasoning and memory.
+- Zimo Meng: Contributor; Tests the OpenWorldLib pipelines.
+- Tianyi Bai: Contributor; Provides technical guidance on world model reasoning.
+- Meiyi Qiang: Contributor; Promotes the framework and tests pipelines for OpenWorldLib.
+- Huanyao Zhang: Contributor; Promotes the framework and tests pipelines for OpenWorldLib.
+- Zhiyou Xiao: Contributor; Tests the OpenWorldLib pipelines.
+- Tianyu Guo: Contributor; Develops the pipeline for audio generation and understanding tasks in OpenWorldLib.
+- Qinhan Yu: Contributor; Tests the OpenWorldLib pipelines.
+- Runhao Zhao: Contributor; Tests the OpenWorldLib pipelines.
+- Zhengpin Li: Contributor; Tests the OpenWorldLib pipelines.
+- Xinyi Huang: Contributor; Develops the pipeline for interactive video generation tasks in OpenWorldLib.
+- Yisheng Pan: Contributor; Tests the OpenWorldLib pipelines.
+- Yiwen Tang: Contributor; Provides technical support for world model-related tasks.
+- Yang Shi: Contributor; Provides technical support for the design of the framework.
+- Yue Ding: Contributor; Provides technical support for world model reasoning.
+- Xinlong Chen: Contributor; Provides technical support for world model reasoning.
+- Hongcheng Gao: Contributor; Provides technical support for world model simulator.
+- Minglei Shi: Contributor; Promotes the framework and tests pipelines for OpenWorldLib.
+- Jialong Wu: Contributor; Provides knowledge guidance for world model-related tasks.
+- Zekun Wang: Contributor; Promotes the framework and tests pipelines for OpenWorldLib.
+- Yuanxing Zhang: Project Supervisor; Guides the design of the OpenWorldLib framework and supervises the project.
+- Xintao Wang: Contributor; Provides technical guidance on world model-related tasks.
+- Pengfei Wan: Contributor; Provides technical guidance on world model synthesis.
+- Yiren Song: Contributor; Provides technical guidance on world model synthesis and VLA.
+- Mike Zheng Shou: Contributor; Provides technical guidance on world model synthesis and VLA.
+- Wentao Zhang: Corresponding Author, Project Supervisor; Writes the manuscript and supervises the project.

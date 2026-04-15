@@ -1,0 +1,83 @@
+paper:
+  id: arxiv:2602.10090v2
+  title: 'Agent World Model: Infinity Synthetic Environments for Agentic Reinforcement
+    Learning'
+  authors:
+  - name: Zhaoyang Wang
+    affiliations:
+    - University of North Carolina at Chapel Hill
+  - name: Canwen Xu
+    affiliations:
+    - Snowflake
+  - name: Boyi Liu
+    affiliations:
+    - Snowflake
+  - name: Yite Wang
+    affiliations:
+    - University of North Carolina at Chapel Hill
+  - name: Siwei Han
+    affiliations:
+    - University of North Carolina at Chapel Hill
+  - name: Zhewei Yao
+    affiliations:
+    - Snowflake
+  - name: Huaxiu Yao
+    affiliations:
+    - Snowflake
+  - name: Yuxiong He
+    affiliations:
+    - Snowflake
+    orcid: 0000-0001-8887-7752
+  publication:
+    type: preprint
+    venue: arXiv
+    date_published: '2026-02-10'
+    year: 2026
+  identifiers:
+    arxiv: 2602.10090v2
+    openalex_work: https://openalex.org/W7128641923
+  urls:
+    pdf: https://arxiv.org/pdf/2602.10090v2
+    abstract: https://arxiv.org/abs/2602.10090v2
+  content:
+    abstract: Recent advances in large language model (LLM) have empowered autonomous
+      agents to perform complex tasks that require multi-turn interactions with tools
+      and environments. However, scaling such agent training is limited by the lack
+      of diverse and reliable environments. In this paper, we propose Agent World
+      Model (AWM), a fully synthetic environment generation pipeline. Using this pipeline,
+      we scale to 1,000 environments covering everyday scenarios, in which agents
+      can interact with rich toolsets (35 tools per environment on average) and obtain
+      high-quality observations. Notably, these environments are code-driven and backed
+      by databases, providing more reliable and consistent state transitions than
+      environments simulated by LLMs. Moreover, they enable more efficient agent interaction
+      compared with collecting trajectories from realistic environments. To demonstrate
+      the effectiveness of this resource, we perform large-scale reinforcement learning
+      for multi-turn tool-use agents. Thanks to the fully executable environments
+      and accessible database states, we can also design reliable reward functions.
+      Experiments on three benchmarks show that training exclusively in synthetic
+      environments, rather than benchmark-specific ones, yields strong out-of-distribution
+      generalization. The code is available at https://github.com/Snowflake-Labs/agent-world-model.
+    keywords:
+    - cs.AI
+    - cs.CL
+    - cs.LG
+    language: en
+    citation: 'Zhaoyang Wang et al.. (2026). Agent World Model: Infinity Synthetic
+      Environments for Ag.... arXiv:2602.10090v2.'
+  workflow:
+    status: unread
+    priority: normal
+    date_added: '2026-02-10'
+  relations:
+    tags: []
+    categories:
+    - cs.AI
+    - cs.CL
+    - cs.LG
+    primary_category: cs.AI
+    related: []
+  bibtex: "@misc{wang20262602,\n  author = {Wang, Zhaoyang and Xu, Canwen and Liu,\
+    \ Boyi and Wang, Yite and Han, Siwei and Yao, Zhewei and Yao, Huaxiu and He, Yuxiong},\n\
+    \  title = {Agent World Model: Infinity Synthetic Environments for Agentic Reinforcement\
+    \ Learning},\n  year = {2026},\n  eprint = {2602.10090},\n  archivePrefix = {arXiv},\n\
+    \  primaryClass = {cs.AI},\n  url = {https://arxiv.org/abs/2602.10090v2},\n}"

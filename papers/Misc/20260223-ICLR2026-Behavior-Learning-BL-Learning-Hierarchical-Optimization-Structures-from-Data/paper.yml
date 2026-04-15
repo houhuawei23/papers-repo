@@ -1,0 +1,105 @@
+# Paper Metadata Template (Extended Version)
+paper: "Behavior Learning (BL)" # Required
+subtitle: "Learning Hierarchical Optimization Structures from Data" # Optional
+publication: "ICLR" # Required
+date: 2026-02-23 # Recommended
+year: 2026 # Recommended (if date missing)
+conference: "ICLR" # For conference papers
+doi: "10.xxxx/xxxxx" # Digital Object Identifier, highly recommended
+isbn: "978-3-16-148410-0" # Book ISBN
+issn: "1234-5678" # Journal ISSN
+arxiv: "arXiv:2602.20152" # arXiv ID
+pmid: "12345678" # PubMed ID
+pmcid: "PMC1234567" # PubMed Central ID
+url: "https://openreview.net/forum?id=bbAN9PPcI1" # Paper link (alternative to link)
+link: "https://..." # Original template field, can be kept
+code: "https://github.com/MoonYLiang/Behavior-Learning" # Code repository link
+dataset: "https://..." # Dataset link
+project: "https://..." # Project homepage
+pdf: "Local or online PDF path" # Direct PDF access link
+
+author:
+  - name: "Zhenyao Ma" # Required
+    affiliation: "Xiamen University" # Recommended
+    department: "Department of Computer Science and Technology" # Optional, more granular
+    country: "China" # Optional
+    email: "zhenyaoma@xmu.edu.cn" # Optional, usually only for corresponding author
+    orcid: "0000-0002-1825-0097" # ORCID identifier
+    corresponding: true # Whether corresponding author
+    role: "first author" # Optional
+  - name: "Yue Liang" # Required
+    affiliation: "University of Tübingen" # Recommended
+    department: "Department of Computer Science" # Optional, more granular
+    country: "Germany" # Optional
+    email: "yue.liang@uni-tuebingen.de" # Optional, usually only for corresponding author
+    orcid: "0000-0002-1825-0097" # ORCID identifier
+    corresponding: false # Whether corresponding author
+    role: "co-first author" # Optional
+  - name: "Dongxu Li" # Required
+    affiliation: "Xi'an Jiaotong University" # Recommended
+    department: "Department of Computer Science" # Optional, more granular
+    country: "China" # Optional
+    email: "dongxuli@xjtu.edu.cn" # Optional, usually only for corresponding author
+    orcid: "0000-0002-1825-0097" # ORCID identifier
+    corresponding: false # Whether corresponding author
+# Funding information
+funding:
+  - funder: "Funding agency name"
+    grant_number: "Grant number"
+    grant_name: "Project name"
+
+citation: "Author. Year. Title. Journal, Volume(Issue), Pages." # Recommended, standard citation format
+bibtex: | # BibTeX entry for easy copying
+  @article{key2024,
+    author = {...},
+    title  = {...},
+    ...
+  }
+
+abstract: |
+  "Inspired by behavioral science, we propose Behavior Learning (BL), a novel general-purpose machine learning framework that learns interpretable and identifiable optimization structures from data, ranging from single optimization problems to hierarchical compositions. 
+  It unifies predictive performance, intrinsic interpretability, and identifiability, with broad applicability to scientific domains involving optimization. 
+  BL parameterizes a compositional utility function built from intrinsically interpretable modular blocks, which induces a data distribution for prediction and generation. 
+  Each block represents and can be written in symbolic form as a utility maximization problem (UMP), a foundational paradigm in behavioral science and a universal framework of optimization. 
+  BL supports architectures ranging from a single UMP to hierarchical compositions, the latter modeling hierarchical optimization structures that offer both expressiveness and structural transparency. 
+  Its smooth and monotone variant (IBL) guarantees identifiability under mild conditions. Theoretically, we establish the universal approximation property of both BL and IBL, and analyze the M-estimation properties of IBL. 
+  Empirically, BL demonstrates strong predictive performance, intrinsic interpretability and scalability to high-dimensional data. Code: https://github.com/MoonYLiang/Behavior-Learning; installable via pip install blnetwork."
+abstract_zh: "Chinese abstract (if available)" # Optional, multilingual
+#  Inverse Optimization, Energy-Based Models (EBMs), Intrinsic Interpretability, Identifiability, Behavioral Modeling
+keywords: # Recommended
+  - "Inverse Optimization"
+  - "Energy-Based Models (EBMs)"
+  - "Intrinsic Interpretability"
+  - "Identifiability"
+  - "Behavioral Modeling"
+keywords_zh: # Optional, Chinese keywords
+  - "keyword1"
+  - "keyword2"
+
+# Document type and status
+type: "conference" # Document type
+language: "en" # Primary language code
+license: "CC BY 4.0" # Open access license type
+copyright: "Copyright information" # Copyright statement
+
+# Personal management fields (add/remove as needed)
+tags: # Custom tags
+  - "Behavior Learning"
+  - "Hierarchical Optimization Structures"
+  - "Data-driven Inverse Optimization"
+  - "Energy-Based Models"
+  - "Intrinsic Interpretability"
+  - "Identifiability"
+  - "Behavioral Modeling"
+notes: "Personal notes or comments" # Free text
+read_status: "unread | reading | read" # Reading status
+rating: 4.5 # Personal rating (1-5)
+date_added: YYYY-MM-DD # Date added to library
+date_read: YYYY-MM-DD # Date reading completed
+starred: true/false # Whether starred
+collections: # Belongs to collections/projects
+  - "Project A"
+  - "Review related"
+related_papers: # Related papers (DOI or title)
+  - "10.xxxx/yyyy"
+  - "Title of related paper"

@@ -1,0 +1,61 @@
+paper:
+  id: arxiv:2405.17031v1
+  title: Any-step Dynamics Model Improves Future Predictions for Online and Offline
+    Reinforcement Learning
+  authors:
+  - name: Haoxin Lin
+  - name: Yu-Yan Xu
+  - name: Yihao Sun
+  - name: Zhilong Zhang
+  - name: Yi-Chen Li
+  - name: Chengxing Jia
+  - name: Junyin Ye
+  - name: Jiaji Zhang
+  - name: Yang Yu
+  publication:
+    type: preprint
+    venue: arXiv
+    date_published: '2024-05-27'
+    year: 2024
+  identifiers:
+    arxiv: 2405.17031v1
+  urls:
+    pdf: https://arxiv.org/pdf/2405.17031v1
+    abstract: https://arxiv.org/abs/2405.17031v1
+  content:
+    abstract: Model-based methods in reinforcement learning offer a promising approach
+      to enhance data efficiency by facilitating policy exploration within a dynamics
+      model. However, accurately predicting sequential steps in the dynamics model
+      remains a challenge due to the bootstrapping prediction, which attributes the
+      next state to the prediction of the current state. This leads to accumulated
+      errors during model roll-out. In this paper, we propose the Any-step Dynamics
+      Model (ADM) to mitigate the compounding error by reducing bootstrapping prediction
+      to direct prediction. ADM allows for the use of variable-length plans as inputs
+      for predicting future states without frequent bootstrapping. We design two algorithms,
+      ADMPO-ON and ADMPO-OFF, which apply ADM in online and offline model-based frameworks,
+      respectively. In the online setting, ADMPO-ON demonstrates improved sample efficiency
+      compared to previous state-of-the-art methods. In the offline setting, ADMPO-OFF
+      not only demonstrates superior performance compared to recent state-of-the-art
+      offline approaches but also offers better quantification of model uncertainty
+      using only a single ADM.
+    keywords:
+    - cs.LG
+    language: en
+    citation: Haoxin Lin et al.. (2024). Any-step Dynamics Model Improves Future Predictions
+      for O.... arXiv:2405.17031v1.
+  workflow:
+    status: unread
+    priority: normal
+    date_added: '2024-05-27'
+  relations:
+    tags: []
+    categories:
+    - cs.LG
+    primary_category: cs.LG
+    related: []
+  bibtex: "@misc{lin20242405,\n  author = {Lin, Haoxin and Xu, Yu-Yan and Sun, Yihao\
+    \ and Zhang, Zhilong and Li, Yi-Chen and Jia, Chengxing and Ye, Junyin and Zhang,\
+    \ Jiaji and Yu, Yang},\n  title = {Any-step Dynamics Model Improves Future Predictions\
+    \ for Online and Offline Reinforcement Learning},\n  year = {2024},\n  eprint\
+    \ = {2405.17031},\n  archivePrefix = {arXiv},\n  primaryClass = {cs.LG},\n  url\
+    \ = {https://arxiv.org/abs/2405.17031v1},\n}"

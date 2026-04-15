@@ -1,0 +1,96 @@
+paper:
+  id: arxiv:2604.04707v1
+  title: 'OpenWorldLib: A Unified Codebase and Definition of Advanced World Models'
+  authors:
+  - name: DataFlow Team
+  - name: Bohan Zeng
+  - name: Daili Hua
+  - name: Kaixin Zhu
+  - name: Yifan Dai
+  - name: Bozhou Li
+  - name: Yuran Wang
+  - name: Chengzhuo Tong
+  - name: Yifan Yang
+  - name: Mingkun Chang
+  - name: Jianbin Zhao
+  - name: Zhou Liu
+  - name: Hao Liang
+  - name: Xiaochen Ma
+  - name: Ruichuan An
+  - name: Junbo Niu
+  - name: Zimo Meng
+  - name: Tianyi Bai
+  - name: Meiyi Qiang
+  - name: Huanyao Zhang
+  - name: Zhiyou Xiao
+  - name: Tianyu Guo
+  - name: Qinhan Yu
+  - name: Runhao Zhao
+  - name: Zhengpin Li
+  - name: Xinyi Huang
+  - name: Yisheng Pan
+  - name: Yiwen Tang
+  - name: Yang Shi
+  - name: Yue Ding
+  - name: Xinlong Chen
+  - name: Hongcheng Gao
+  - name: Minglei Shi
+  - name: Jialong Wu
+  - name: Zekun Wang
+  - name: Yuanxing Zhang
+  - name: Xintao Wang
+  - name: Pengfei Wan
+  - name: Yiren Song
+  - name: Mike Zheng Shou
+  - name: Wentao Zhang
+  publication:
+    type: preprint
+    venue: arXiv
+    date_published: '2026-04-06'
+    year: 2026
+  identifiers:
+    arxiv: 2604.04707v1
+  urls:
+    pdf: https://arxiv.org/pdf/2604.04707v1
+    abstract: https://arxiv.org/abs/2604.04707v1
+  content:
+    abstract: 'World models have garnered significant attention as a promising research
+      direction in artificial intelligence, yet a clear and unified definition remains
+      lacking. In this paper, we introduce OpenWorldLib, a comprehensive and standardized
+      inference framework for Advanced World Models. Drawing on the evolution of world
+      models, we propose a clear definition: a world model is a model or framework
+      centered on perception, equipped with interaction and long-term memory capabilities,
+      for understanding and predicting the complex world. We further systematically
+      categorize the essential capabilities of world models. Based on this definition,
+      OpenWorldLib integrates models across different tasks within a unified framework,
+      enabling efficient reuse and collaborative inference. Finally, we present additional
+      reflections and analyses on potential future directions for world model research.
+      Code link: https://github.com/OpenDCAI/OpenWorldLib'
+    keywords:
+    - cs.CV
+    language: en
+    citation: 'DataFlow Team et al.. (2026). OpenWorldLib: A Unified Codebase and
+      Definition of Advanc.... arXiv:2604.04707v1.'
+  workflow:
+    status: unread
+    priority: normal
+    date_added: '2026-04-06'
+  relations:
+    tags: []
+    categories:
+    - cs.CV
+    primary_category: cs.CV
+    related: []
+  bibtex: "@misc{team20262604,\n  author = {Team, DataFlow and Zeng, Bohan and Hua,\
+    \ Daili and Zhu, Kaixin and Dai, Yifan and Li, Bozhou and Wang, Yuran and Tong,\
+    \ Chengzhuo and Yang, Yifan and Chang, Mingkun and Zhao, Jianbin and Liu, Zhou\
+    \ and Liang, Hao and Ma, Xiaochen and An, Ruichuan and Niu, Junbo and Meng, Zimo\
+    \ and Bai, Tianyi and Qiang, Meiyi and Zhang, Huanyao and Xiao, Zhiyou and Guo,\
+    \ Tianyu and Yu, Qinhan and Zhao, Runhao and Li, Zhengpin and Huang, Xinyi and\
+    \ Pan, Yisheng and Tang, Yiwen and Shi, Yang and Ding, Yue and Chen, Xinlong and\
+    \ Gao, Hongcheng and Shi, Minglei and Wu, Jialong and Wang, Zekun and Zhang, Yuanxing\
+    \ and Wang, Xintao and Wan, Pengfei and Song, Yiren and Shou, Mike Zheng and Zhang,\
+    \ Wentao},\n  title = {OpenWorldLib: A Unified Codebase and Definition of Advanced\
+    \ World Models},\n  year = {2026},\n  eprint = {2604.04707},\n  archivePrefix\
+    \ = {arXiv},\n  primaryClass = {cs.CV},\n  url = {https://arxiv.org/abs/2604.04707v1},\n\
+    }"

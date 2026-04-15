@@ -1,0 +1,81 @@
+# Paper Metadata Template
+# 参考 .todo/paper.yml 与现有 paper.yml 结构
+
+paper:
+  id: "arxiv:XXXX.XXXXXv1"           # Required. Format: arxiv:ID 或 doi:10.xxxx/yyyy
+  title: "Full title of the paper"   # Required
+  authors:                           # Required
+    - name: "Author One"
+    - name: "Author Two"
+      affiliation: "Institution"     # Optional
+    - name: "Author Three"
+
+publication:
+  type: "preprint | journal | conference | book | thesis | techreport"  # Required
+  venue: "arXiv | ICLR | NeurIPS | ..."  # Required
+  date_published: "YYYY-MM-DD"       # Recommended
+  year: YYYY                         # Required
+  # 以下为可选（期刊/会议）
+  # volume: "Volume number"
+  # issue: "Issue number"
+  # pages: "123-145"
+  # conference: "Full conference name, edition, location"
+  # booktitle: "Proceedings title"
+
+identifiers:
+  arxiv: "XXXX.XXXXXv1"              # arXiv ID
+  doi: "10.xxxx/yyyy"                # Optional
+  # pmid: "12345678"
+  # pmcid: "PMC1234567"
+
+urls:
+  pdf: "https://..."                 # Required
+  abstract: "https://..."            # Recommended
+  website: "https://..."             # Optional
+  github: "https://github.com/..."   # Optional
+  code: "https://..."                # Optional
+  dataset: "https://..."             # Optional
+  project: "https://..."             # Optional
+
+content:
+  abstract: |
+    Abstract content here...
+  keywords:                          # Recommended
+    - "cs.RO"
+    - "cs.AI"
+  language: "en"                     # en | zh
+  citation: "Author et al.. (Year). Title. Venue, identifier."
+  # abstract_zh: "中文摘要（可选）"
+  # keywords_zh: ["关键词1", "关键词2"]
+
+workflow:
+  status: "unread | reading | read"  # Required
+  priority: "normal | high | low"    # Optional
+  date_added: "YYYY-MM-DD"           # Recommended
+  # date_read: "YYYY-MM-DD"
+  # rating: 4.5
+  # starred: false
+
+relations:
+  tags: []                           # Custom tags, e.g. [VLA, World Model]
+  categories:                        # arXiv-style categories
+    - "cs.RO"
+  primary_category: "cs.RO"          # Primary arXiv category
+  related: []                        # Related papers (DOIs or titles)
+  # collections: ["Project A"]
+
+# funding:                            # Optional
+#   - funder: "Agency name"
+#     grant_number: "XXX"
+#     grant_name: "Project name"
+
+bibtex: |
+  @misc{keyYYYY,
+    author = {...},
+    title = {...},
+    year = {YYYY},
+    eprint = {XXXX.XXXXX},
+    archivePrefix = {arXiv},
+    primaryClass = {cs.RO},
+    url = {https://arxiv.org/abs/XXXX.XXXXXv1},
+  }

@@ -14,7 +14,9 @@ papers-repo/
 │       └── notes/
 │           └── reading-notes.md   # 阅读笔记（可选）
 ├── scripts/
-│   └── analyze_repo.py        # 仓库分析与报告脚本
+│   ├── analyze_repo.py        # 仓库分析与报告脚本
+│   ├── cleanup_paper_images.py # 清理未引用图片（带 TUI 交互）
+│   └── generate_paper_list.py # 生成论文列表
 ├── reports/                   # 分析报告输出
 └── docs/
     └── paper_schema.md        # paper.yml 字段说明
@@ -74,6 +76,21 @@ python scripts/analyze_repo.py --root ./papers --out ./reports/latest
 1. **基础统计**：论文总数、含 paper.yml 比例、笔记/译文覆盖情况
 2. **质量检查**：缺失字段、解析失败、目录命名问题、疑似重复
 3. **改进建议**：按优先级处理（合并重复、修正命名、补充元数据、确认隐藏目录）
+
+### 清理未引用图片
+
+`scripts/cleanup_paper_images.py` 会扫描所有 paper 目录下的 `images/`，找出未被 Markdown 文件引用的图片，并通过 Textual TUI 让你鼠标勾选后批量删除：
+
+```bash
+# 默认启动 TUI 交互
+python scripts/cleanup_paper_images.py -d ./papers
+
+# 仅预览，不删除
+python scripts/cleanup_paper_images.py -d ./papers --dry-run
+
+# 跳过确认，直接删除（自动化场景）
+python scripts/cleanup_paper_images.py -d ./papers --yes
+```
 
 ### 增量维护建议
 

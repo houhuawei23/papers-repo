@@ -1,0 +1,84 @@
+# Paper Metadata Template (Extended Version)
+paper: "Training Agents Inside of Scalable World Models"                           # Required
+subtitle: "Paper subtitle (if any)"                        # Optional
+publication: "arXiv"            # Required
+date: 2025-09-29                                            # Recommended
+year: 2025                                                   # Recommended (if date missing)
+volume: "Volume number"                                      # For journals
+issue: "Issue number"                                        # For journals
+pages: "Page range, e.g., 123-145"                          # For journals or conference papers
+publisher: "Publisher name"                                  # For books or proceedings
+conference: "Full conference name, including edition and location"  # For conference papers
+booktitle: "Title of the book if chapter in proceedings"     # For books or proceedings
+editor: "Editor name, same format as authors"                # For proceedings or books
+series: "Series name"                                         # For series publications
+doi: "10.xxxx/xxxxx"                                          # Digital Object Identifier, highly recommended
+isbn: "978-3-16-148410-0"                                     # Book ISBN
+issn: "1234-5678"                                             # Journal ISSN
+arxiv: "arXiv:2509.24527"                                   # arXiv ID
+pmid: "12345678"                                              # PubMed ID
+pmcid: "PMC1234567"                                           # PubMed Central ID
+url: "https://..."                                            # Paper link (alternative to link)
+link: "https://..."                                           # Original template field, can be kept
+code: "https://github.com/..."                                # Code repository link
+dataset: "https://..."                                        # Dataset link
+project: 
+  - "https://dreamer4.ai/"                                        # Project homepage
+  - "https://danijar.com/project/dreamer4/"
+pdf: "Local or online PDF path"                               # Direct PDF access link
+
+author:
+  - name: "Full author name"                                  # Required
+    affiliation: "Institution name"                           # Recommended
+    department: "Department/Division"                         # Optional, more granular
+    country: "Country"                                        # Optional
+    email: "Author email"                                     # Optional, usually only for corresponding author
+    orcid: "0000-0002-1825-0097"                              # ORCID identifier
+    corresponding: true/false                                 # Whether corresponding author
+    role: "Author contribution role (e.g., first author, co-first author)"  # Optional
+
+# Funding information
+funding:
+  - funder: "Funding agency name"
+    grant_number: "Grant number"
+    grant_name: "Project name"
+
+citation: "Author. Year. Title. Journal, Volume(Issue), Pages."  # Recommended, standard citation format
+bibtex: |                                                       # BibTeX entry for easy copying
+  @article{key2024,
+    author = {...},
+    title  = {...},
+    ...
+  }
+
+abstract: "Abstract content"                                   # Recommended
+abstract_zh: "Chinese abstract (if available)"                 # Optional, multilingual
+keywords:                                                      # Recommended
+  - "keyword1"
+  - "keyword2"
+keywords_zh:                                                   # Optional, Chinese keywords
+  - "keyword1"
+  - "keyword2"
+
+# Document type and status
+type: "journal | conference | preprint | book | thesis | techreport"  # Document type
+language: "en"                                                  # Primary language code
+license: "CC BY 4.0"                                            # Open access license type
+copyright: "Copyright information"                              # Copyright statement
+
+# Personal management fields (add/remove as needed)
+tags:                                                          # Custom tags
+  - "machine learning"
+  - "graph neural networks"
+notes: "Personal notes or comments"                            # Free text
+read_status: "unread | reading | read"                         # Reading status
+rating: 4.5                                                     # Personal rating (1-5)
+date_added: YYYY-MM-DD                                          # Date added to library
+date_read: YYYY-MM-DD                                           # Date reading completed
+starred: true/false                                             # Whether starred
+collections:                                                    # Belongs to collections/projects
+  - "Project A"
+  - "Review related"
+related_papers:                                                 # Related papers (DOI or title)
+  - "10.xxxx/yyyy"
+  - "Title of related paper"

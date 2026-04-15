@@ -1,0 +1,52 @@
+paper:
+  id: arxiv:1505.04597v1
+  title: 'U-Net: Convolutional Networks for Biomedical Image Segmentation'
+  authors:
+  - name: Olaf Ronneberger
+  - name: Philipp Fischer
+  - name: Thomas Brox
+  publication:
+    type: preprint
+    venue: arXiv
+    date_published: '2015-05-18'
+    year: 2015
+  identifiers:
+    arxiv: 1505.04597v1
+  urls:
+    pdf: https://arxiv.org/pdf/1505.04597v1
+    abstract: https://arxiv.org/abs/1505.04597v1
+  content:
+    abstract: There is large consent that successful training of deep networks requires
+      many thousand annotated training samples. In this paper, we present a network
+      and training strategy that relies on the strong use of data augmentation to
+      use the available annotated samples more efficiently. The architecture consists
+      of a contracting path to capture context and a symmetric expanding path that
+      enables precise localization. We show that such a network can be trained end-to-end
+      from very few images and outperforms the prior best method (a sliding-window
+      convolutional network) on the ISBI challenge for segmentation of neuronal structures
+      in electron microscopic stacks. Using the same network trained on transmitted
+      light microscopy images (phase contrast and DIC) we won the ISBI cell tracking
+      challenge 2015 in these categories by a large margin. Moreover, the network
+      is fast. Segmentation of a 512x512 image takes less than a second on a recent
+      GPU. The full implementation (based on Caffe) and the trained networks are available
+      at http://lmb.informatik.uni-freiburg.de/people/ronneber/u-net .
+    keywords:
+    - cs.CV
+    language: en
+    citation: 'Olaf Ronneberger et al.. (2015). U-Net: Convolutional Networks for
+      Biomedical Image Segmen.... arXiv:1505.04597v1.'
+  workflow:
+    status: unread
+    priority: normal
+    date_added: '2015-05-18'
+  relations:
+    tags: []
+    categories:
+    - cs.CV
+    primary_category: cs.CV
+    related: []
+  bibtex: "@misc{ronneberger20151505,\n  author = {Ronneberger, Olaf and Fischer,\
+    \ Philipp and Brox, Thomas},\n  title = {U-Net: Convolutional Networks for Biomedical\
+    \ Image Segmentation},\n  year = {2015},\n  eprint = {1505.04597},\n  archivePrefix\
+    \ = {arXiv},\n  primaryClass = {cs.CV},\n  url = {https://arxiv.org/abs/1505.04597v1},\n\
+    }"

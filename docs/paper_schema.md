@@ -84,6 +84,8 @@ urls:
   pdf: https://arxiv.org/pdf/2307.15818v1
   abstract: https://arxiv.org/abs/2307.15818v1
   website: https://example.com/
+  github: https://github.com/example/example#
+  docs: https://zread.ai/example/example/
 ```
 
 ### paper.content

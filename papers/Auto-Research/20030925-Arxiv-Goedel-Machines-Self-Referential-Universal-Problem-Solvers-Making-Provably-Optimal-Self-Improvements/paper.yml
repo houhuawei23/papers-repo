@@ -1,0 +1,54 @@
+paper:
+  id: arxiv:cs/0309048
+  title: 'Goedel Machines: Self-Referential Universal Problem Solvers Making Provably
+    Optimal Self-Improvements'
+  authors:
+  - name: Juergen Schmidhuber
+  publication:
+    type: preprint
+    venue: arXiv
+    date_published: '2003-09-25'
+    year: 2003
+  identifiers:
+    arxiv: cs/0309048
+  urls:
+    pdf: https://arxiv.org/pdf/cs/0309048v5
+    abstract: https://arxiv.org/abs/cs/0309048v5
+  content:
+    abstract: We present the first class of mathematically rigorous, general, fully
+      self-referential, self-improving, optimally efficient problem solvers. Inspired
+      by Kurt Goedel's celebrated self-referential formulas (1931), such a problem
+      solver rewrites any part of its own code as soon as it has found a proof that
+      the rewrite is useful, where the problem-dependent utility function and the
+      hardware and the entire initial code are described by axioms encoded in an initial
+      proof searcher which is also part of the initial code. The searcher systematically
+      and efficiently tests computable proof techniques (programs whose outputs are
+      proofs) until it finds a provably useful, computable self-rewrite. We show that
+      such a self-rewrite is globally optimal - no local maxima! - since the code
+      first had to prove that it is not useful to continue the proof search for alternative
+      self-rewrites. Unlike previous non-self-referential methods based on hardwired
+      proof searchers, ours not only boasts an optimal order of complexity but can
+      optimally reduce any slowdowns hidden by the O()-notation, provided the utility
+      of such speed-ups is provable at all.
+    keywords:
+    - cs.LO
+    - cs.AI
+    language: en
+    citation: 'Juergen Schmidhuber. (2003). Goedel Machines: Self-Referential Universal
+      Problem Solve....'
+  workflow:
+    status: unread
+    priority: normal
+    date_added: '2003-09-25'
+  relations:
+    tags: []
+    categories:
+    - cs.LO
+    - cs.AI
+    primary_category: cs.LO
+    related: []
+  bibtex: "@misc{schmidhuber2003cs/0309048,\n  author = {Schmidhuber, Juergen},\n\
+    \  title = {Goedel Machines: Self-Referential Universal Problem Solvers Making\
+    \ Provably Optimal Self-Improvements},\n  year = {2003},\n  eprint = {cs/0309048},\n\
+    \  archivePrefix = {arXiv},\n  primaryClass = {cs.LO},\n  url = {https://arxiv.org/abs/cs/0309048v5},\n\
+    }"

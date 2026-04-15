@@ -1,0 +1,73 @@
+paper:
+  id: arxiv:2411.14499v4
+  title: Understanding World or Predicting Future? A Comprehensive Survey of World
+    Models
+  authors:
+  - name: Jingtao Ding
+  - name: Yunke Zhang
+  - name: Yu Shang
+  - name: Jie Feng
+  - name: Yuheng Zhang
+  - name: Zefang Zong
+  - name: Yuan Yuan
+  - name: Hongyuan Su
+  - name: Nian Li
+  - name: Jinghua Piao
+  - name: Yucheng Deng
+  - name: Nicholas Sukiennik
+  - name: Chen Gao
+  - name: Fengli Xu
+  - name: Yong Li
+  publication:
+    type: preprint
+    venue: arXiv
+    date_published: '2024-11-21'
+    year: 2024
+  identifiers:
+    arxiv: 2411.14499v4
+  urls:
+    pdf: https://arxiv.org/pdf/2411.14499v4
+    abstract: https://arxiv.org/abs/2411.14499v4
+    code: https://github.com/tsinghua-fib-lab/World-Model
+  content:
+    abstract: 'The concept of world models has garnered significant attention due
+      to advancements in multimodal large language models such as GPT-4 and video
+      generation models such as Sora, which are central to the pursuit of artificial
+      general intelligence. This survey offers a comprehensive review of the literature
+      on world models. Generally, world models are regarded as tools for either understanding
+      the present state of the world or predicting its future dynamics. This review
+      presents a systematic categorization of world models, emphasizing two primary
+      functions: (1) constructing internal representations to understand the mechanisms
+      of the world, and (2) predicting future states to simulate and guide decision-making.
+      Initially, we examine the current progress in these two categories. We then
+      explore the application of world models in key domains, including generative
+      games, autonomous driving, robotics, and social simulacra, with a focus on how
+      each domain utilizes these aspects. Finally, we outline key challenges and provide
+      insights into potential future research directions. We summarize the representative
+      papers along with their code repositories in https://github.com/tsinghua-fib-lab/World-Model.'
+    keywords:
+    - cs.CL
+    - cs.AI
+    - cs.LG
+    language: en
+    citation: Jingtao Ding et al.. (2024). Understanding World or Predicting Future?
+      A Comprehensive.... arXiv:2411.14499v4.
+  workflow:
+    status: unread
+    priority: normal
+    date_added: '2024-11-21'
+  relations:
+    tags: []
+    categories:
+    - cs.CL
+    - cs.AI
+    - cs.LG
+    primary_category: cs.CL
+    related: []
+  bibtex: "@misc{ding20242411,\n  author = {Ding, Jingtao and Zhang, Yunke and Shang,\
+    \ Yu and Feng, Jie and Zhang, Yuheng and Zong, Zefang and Yuan, Yuan and Su, Hongyuan\
+    \ and Li, Nian and Piao, Jinghua and Deng, Yucheng and Sukiennik, Nicholas and\
+    \ Gao, Chen and Xu, Fengli and Li, Yong},\n  title = {Understanding World or Predicting\
+    \ Future? A Comprehensive Survey of World Models},\n  year = {2024},\n  eprint\
+    \ = {2411.14499},\n  archivePrefix = {arXiv},\n  primaryClass = {cs.CL},\n  url\
+    \ = {https://arxiv.org/abs/2411.14499v4},\n}"
