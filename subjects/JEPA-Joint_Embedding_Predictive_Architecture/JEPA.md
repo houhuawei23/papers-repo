@@ -1,3 +1,5 @@
+https://www.turingpost.com/p/jepa
+
 [1] https://openreview.net/pdf?id=BZ5a1r-kVsf
 
 [2] https://arxiv.org/abs/2301.08243

@@ -56,9 +56,9 @@ Arena
 
 这一差距源于两个核心局限：
 
-（i）在缺乏丰富具身交互信号的通用视觉数据上进行训练，这阻碍了对细粒度物理动力学（如摩擦、碰撞响应和质量分布）的获取；
+（i）**在缺乏丰富具身交互信号的通用视觉数据上进行训练**，这阻碍了对**细粒度物理动力学**（如摩擦、碰撞响应和质量分布）的获取；
 
-（ii）在微调过程中依赖标准的 **最大似然目标（maximum likelihood objectives）** ，该目标对所有预测误差一视同仁，无法区分物理上有效与无效的状态转移。
+（ii）在微调过程中依赖标准的 **最大似然目标（maximum likelihood objectives）** ，**该目标对所有预测误差一视同仁，无法区分物理上有效与无效的状态转移**。
 
 **既缺乏具身体验，又缺乏物理感知的监督，导致了视觉真实感与物理合理性之间的系统性脱节。**
 
@@ -154,7 +154,9 @@ action controllability, physical consistency, and zero-shot generalization.
 
 ![overview](images/overview.png)
 
-> 图 2：两阶段训练流程。阶段 1：在 DiT 上进行监督微调（SFT），根据观察和指令预测未来帧。阶段 2：生成 $N$ 个候选，通过物理检查表评分，并在冻结的 DiT 权重上通过低秩适应（LoRA）应用 DPO。
+> 图 2：两阶段训练流程。
+> 阶段 1：在 DiT 上进行监督微调（SFT），根据观察和指令预测未来帧。
+> 阶段 2：生成 $N$ 个候选，通过物理检查表评分，并在冻结的 DiT 权重上通过低秩适应（LoRA）应用 DPO。
 
 `<a id="table-1"></a>`
 
@@ -169,7 +171,7 @@ action controllability, physical consistency, and zero-shot generalization.
 
 ### 3.1 具身视频生成主干网络（Embodied Video Generation Backbone）
 
-生成物理上合理的操作视频需要一个主干网络，它既能捕捉真实世界场景的视觉多样性，又能捕捉机器人-物体交互的细粒度时空动态。为满足此要求，我们在 Wan2.1-I2V-14B [wan2025open] 的基础上构建，并在我们精心整理的具身数据集上对其进行全面微调。
+**生成物理上合理的操作视频需要一个主干网络，它既能捕捉真实世界场景的视觉多样性，又能捕捉机器人-物体交互的细粒度时空动态。** 为满足此要求，我们在 Wan2.1-I2V-14B [wan2025open] 的基础上构建，并在我们精心整理的具身数据集上对其进行全面微调。
 
 `<a id="section-3-2"></a>`
 
@@ -184,13 +186,27 @@ action controllability, physical consistency, and zero-shot generalization.
 
 对于给定的提示 $x$ 和初始状态，我们生成 $N$ 个候选视频变体。使用单个 VLM 评估物理合理性存在 **自我评估幻觉（self-evaluation hallucinations）** 的风险，即生成问题的同一模型也评判答案。为防止这种情况，我们将评估解耦为两个角色。
 
-**通义千问-VL 32B 思考模型（Qwen3-VL 32B Thinking model）** 充当*提议者（proposer）*。它观察第一帧和文本指令，基于一个 **分层评估系统（hierarchical evaluation system）** 动态生成特定任务的物理检查清单。该系统对 **第一层指标（Tier 1 metrics）** （如穿透和反重力等致命违规）应用 **一票否决权（single-vote veto power）** ，并使用 **第二层指标（Tier 2 metrics）** （微观物理保真度和接触动态）来区分合规样本。生成具体问题可防止模糊查询引起的幻觉。例如，给定抓取并放置苹果的指令，提议者会询问夹爪是否穿透苹果、苹果是否穿透袋子，以及是否被牢固抓握而非磁力吸附。提议者还明确构建一个平衡的正负问题组合，以防止评分模型阿谀奉承地预测没有违规。
+**通义千问-VL 32B 思考模型（Qwen3-VL 32B Thinking model）** 充当*提议者（proposer）*。
 
-随后， **Gemini 3 Pro 模型（Gemini 3 Pro model）** [gemini3_2025] 充当*评分者（scorer）*。它使用明确的 **思维链（Chain-of-Thought）** 推理，包括全局扫描、标记可疑帧和回溯确认，来根据生成的检查清单评估 $N$ 个变体。为了在 $\mathcal{O}(N)$ 复杂度内高效解决分数平局并分离出最优样本（$y_{w}$）和最差样本（$y_{l}$），我们采用基于多轮锦标赛的采样策略：首先进行淘汰赛选出最优样本，随后进行败者组轮次以确定最差样本。这种两阶段机制避免了全排列比较，并产生具有明显区分度的 **直接偏好优化（Direct Preference Optimization, DPO）** [rafailov2023direct] 训练三元组 $(x,y_{w},y_{l})$。
+- 它观察第一帧和文本指令，基于一个 **分层评估系统（hierarchical evaluation system）** 动态生成特定任务的物理检查清单。
+- 该系统对 **第一层指标（Tier 1 metrics）** （如穿透和反重力等致命违规）应用 **一票否决权（single-vote veto power）** ，并使用 **第二层指标（Tier 2 metrics）** （微观物理保真度和接触动态）来区分合规样本。
+- 生成具体问题可防止模糊查询引起的幻觉。
+- 例如，给定抓取并放置苹果的指令，提议者会询问夹爪是否穿透苹果、苹果是否穿透袋子，以及是否被牢固抓握而非磁力吸附。
+- 提议者还明确构建一个**平衡的正负问题组合**，以防止评分模型阿谀奉承地预测没有违规。
+
+随后， **Gemini 3 Pro 模型（Gemini 3 Pro model）** [gemini3_2025] 充当*评分者（scorer）*。
+
+- 它使用明确的 **思维链（Chain-of-Thought）** 推理，包括全局扫描、标记可疑帧和回溯确认，来根据生成的检查清单评估 $N$ 个变体。
+- 为了在 $\mathcal{O}(N)$ 复杂度内高效解决分数平局并分离出最优样本（$y_{w}$）和最差样本（$y_{l}$），我们采用基于**多轮锦标赛的采样策略**：首先进行淘汰赛选出最优样本，随后进行败者组轮次以确定最差样本。
+- 这种两阶段机制避免了全排列比较，并产生具有明显区分度的 **直接偏好优化（Direct Preference Optimization, DPO）** [rafailov2023direct] 训练三元组 $(x,y_{w},y_{l})$。
 
 #### 3.2.2 扩散直接偏好优化训练（Diffusion-DPO Training）
 
-给定由解耦判别器产生的判别性三元组 $(c,v_{w},v_{l})$，其中 $c$ 是条件，$v_{w}$ 是符合物理规律的视频，$v_{l}$ 是违反物理规律的视频，我们采用 **扩散直接偏好优化（Diffusion-DPO）** 框架在潜在空间中直接微调视频扩散模型。对于视频潜在表示 $z$，我们在时间步 $t\sim\mathcal{U}(0,T)$ 注入高斯噪声 $\epsilon\sim\mathcal{N}(0,I)$ 以获得 $z_{t}$。模型 $\epsilon_{\theta}$ 的单步去噪均方误差为 $L(\theta,z)=\|\epsilon_{\theta}(z_{t},t,c)-\epsilon\|_{2}^{2}$。令 $L_{\theta}(\cdot)$ 和 $L_{ref}(\cdot)$ 分别表示策略模型 $\pi_{\theta}$ 和参考模型 $\pi_{ref}$（SFT 基线）的去噪误差，物理偏好对齐损失为：
+给定由解耦判别器产生的判别性三元组 $(c,v_{w},v_{l})$，其中 $c$ 是条件，$v_{w}$ 是符合物理规律的视频，$v_{l}$ 是违反物理规律的视频，我们采用 **扩散直接偏好优化（Diffusion-DPO）** 框架**在潜在空间中直接微调视频扩散模型**。
+
+- 对于视频潜在表示 $z$，我们在时间步 $t\sim\mathcal{U}(0,T)$ 注入高斯噪声 $\epsilon\sim\mathcal{N}(0,I)$ 以获得 $z_{t}$。
+- 模型 $\epsilon_{\theta}$ 的单步去噪均方误差为 $L(\theta,z)=\|\epsilon_{\theta}(z_{t},t,c)-\epsilon\|_{2}^{2}$。
+- 令 $L_{\theta}(\cdot)$ 和 $L_{ref}(\cdot)$ 分别表示策略模型 $\pi_{\theta}$ 和参考模型 $\pi_{ref}$（SFT 基线）的去噪误差，物理偏好对齐损失为：
 
 $$
 \mathcal{L}_{DPO}=-\mathbb{E}_{z,\epsilon,t}\Bigg[\log\sigma\Bigg(-\frac{\beta}{2}\Big[\underbrace{(L_{\theta}(z_{w})-L_{\theta}(z_{l}))}_{\text{策略差异（Policy Diff.）}} -\underbrace{(L_{ref}(z_{w})-L_{ref}(z_{l}))}_{\text{参考差异（Ref.\ Diff.）}}\Big]\Bigg)\Bigg],(1)
@@ -235,19 +251,10 @@ $$
 
 > 表 2：在 EZSbench 上的定量比较。
 
-| 模型  | AQ | BC | IQ | MS | OC | SC | I2VB | I2VS | 质量分数      | 领域分数     | 平均分 |
-| ----- | -- | -- | -- | -- | -- | -- | ---- | ---- | ------------- | ------------ | ------ |
-| Model | AQ | BC | IQ | MS | OC | SC | I2VB | I2VS | Quality Score | Domain Score | Avg.   |
-| Model | AQ | BC | IQ | MS | OC | SC | I2VB | I2VS | Quality Score | Domain Score | Avg.   |
-| Model | AQ | BC | IQ | MS | OC | SC | I2VB | I2VS | Quality Score | Domain Score | Avg.   |
-| Model | AQ | BC | IQ | MS | OC | SC | I2VB | I2VS | Quality Score | Domain Score | Avg.   |
-| Model | AQ | BC | IQ | MS | OC | SC | I2VB | I2VS | Quality Score | Domain Score | Avg.   |
-| Model | AQ | BC | IQ | MS | OC | SC | I2VB | I2VS | Quality Score | Domain Score | Avg.   |
-| Model | AQ | BC | IQ | MS | OC | SC | I2VB | I2VS | Quality Score | Domain Score | Avg.   |
-| Model | AQ | BC | IQ | MS | OC | SC | I2VB | I2VS | Quality Score | Domain Score | Avg.   |
-| Model | AQ | BC | IQ | MS | OC | SC | I2VB | I2VS | Quality Score | Domain Score | Avg.   |
-| Model | AQ | BC | IQ | MS | OC | SC | I2VB | I2VS | Quality Score | Domain Score | Avg.   |
-| Model | AQ | BC | IQ | MS | OC | SC | I2VB | I2VS | Quality Score | Domain Score | Avg.   |
+| 模型    | AQ  | BC  | IQ  | MS  | OC  | SC  | I2VB | I2VS | 质量分数          | 领域分数         | 平均分  |
+| ----- | --- | --- | --- | --- | --- | --- | ---- | ---- | ------------- | ------------ | ---- |
+| Model | AQ  | BC  | IQ  | MS  | OC  | SC  | I2VB | I2VS | Quality Score | Domain Score | Avg. |
+
 
 `<a id="figure-5"></a>`
 
@@ -305,21 +312,10 @@ $$
 
 | Model        | PSNR  | SSIM   | Traj. Consis. |
 | ------------ | ----- | ------ | ------------- |
-| Model        | PSNR  | SSIM   | Traj. Consis. |
-| Model        | PSNR  | SSIM   | Traj. Consis. |
-| Model        | PSNR  | SSIM   | Traj. Consis. |
-| Enerverse-AC | 20.42 | 0.7542 | 0.8157        |
-| Enerverse-AC | 20.42 | 0.7542 | 0.8157        |
-| Enerverse-AC | 20.42 | 0.7542 | 0.8157        |
 | Enerverse-AC | 20.42 | 0.7542 | 0.8157        |
 | Gen-Sim      | 18.05 | 0.7413 | 0.6195        |
-| Gen-Sim      | 18.05 | 0.7413 | 0.6195        |
-| Gen-Sim      | 18.05 | 0.7413 | 0.6195        |
-| Gen-Sim      | 18.05 | 0.7413 | 0.6195        |
 | Ours         | 21.09 | 0.8126 | 0.8522        |
-| Ours         | 21.09 | 0.8126 | 0.8522        |
-| Ours         | 21.09 | 0.8126 | 0.8522        |
-| Ours         | 21.09 | 0.8126 | 0.8522        |
+
 
 `<a id="section-5-3"></a>`
 

@@ -1,0 +1,88 @@
+paper:
+  id: arxiv:2602.23152v1
+  title: The Trinity of Consistency as a Defining Principle for General World Models
+  authors:
+    - name: Jingxuan Wei
+    - name: Siyuan Li
+    - name: Yuhang Xu
+    - name: Zheng Sun
+    - name: Junjie Jiang
+    - name: Hexuan Jin
+    - name: Caijun Jia
+    - name: Honghao He
+    - name: Xinglong Xu
+    - name: Xi bai
+    - name: Chang Yu
+    - name: Yumou Liu
+    - name: Junnan Zhu
+      orcid: 0000-0002-9856-2946
+    - name: Xuanhe Zhou
+    - name: Jintao Chen
+    - name: Xiaobin Hu
+    - name: Shancheng Pang
+    - name: Bihui Yu
+    - name: Ran He
+    - name: Zhen Lei
+    - name: Stan Z. Li
+    - name: Conghui He
+    - name: Shuicheng Yan
+    - name: Cheng Tan
+  publication:
+    type: preprint
+    venue: arXiv
+    date_published: "2026-02-26"
+    year: 2026
+  identifiers:
+    arxiv: 2602.23152v1
+    openalex_work: https://openalex.org/W7131884266
+  urls:
+    pdf: https://arxiv.org/pdf/2602.23152v1
+    abstract: https://arxiv.org/abs/2602.23152v1
+  content:
+    abstract:
+      "The construction of World Models capable of learning, simulating, and
+      reasoning about objective physical laws constitutes a foundational challenge
+      in the pursuit of Artificial General Intelligence. Recent advancements represented
+      by video generation models like Sora have demonstrated the potential of data-driven
+      scaling laws to approximate physical dynamics, while the emerging Unified Multimodal
+      Model (UMM) offers a promising architectural paradigm for integrating perception,
+      language, and reasoning. Despite these advances, the field still lacks a principled
+      theoretical framework that defines the essential properties requisite for a
+      General World Model. In this paper, we propose that a World Model must be grounded
+      in the Trinity of Consistency: Modal Consistency as the semantic interface,
+      Spatial Consistency as the geometric basis, and Temporal Consistency as the
+      causal engine. Through this tripartite lens, we systematically review the evolution
+      of multimodal learning, revealing a trajectory from loosely coupled specialized
+      modules toward unified architectures that enable the synergistic emergence of
+      internal world simulators. To complement this conceptual framework, we introduce
+      CoW-Bench, a benchmark centered on multi-frame reasoning and generation scenarios.
+      CoW-Bench evaluates both video generation models and UMMs under a unified evaluation
+      protocol. Our work establishes a principled pathway toward general world models,
+      clarifying both the limitations of current systems and the architectural requirements
+      for future progress."
+    keywords:
+      - cs.AI
+    language: en
+    citation:
+      Jingxuan Wei et al.. (2026). The Trinity of Consistency as a Defining
+      Principle for Ge.... arXiv:2602.23152v1.
+  workflow:
+    status: unread
+    priority: normal
+    date_added: "2026-02-26"
+  relations:
+    tags: []
+    categories:
+      - cs.AI
+    primary_category: cs.AI
+    related: []
+  bibtex:
+    "@misc{wei20262602,\n  author = {Wei, Jingxuan and Li, Siyuan and Xu, Yuhang\
+    \ and Sun, Zheng and Jiang, Junjie and Jin, Hexuan and Jia, Caijun and He, Honghao\
+    \ and Xu, Xinglong and bai, Xi and Yu, Chang and Liu, Yumou and Zhu, Junnan and\
+    \ Zhou, Xuanhe and Chen, Jintao and Hu, Xiaobin and Pang, Shancheng and Yu, Bihui\
+    \ and He, Ran and Lei, Zhen and Li, Stan Z. and He, Conghui and Yan, Shuicheng\
+    \ and Tan, Cheng},\n  title = {The Trinity of Consistency as a Defining Principle\
+    \ for General World Models},\n  year = {2026},\n  eprint = {2602.23152},\n  archivePrefix\
+    \ = {arXiv},\n  primaryClass = {cs.AI},\n  url = {https://arxiv.org/abs/2602.23152v1},\n\
+    }"

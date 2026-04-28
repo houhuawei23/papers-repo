@@ -1,7 +1,7 @@
 # Paper List
 
 - 根目录: `/home/hhw/Desktop/00_Personal/papers-repo/papers/Causal`
-- 生成时间: `2026-04-15 16:27:16`
+- 生成时间: `2026-04-28 15:59:29`
 - 统计: 共 **2** 篇，含 paper.yml **2**，主文档 **2**，译文 **2**，解析异常 **0**
 
 ## 索引

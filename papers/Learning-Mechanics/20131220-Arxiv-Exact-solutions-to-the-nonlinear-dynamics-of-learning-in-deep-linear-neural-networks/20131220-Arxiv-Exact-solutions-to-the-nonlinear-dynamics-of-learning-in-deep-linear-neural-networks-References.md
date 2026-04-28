@@ -1,0 +1,27 @@
+## References
+
+- <a id="ref-1"></a> [1] [1] A. Krizhevsky, I. Sutskever, and G.E. Hinton. ImageNet Classification with Deep Convolutional Neural Networks. In Advances in Neural Information Processing Systems 25, 2012.
+- <a id="ref-2"></a> [2] [2] Q.V. Le, M.A. Ranzato, R. Monga, M. Devin, K. Chen, G.S. Corrado, J. Dean, and A.Y. Ng. Building high-level features using large scale unsupervised learning. In 29th International Conference on Machine Learning, 2012.
+- <a id="ref-3"></a> [3] [3] D. Ciresan, U. Meier, and J. Schmidhuber. Multi-column Deep Neural Networks for Image Classification. In IEEE Conf. on Computer Vision and Pattern Recognition, pages 3642–3649, 2012.
+- <a id="ref-4"></a> [4] [4] A. Mohamed, G.E. Dahl, and G. Hinton. Acoustic Modeling Using Deep Belief Networks. IEEE Transactions on Audio, Speech, and Language Processing, 20(1):14–22, January 2012.
+- <a id="ref-5"></a> [5] [5] R. Collobert and J. Weston. A Unified Architecture for Natural Language Processing: Deep Neural Networks with Multitask Learning. In Proceedings of the 25th International Conference on Machine Learning, 2008.
+- <a id="ref-6"></a> [6] [6] R. Socher, J. Bauer, C.D. Manning, and A.Y. Ng. Parsing with Compositional Vector Grammars. In Association for Computational Linguistics Conference, 2013.
+- <a id="ref-7"></a> [7] [7] S. Hochreiter. Untersuchungen zu dynamischen neuronalen Netzen. PhD thesis, TU Munich, 1991.
+- <a id="ref-8"></a> [8] [8] Y. Bengio, P. Simard, and P. Frasconi. Learning Long-Term Dependencies with Gradient Descent is Difficult. IEEE Transactions on Neural Networks, 5(2):157–166, 1994.
+- <a id="ref-9"></a> [9] [9] Y. LeCun, L. Bottou, G.B. Orr, and K.R. Müller. Efficient BackProp. Neural networks: Tricks of the trade, 1998.
+- <a id="ref-10"></a> [10] [10] Y. Bengio and Y. LeCun. Scaling learning algorithms towards AI. In L. Bottou, O. Chapelle, D. DeCoste, and J. Weston, editors, Large-Scale Kernel Machines, number 1, pages 1–41. MIT Press, 2007.
+- <a id="ref-11"></a> [11] [11] D. Erhan, P.A. Manzagol, Y. Bengio, S. Bengio, and P. Vincent. The Difficulty of Training Deep Architectures and the Effect of Unsupervised Pre-Training. In 12th International Conference on Artificial Intelligence and Statistics, volume 5, 2009.
+- <a id="ref-12"></a> [12] [12] Y. Bengio. Learning Deep Architectures for AI. 2009.
+- <a id="ref-13"></a> [13] [13] X. Glorot and Y. Bengio. Understanding the difficulty of training deep feedforward neural networks. 13th International Conference on Artificial Intelligence and Statistics, 2010.
+- <a id="ref-14"></a> [14] [14] D. Erhan, Y. Bengio, A. Courville, P.A. Manzagol, and P. Vincent. Why does unsupervised pre-training help deep learning? Journal of Machine Learning Research, 11:625–660, 2010.
+- <a id="ref-15"></a> [15] [15] Y.N. Dauphin and Y. Bengio. Big Neural Networks Waste Capacity. In International Conference on Learning Representations, 2013.
+- <a id="ref-16"></a> [16] [16] A.M. Saxe, J.L. McClelland, and S. Ganguli. Learning hierarchical category structure in deep neural networks. In Proceedings of the 35th Annual Conference of the Cognitive Science Society, 2013.
+- <a id="ref-17"></a> [17] [17] G.E. Hinton and R.R. Salakhutdinov. Reducing the dimensionality of data with neural networks. Science, 313(5786):504–7, July 2006.
+- <a id="ref-18"></a> [18] [18] Y. Bengio, P. Lamblin, D. Popovici, and H. Larochelle. Greedy Layer-Wise Training of Deep Networks. Advances in Neural Information Processing Systems 20, 2007.
+- <a id="ref-19"></a> [19] [19] P. Baldi and K. Hornik. Neural networks and principal component analysis: Learning from examples without local minima. Neural Networks, 2(1):53–58, January 1989.
+- <a id="ref-20"></a> [20] [20] K. Fukumizu. Effect of Batch Learning In Multilayer Neural Networks. In Proceedings of the 5th International Conference on Neural Information Processing, pages 67–70, 1998.
+- <a id="ref-21"></a> [21] [21] J. Martens. Deep learning via Hessian-free optimization. In Proceedings of the 27th International Conference on Machine Learning, 2010.
+- <a id="ref-22"></a> [22] [22] O. Chapelle and D. Erhan. Improved Preconditioner for Hessian Free Optimization. In NIPS Workshop on Deep Learning and Unsupervised Feature Learning, 2011.
+- <a id="ref-23"></a> [23] [23] I. Sutskever, J. Martens, G. Dahl, and G.E. Hinton. On the importance of initialization and momentum in deep learning. In 30th International Conference on Machine Learning, 2013.
+- <a id="ref-24"></a> [24] [24] Razvan Pascanu, Tomas Mikolov, and Yoshua Bengio. On the difficulty of training recurrent neural networks. Technical report, Universite de Montreal, 2012.
+- <a id="ref-25"></a> [25] [25] P. Lamblin and Y. Bengio. Important gains from supervised fine-tuning of deep architectures on large labeled sets. In NIPS Workshop on Deep Learning and Unsupervised Feature Learning, 2010.
