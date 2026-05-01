@@ -14,7 +14,6 @@
   - Zhejiang University
   - China University of Petroleum (East China)
 
-
 ## 目录（Contents）
 
 - [摘要（Abstract）](#abstract)
@@ -26,195 +25,163 @@
       - [柏拉图洞穴与投影流形（Platonic Cave &amp; Projected Manifolds）](#platonic-cave-projected-manifolds)
       - [超球面假设与模态间隙（Hypersphere Hypothesis &amp; Modal Gap）](#hypersphere-hypothesis-modal-gap)
       - [计算范式的演进：从摊销推理到测试时计算（Evolution of Computational Paradigms: From Amortized Inference to Test-time Compute）](#evolution-of-computational-paradigms-from-amortized-inference-to-test-time-compute)
-    - [2.2.2 离散序列 vs.](#222-discrete-sequences-vs)
-
-2.2.2 离散序列 vs. 连续流形（Discrete Sequences vs. Continuous Manifolds）
-      - 离散自回归（Discrete Autoregressive, AR）
-      - 连续流匹配（Continuous Flow Matching, FM）
-    - 2.2.3 架构演进（Architectural Evolution）
-      - (1) 早期演进：双塔架构与连接器范式的建立（Early Evolution: Establishment of Dual-Tower Architectures and Connector Paradigms）
-      - (2) 早期融合与统一优化的挑战（Early Fusion and the Challenge of Unified Optimization）
-      - (3) 正交解耦的主流范式（The Mainstream Paradigm of Orthogonal Decoupling）
-    - 2.2.4 通过强化学习进行意图对齐（Intent Alignment via RL）
-      - 过程监督与物理约束（Process Supervision & Physical Constraints）
-      - 感知-生成协同循环（Perception-Generation Synergistic Loop）
-      - 面向自回归模型的分解优化（Factorized Optimization for AR Models）
-    - 2.2.5 通过测试时计算实现认知循环（Cognitive Loop via Test-time Compute）
-
-- 2.3 空间一致性（Spatial Consistency）
-  - 2.3.1 一致性的几何分解（Geometric Decomposition of Consistency）
-    - 微观层面：局部邻域拓扑一致性（Micro-level: Local Neighborhood Topological Consistency）
-    - 宏观层面：全局几何一致性（Macro-level: Global Geometric Consistency）
-  - 2.3.2 理论公式（Theoretical Formulation）
-    - 物理渲染：辐射传输方程（Physical Rendering: The RTE）
-    - 生成演化：随机微分方程（Generative Evolution: The SDE）
-    - 运动定律：拉格朗日输运（Motion Law: Lagrangian Transport）
-  - 2.3.3 二维代理流形与域不匹配（2D Proxy Manifold & Domain Mismatch）
-    - 缺乏 $SE(3)$ 等变性的动力学拟合（Dynamics Fitting Lacking $SE(3)$ Equivariance）
-    - 物理感知建模的早期尝试与局限性（Early Attempts and Limitations of Physics-aware Modeling）
-  - 2.3.4 隐式连续场（Implicit Continuous Fields）
-    - (1) 表示效率与频率保真度（Representation Efficiency & Frequency Fidelity）
-    - (2) 水平集歧义性与程函流形约束（Level Set Ambiguity & Eikonal Manifold Constraints）
-  - 2.3.5 显式拉格朗日基元（Explicit Lagrangian Primitives）
-    - (1) 静态表示的机制（Mechanisms of Static Representation）
-    - (2) 向四维动力学的演进（Evolution towards 4D Dynamics）
-  - 2.3.6 生成式统计先验（Generative Statistical Priors）
-    - (1) 算法与几何约束（Algorithmic & Geometric Constraints）
-    - (2) 规模化数据基础（Scaled Data Foundation）
-- 2.4 时间一致性（Temporal Consistency）
-  - 2.4.1 从频率稳定性到物理一致性（From Frequency Stability to Physical Compliance）
-    - 从感知到物理推理（From Perception to Physical Reasoning）
-  - 2.4.2 潜在时间膨胀（Latent Temporal Inflation）
-    - 独立性假设与证据下界松弛（Independence Assumption & ELBO Relaxation）
-    - 空间锚定与零样本注入（Spatial Anchoring & Zero-shot Injection）
-    - 频率滤波与动态校正（Frequency Filtering & Dynamic Correction）
-    - 膨胀的理论边界（The Theoretical Boundary of Inflation）
-  - 2.4.3 离散自回归建模（Discrete Autoregressive Modeling）
-    - 因果三维分词器与数据压缩（Causal 3D Tokenizer & Data Compression）
-    - 长序列中的记忆衰减（Memory Decay in Long Sequences）
-    - 回归连续潜在空间（Return to Continuous Latent Space）
-    - 混合过渡：融合自回归与扩散（Hybrid Transition: Fusing AR and Diffusion）
-  - 2.4.4 基于扩散变换器的统一时空建模（Unified Spatiotemporal Modeling via DiT）
-    - 原生时空架构（Native Spatiotemporal Architecture）
-    - 计算演进：线性化与推理加速（Computational Evolution: Linearization & Inference Acceleration）
-    - 工业界的趋同与分歧（Convergence & Divergence in Industry）
-  - 2.4.5 逻辑一致性与因果推理（Logical Consistency and Causal Reasoning）
-    - 多模态感知中的“图像伴随思考”（Think-with-Image in Multimodal Perception）
-    - 帧链与时间因果性（Chain-of-Frame & Temporal Causality）
-- 2.5 一致性的展望（Outlook of the Consistencies）
+    - [2.2.2 离散序列 vs. 连续流形（Discrete Sequences vs. Continuous Manifolds）](#222-discrete-sequences-vs)
+      - [离散自回归（Discrete Autoregressive, AR）](#离散自回归-discrete-autoregressive-ar)
+      - [连续流匹配（Continuous Flow Matching, FM）](#连续流匹配-continuous-flow-matching-fm)
+    - [2.2.3 架构演进（Architectural Evolution）](#2-2-3-architectural-evolution)
+      - [早期演进：双塔架构与连接器范式的建立（Early Evolution: Establishment of Dual-Tower Architectures and Connector Paradigms）](#1-早期演进双塔架构与连接器范式的建立)
+      - [早期融合与统一优化的挑战（Early Fusion and the Challenge of Unified Optimization）](#2-早期融合与统一优化的挑战)
+      - [正交解耦的主流范式（The Mainstream Paradigm of Orthogonal Decoupling）](#3-正交解耦的主流范式)
+    - [2.2.4 通过强化学习进行意图对齐（Intent Alignment via RL）](#2-2-4-通过强化学习进行意图对齐)
+      - [过程监督与物理约束（Process Supervision &amp; Physical Constraints）](#过程监督与物理约束-process-supervision-physical-constraints)
+      - [感知-生成协同循环（Perception-Generation Synergistic Loop）](#感知-生成协同循环-perception-generation-synergistic-loop)
+      - [面向自回归模型的分解优化（Factorized Optimization for AR Models）](#面向自回归模型的分解优化-factorized-optimization-for-ar-models)
+    - [2.2.5 通过测试时计算实现认知循环（Cognitive Loop via Test-time Compute）](#2-2-5-通过测试时计算实现认知循环)
+  - [2.3 空间一致性（Spatial Consistency）](#2-3-spatial-consistency)
+    - [2.3.1 一致性的几何分解（Geometric Decomposition of Consistency）](#231-geometric-decomposition-of-consistency)
+      - [微观层面：局部邻域拓扑一致性（Micro-level: Local Neighborhood Topological Consistency）](#micro-level-local-neighborhood-topological-consistency)
+      - [宏观层面：全局几何一致性（Macro-level: Global Geometric Consistency）](#macro-level-global-geometric-consistency)
+    - [2.3.2 理论公式（Theoretical Formulation）](#232-theoretical-formulation)
+      - [物理渲染：辐射传输方程（Physical Rendering: The RTE）](#physical-rendering-the-rte)
+      - [生成演化：随机微分方程（Generative Evolution: The SDE）](#generative-evolution-the-sde)
+      - [运动定律：拉格朗日输运（Motion Law: Lagrangian Transport）](#motion-law-lagrangian-transport)
+    - [2.3.3 二维代理流形与域不匹配（2D Proxy Manifold &amp; Domain Mismatch）](#233-2d-proxy-manifold-domain-mismatch)
+      - [缺乏 $SE(3)$ 等变性的动力学拟合（Dynamics Fitting Lacking $SE(3)$ Equivariance）](#dynamics-fitting-lacking-s-e-3-se3-equivariance)
+      - [物理感知建模的早期尝试与局限性（Early Attempts and Limitations of Physics-aware Modeling）](#early-attempts-and-limitations-of-physics-aware-modeling)
+    - [2.3.4 隐式连续场（Implicit Continuous Fields）](#234-implicit-continuous-fields)
+      - [表示效率与频率保真度（Representation Efficiency &amp; Frequency Fidelity）](#1-representation-efficiency-frequency-fidelity)
+      - [水平集歧义性与程函流形约束（Level Set Ambiguity &amp; Eikonal Manifold Constraints）](#2-level-set-ambiguity-eikonal-manifold-constraints)
+    - [2.3.5 显式拉格朗日基元（Explicit Lagrangian Primitives）](#235-explicit-lagrangian-primitives)
+      - [静态表示的机制（Mechanisms of Static Representation）](#1-mechanisms-of-static-representation)
+      - [向四维动力学的演进（Evolution towards 4D Dynamics）](#2-evolution-towards-4d-dynamics)
+    - [2.3.6 生成式统计先验（Generative Statistical Priors）](#236-generative-statistical-priors)
+      - [算法与几何约束（Algorithmic &amp; Geometric Constraints）](#1-algorithmic-geometric-constraints)
+      - [规模化数据基础（Scaled Data Foundation）](#2-scaled-data-foundation)
+  - [2.4 时间一致性（Temporal Consistency）](#2-4-temporal-consistency)
+    - [2.4.1 从频率稳定性到物理一致性（From Frequency Stability to Physical Compliance）](#241-from-frequency-stability-to-physical-compliance)
+      - [从感知到物理推理（From Perception to Physical Reasoning）](#from-perception-to-physical-reasoning)
+    - [2.4.2 潜在时间膨胀（Latent Temporal Inflation）](#242-latent-temporal-inflation)
+      - [独立性假设与证据下界松弛（Independence Assumption &amp; ELBO Relaxation）](#independence-assumption-elbo-relaxation)
+      - [空间锚定与零样本注入（Spatial Anchoring &amp; Zero-shot Injection）](#spatial-anchoring-zero-shot-injection)
+      - [频率滤波与动态校正（Frequency Filtering &amp; Dynamic Correction）](#frequency-filtering-dynamic-correction)
+      - [膨胀的理论边界（The Theoretical Boundary of Inflation）](#the-theoretical-boundary-of-inflation)
+    - [2.4.3 离散自回归建模（Discrete Autoregressive Modeling）](#243-discrete-autoregressive-modeling)
+      - [因果三维分词器与数据压缩（Causal 3D Tokenizer &amp; Data Compression）](#causal-3d-tokenizer-data-compression)
+      - [长序列中的记忆衰减（Memory Decay in Long Sequences）](#memory-decay-in-long-sequences)
+      - [回归连续潜在空间（Return to Continuous Latent Space）](#return-to-continuous-latent-space)
+      - [混合过渡：融合自回归与扩散（Hybrid Transition: Fusing AR and Diffusion）](#hybrid-transition-fusing-ar-and-diffusion)
+    - [2.4.4 基于扩散变换器的统一时空建模（Unified Spatiotemporal Modeling via DiT）](#244-unified-spatiotemporal-modeling-via-dit)
+      - [原生时空架构（Native Spatiotemporal Architecture）](#native-spatiotemporal-architecture)
+      - [计算演进：线性化与推理加速（Computational Evolution: Linearization &amp; Inference Acceleration）](#computational-evolution-linearization-inference-acceleration)
+      - [工业界的趋同与分歧（Convergence &amp; Divergence in Industry）](#convergence-divergence-in-industry)
+    - [2.4.5 逻辑一致性与因果推理（Logical Consistency and Causal Reasoning）](#245-logical-consistency-and-causal-reasoning)
+      - [多模态感知中的“图像伴随思考”（Think-with-Image in Multimodal Perception）](#think-with-image-in-multimodal-perception)
+      - [帧链与时间因果性（Chain-of-Frame &amp; Temporal Causality）](#chain-of-frame-temporal-causality)
+  - [2.5 一致性的展望（Outlook of the Consistencies）](#2-5-outlook-of-the-consistencies)
 - [3 多种一致性的初步整合（Initial Integration of Multiple Consistencies）](#3-initial-integration-of-multiple-consistencies)
-  - 3.1 大型多模态模型的崛起（The Rise of Large Multimodal Models）
-    - 3.1.1 大语言模型作为核心认知基础（LLM as a Core Cognitive Base）
-      - (1) 模态分词化与表示桥接（Modal Tokenization & Representation Bridging）
-      - (2) 从刚性投影到感知器瓶颈（From Rigid Projection to Perceiver Bottleneck）
-    - 3.1.2 作为多模态的认知演化（Cognitive Evolution as a Multimodal）
-      - (1) 层次化任务规划与程序化指令（Hierarchical Task Planning & Programmatic Instruction）
-      - (2) 工具使用与闭环验证（Tool-use & Closed-loop Verification）
-  - 3.2 模态一致性与空间一致性的整合（Integration of Modal and Spatial Consistency）
-    - 3.2.1 像素空间操作（Pixel Space Manipulation）
-      - (1) 指令驱动的图像编辑（Instruction-Driven Image Editing）
-      - (2) 通用图像生成（General Image Generation）
-    - 3.2.2 视角空间映射（View Space Mapping）
-      - 姿态对齐的耦合训练（Pose-Aligned Coupled Training）
-    - 3.2.3 体积空间表示（Volume Space Representation）
-      - (1) 条件三维生成：从二维蒸馏到视频流形约束（Conditional 3D Generation: From 2D Distillation to Video Manifold Constraints）
-      - (2) 多模态对齐（Multimodal Alignment）
-      - (3) 三维理解与编辑：语义提升（3D Understanding & Editing: Semantic Lifting）
-    - 3.2.4 用于模态-空间对齐的强化学习（Reinforcement Learning for Modal-Spatial Alignment）
-      - 判别器引导的显式锚定（Discriminator-Guided Explicit Anchoring）
-      - 区域-时间解耦（Region-Temporal Decoupling）
-      - 测试时训练与视觉思维链（TTT & Visual CoT）
-  - 3.3 模态一致性与时间一致性的整合（Integration of Modal and Temporal Consistency）
-    - 3.3.1 端到端可扩展建模（End-to-End Scalable Modeling）
-      - (1) 扩散模型（Diffusion Model）
-      - (2) 自回归模型（Autoregressive Model, AR）
-      - (3) 自回归-扩散混合模型（Autoregressive-Diffusion Hybrid Model）
-    - 3.3.2 显式结构化控制（Explicit Structured Control）
-      - (1) 运动-几何显式编码（Motion-Geometry Explicit Encoding）
-      - (2) 首尾帧锚定与插值（Start-End Frame Anchoring and Interpolation）
-      - (3) 多条件解耦架构（Multi-Condition Decoupling Architecture）
-    - 3.3.3 统一理解与生成共生架构（Unified Comprehension and Generation Symbiosis Architecture）
-      - (1) 共享表示双向协同（Shared Representation Bidirectional Synergy）
-      - (2) 预训练驱动的协同适应（Pre-training Driven Synergistic Adaptation）
-    - 3.3.4 用于模态-时间对齐的强化学习（Reinforcement Learning for Modal-Temporal Alignment）
-      - (1) 基于偏好的联合对齐（Preference-based Joint Alignment）
-      - (2) 通过自我精炼的迭代对齐（Iterative Alignment via Self-Refinement）
-      - (3) 通用奖励建模（Universal Reward Modeling）
-      - (4) 通过视觉-语言-动作-强化学习的具体化动作对齐（Embodied Action Alignment via VLA-RL）
-  - 3.4 空间一致性与时间一致性的整合（Integration of Spatial and Temporal Consistency）
-    - 3.4.1 隐式时空学习（Implicit Spatiotemporal Learning）
-      - 视频先验蒸馏（Video Prior Distillation）
-    - 3.4.2 显式几何锚定（Explicit Geometric Anchoring）
-      - (1) 点云条件化（Point Cloud Conditioning）
-      - (2) 几何嵌入注入（Geometric Embedding Injection）
-      - (3) 轨迹参数化控制（Trajectory Parametric Control）
-    - 3.4.3 统一时空表示（Unified Spatiotemporal Representation）
-      - (1) 混合体积表示：低秩张量分解与混合场（Hybrid Volumetric Representation: Low-Rank Tensor Decomposition & Hybrid Fields）
-      - (2) 显式结构化表示（Explicit Structured Representation）
-      - (3) 以轨迹为中心的基础模型（Trajectory-Centric Foundation Models）
-    - 3.4.4 用于时空对齐的强化学习（Reinforcement Learning for Spatial-Temporal Alignment）
-      - 全局混合奖励反馈与动态对齐（Global Mixed-Reward Feedback & Dynamic Alignment）
-      - 层次化结构解耦与显式代价（Hierarchical Structural Decoupling & Explicit Costs）
-  - 3.5 世界模型的初步涌现（Preliminary Emergence of World Models）
-    - 3.5.1 从基准建立到多样化演进（From Benchmark Establishment to Diverse Evolution）
-      - Sora：世界模拟器范式的建立（Sora: Paradigm Establishment of World Simulator）
-      - Open-Sora：技术民主化与架构验证（Open-Sora: Technology Democratization & Architecture Verification）
-      - 从被动观察到主动交互的转变（Transition from Passive Observation to Active Interaction）
-      - 多样化技术路径的协同印证（Synergistic Corroboration of Diverse Technical Paths）
-    - 3.5.2 三种一致性的对抗循环（Combat Loop of Three Consistencies）
-      - 交互式世界模拟器：物理、逻辑与三维保真度的融合（Interactive World Simulators: The Convergence of Physics, Logic, and 3D Fidelity）
-      - 统一的认知-动作流形：从操作到导航（Unified Cognition-Action Manifolds: From Manipulation to Navigation）
-      - 基于物理因果性的时空约束（Spatio-Temporal Constraints Based on Physical Causality）
+  - [3.1 大型多模态模型的崛起（The Rise of Large Multimodal Models）](#31-the-rise-of-large-multimodal-models)
+    - [3.1.1 大语言模型作为核心认知基础（LLM as a Core Cognitive Base）](#311-llm-as-a-core-cognitive-base)
+      - [模态分词化与表示桥接（Modal Tokenization &amp; Representation Bridging）](#1-modal-tokenization-representation-bridging)
+      - [从刚性投影到感知器瓶颈（From Rigid Projection to Perceiver Bottleneck）](#2-from-rigid-projection-to-perceiver-bottleneck)
+    - [3.1.2 作为多模态的认知演化（Cognitive Evolution as a Multimodal）](#312-cognitive-evolution-as-a-multimodal)
+      - [层次化任务规划与程序化指令（Hierarchical Task Planning &amp; Programmatic Instruction）](#1-hierarchical-task-planning-programmatic-instruction)
+      - [工具使用与闭环验证（Tool-use &amp; Closed-loop Verification）](#2-tool-use-closed-loop-verification)
+  - [3.2 模态一致性与空间一致性的整合（Integration of Modal and Spatial Consistency）](#32-integration-of-modal-and-spatial-consistency)
+    - [3.2.1 像素空间操作（Pixel Space Manipulation）](#321-pixel-space-manipulation)
+      - [指令驱动的图像编辑（Instruction-Driven Image Editing）](#1-instruction-driven-image-editing)
+      - [通用图像生成（General Image Generation）](#2-general-image-generation)
+    - [3.2.2 视角空间映射（View Space Mapping）](#322-view-space-mapping)
+      - [姿态对齐的耦合训练（Pose-Aligned Coupled Training）](#姿态对齐的耦合训练)
+    - [3.2.3 体积空间表示（Volume Space Representation）](#323-volume-space-representation)
+      - [条件三维生成：从二维蒸馏到视频流形约束（Conditional 3D Generation: From 2D Distillation to Video Manifold Constraints）](#1-条件三维生成从二维蒸馏到视频流形约束)
+      - [多模态对齐（Multimodal Alignment）](#2-多模态对齐)
+      - [三维理解与编辑：语义提升（3D Understanding &amp; Editing: Semantic Lifting）](#3-三维理解与编辑语义提升)
+    - [3.2.4 用于模态-空间对齐的强化学习（Reinforcement Learning for Modal-Spatial Alignment）](#324-reinforcement-learning-for-modal-spatial-alignment)
+      - [判别器引导的显式锚定（Discriminator-Guided Explicit Anchoring）](#discriminator-guided-explicit-anchoring)
+      - [区域-时间解耦（Region-Temporal Decoupling）](#region-temporal-decoupling)
+      - [测试时训练与视觉思维链（TTT &amp; Visual CoT）](#ttt-visual-cot)
+  - [3.3 模态一致性与时间一致性的整合（Integration of Modal and Temporal Consistency）](#33-integration-of-modal-and-temporal-consistency)
+    - [3.3.1 端到端可扩展建模（End-to-End Scalable Modeling）](#331-end-to-end-scalable-modeling)
+      - [扩散模型（Diffusion Model）](#1-diffusion-model)
+      - [自回归模型（Autoregressive Model, AR）](#2-autoregressive-model-ar)
+      - [自回归-扩散混合模型（Autoregressive-Diffusion Hybrid Model）](#3-autoregressive-diffusion-hybrid-model)
+    - [3.3.2 显式结构化控制（Explicit Structured Control）](#332-explicit-structured-control)
+      - [运动-几何显式编码（Motion-Geometry Explicit Encoding）](#1-motion-geometry-explicit-encoding)
+      - [首尾帧锚定与插值（Start-End Frame Anchoring and Interpolation）](#2-start-end-frame-anchoring-and-interpolation)
+      - [多条件解耦架构（Multi-Condition Decoupling Architecture）](#3-multi-condition-decoupling-architecture)
+    - [3.3.3 统一理解与生成共生架构（Unified Comprehension and Generation Symbiosis Architecture）](#333-unified-comprehension-and-generation-symbiosis-architecture)
+      - [共享表示双向协同（Shared Representation Bidirectional Synergy）](#1-shared-representation-bidirectional-synergy)
+      - [预训练驱动的协同适应（Pre-training Driven Synergistic Adaptation）](#2-pre-training-driven-synergistic-adaptation)
+    - [3.3.4 用于模态-时间对齐的强化学习（Reinforcement Learning for Modal-Temporal Alignment）](#334-reinforcement-learning-for-modal-temporal-alignment)
+      - [基于偏好的联合对齐（Preference-based Joint Alignment）](#1-基于偏好的联合对齐)
+      - [通过自我精炼的迭代对齐（Iterative Alignment via Self-Refinement）](#2-通过自我精炼的迭代对齐)
+      - [通用奖励建模（Universal Reward Modeling）](#3-通用奖励建模)
+      - [通过视觉-语言-动作-强化学习的具体化动作对齐（Embodied Action Alignment via VLA-RL）](#4-通过视觉-语言-动作-强化学习的具体化动作对齐)
+  - [3.4 空间一致性与时间一致性的整合（Integration of Spatial and Temporal Consistency）](#34-integration-of-spatial-and-temporal-consistency)
+    - [3.4.1 隐式时空学习（Implicit Spatiotemporal Learning）](#34-implicit-spatiotemporal-learning)
+      - [视频先验蒸馏（Video Prior Distillation）](#视频先验蒸馏video-prior-distillation)
+    - [3.4.2 显式几何锚定（Explicit Geometric Anchoring）](#34-explicit-geometric-anchoring)
+      - [点云条件化（Point Cloud Conditioning）](#1-point-cloud-conditioning)
+      - [几何嵌入注入（Geometric Embedding Injection）](#2-geometric-embedding-injection)
+      - [轨迹参数化控制（Trajectory Parametric Control）](#3-trajectory-parametric-control)
+    - [3.4.3 统一时空表示（Unified Spatiotemporal Representation）](#34-unified-spatiotemporal-representation)
+      - [混合体积表示：低秩张量分解与混合场（Hybrid Volumetric Representation: Low-Rank Tensor Decomposition &amp; Hybrid Fields）](#1-hybrid-volumetric-representation-low-rank-tensor-decomposition-hybrid-fields)
+      - [显式结构化表示（Explicit Structured Representation）](#2-explicit-structured-representation)
+      - [以轨迹为中心的基础模型（Trajectory-Centric Foundation Models）](#3-trajectory-centric-foundation-models)
+    - [3.4.4 用于时空对齐的强化学习（Reinforcement Learning for Spatial-Temporal Alignment）](#34-reinforcement-learning-for-spatial-temporal-alignment)
+      - [全局混合奖励反馈与动态对齐（Global Mixed-Reward Feedback &amp; Dynamic Alignment）](#global-mixed-reward-feedback-dynamic-alignment)
+      - [层次化结构解耦与显式代价（Hierarchical Structural Decoupling &amp; Explicit Costs）](#hierarchical-structural-decoupling-explicit-costs)
+  - [3.5 世界模型的初步涌现（Preliminary Emergence of World Models）](#35-preliminary-emergence-of-world-models)
+    - [3.5.1 从基准建立到多样化演进（From Benchmark Establishment to Diverse Evolution）](#35-from-benchmark-establishment-to-diverse-evolution)
+      - [Sora：世界模拟器范式的建立（Sora: Paradigm Establishment of World Simulator）](#sora-world-simulator-paradigm-establishment)
+      - [Open-Sora：技术民主化与架构验证（Open-Sora: Technology Democratization &amp; Architecture Verification）](#open-sora-technology-democratization-architecture-verification)
+      - [从被动观察到主动交互的转变（Transition from Passive Observation to Active Interaction）](#from-passive-observation-to-active-interaction)
+      - [多样化技术路径的协同印证（Synergistic Corroboration of Diverse Technical Paths）](#synergistic-corroboration-of-diverse-technical-paths)
+    - [3.5.2 三种一致性的对抗循环（Combat Loop of Three Consistencies）](#35-combat-loop-of-three-consistencies)
+      - [交互式世界模拟器：物理、逻辑与三维保真度的融合（Interactive World Simulators: The Convergence of Physics, Logic, and 3D Fidelity）](#interactive-world-simulators-the-convergence-of-physics-logic-and-3d-fidelity)
+      - [统一的认知-动作流形：从操作到导航（Unified Cognition-Action Manifolds: From Manipulation to Navigation）](#unified-cognition-action-manifolds-from-manipulation-to-navigation)
+      - [基于物理因果性的时空约束（Spatio-Temporal Constraints Based on Physical Causality）](#spatio-temporal-constraints-based-on-physical-causality)
 - [4 挑战、基准与展望（Challenges, Benchmarks, and Outlook）](#4-challenges-benchmarks-and-outlook)
-  - 4.1 从初步融合到真正统一的核心挑战（Core Challenges from Preliminary Fusion to True Unification）
-
-### 4.2 构建综合评估基准（Constructing Comprehensive Evaluation Benchmarks）
-
-#### 4.2.1 模态一致性：从符号映射到知识协同（Modal Consistency: From Symbol Mapping to Knowledge Synergy）
-
-##### 知识驱动对齐（Knowledge-driven Alignment）。
-
-##### 理解与生成之间的执行鸿沟（Execution Gap between Understanding and Generation）。
-
-#### 4.2.2 空间一致性：从视觉相似性到拓扑与物理验证（Spatial Consistency: From Visual Similarity to Topological & Physical Verification）
-
-##### 拓扑逻辑与交互推理（Topological Logic & Interactive Reasoning）。
-
-##### 物理模拟与穿透检测（Physical Simulation & Penetration Detection）。
-
-#### 4.2.3 时间一致性：从帧间平滑性到逻辑因果演化（Temporal Consistency: From Inter-frame Smoothness to Logical Causal Evolution）
-
-##### (1) 静态时间语义（时间即属性）（Static Temporal Semantics (Time-as-Attribute)）。
-
-##### (2) 视觉物理时序（视频中的思考）（Visual Physical Chronology (Thinking-in-Video)）。
-
-##### (3) 符号逻辑时序与过程可验证性（Symbolic Logical Chronology & Process Verifiability）。
-
-##### (4) 长程缺陷与恒常性失效（Long-range Defects & Constancy Failure）。
-
-#### 4.2.4 现有基准的局限性与本基准的设计原理（Limitations of Existing Benchmarks & Design Rationale of Our Benchmark）
-
-##### (1) 指标的软上限与评估幻觉（Soft Ceiling of Metrics & Judge Hallucination）。
-
-##### (2) 分布内记忆掩盖了分布外泛化的不足（In-Distribution Memory Masks OOD Generalization Shortcomings）。
-
-##### (3) 长程生成中的误差累积与缺乏过程验证（Error Accumulation in Long-range Generation & Lack of Process Verification）。
-
-##### (4) 缺乏用于主动干预的因果探针（Lack of Causal Probes for Active Intervention）。
-
-### 4.3 终极展望：通用世界模拟器（Ultimate Outlook: General World Simulator）
-
-## 5 CoW-Bench
-
-### 5.1 数据集（Dataset）
-
-#### 5.1.1 数据集构建（Dataset Construction）
-
-#### 5.1.2 数据集分析（Dataset Analysis）
-
-##### 统计信息与分层本体（Statistics and Hierarchical Ontology）。
-
-##### 细粒度复杂度分析（Fine-grained Complexity Analysis）。
-
-### 5.2 评估指标（Evaluation metrics）
-
-### 5.3 与现有基准的比较（Comparison with Existing Benchmarks）
-
-#### 判别式感知 vs. 生成式模拟（Discriminative Perception vs. Generative Simulation）
-
-#### 评估信号：问答准确率 vs. 动态约束满足度（Evaluation Signals: QA Accuracy vs. Dynamic Constraint Satisfaction）
-
-#### 复杂度来源：认知深度 vs. 物理真实性（Complexity Sources: Cognitive Depth vs. Physical Fidelity）
+  - [4.1 从初步融合到真正统一的核心挑战（Core Challenges from Preliminary Fusion to True Unification）](#4-1-core-challenges-from-preliminary-fusion-to-true-unification)
+  - [4.2 构建综合评估基准（Constructing Comprehensive Evaluation Benchmarks）](#4-2-constructing-comprehensive-evaluation-benchmarks)
+    - [4.2.1 模态一致性：从符号映射到知识协同（Modal Consistency: From Symbol Mapping to Knowledge Synergy）](#4-2-1-modal-consistency-from-symbol-mapping-to-knowledge-synergy)
+      - [知识驱动对齐（Knowledge-driven Alignment）](#知识驱动对齐knowledge-driven-alignment)
+      - [理解与生成之间的执行鸿沟（Execution Gap between Understanding and Generation）](#理解与生成之间的执行鸿沟execution-gap-between-understanding-and-generation)
+    - [4.2.2 空间一致性：从视觉相似性到拓扑与物理验证（Spatial Consistency: From Visual Similarity to Topological &amp; Physical Verification）](#4-2-2-spatial-consistency-from-visual-similarity-to-topological-physical-verification)
+      - [拓扑逻辑与交互推理（Topological Logic &amp; Interactive Reasoning）](#拓扑逻辑与交互推理topological-logic-interactive-reasoning)
+      - [物理模拟与穿透检测（Physical Simulation &amp; Penetration Detection）](#物理模拟与穿透检测physical-simulation-penetration-detection)
+    - [4.2.3 时间一致性：从帧间平滑性到逻辑因果演化（Temporal Consistency: From Inter-frame Smoothness to Logical Causal Evolution）](#4-2-3-temporal-consistency-from-inter-frame-smoothness-to-logical-causal-evolution)
+      - [静态时间语义（时间即属性）（Static Temporal Semantics (Time-as-Attribute)）](#静态时间语义时间即属性static-temporal-semantics-time-as-attribute)
+      - [视觉物理时序（视频中的思考）（Visual Physical Chronology (Thinking-in-Video)）](#视觉物理时序视频中的思考visual-physical-chronology-thinking-in-video)
+      - [符号逻辑时序与过程可验证性（Symbolic Logical Chronology &amp; Process Verifiability）](#符号逻辑时序与过程可验证性symbolic-logical-chronology-process-verifiability)
+      - [长程缺陷与恒常性失效（Long-range Defects &amp; Constancy Failure）](#长程缺陷与恒常性失效long-range-defects-constancy-failure)
+    - [4.2.4 现有基准的局限性与本基准的设计原理（Limitations of Existing Benchmarks &amp; Design Rationale of Our Benchmark）](#4-2-4-limitations-of-existing-benchmarks-design-rationale-of-our-benchmark)
+      - [指标的软上限与评估幻觉（Soft Ceiling of Metrics &amp; Judge Hallucination）](#指标的软上限与评估幻觉soft-ceiling-of-metrics-judge-hallucination)
+      - [分布内记忆掩盖了分布外泛化的不足（In-Distribution Memory Masks OOD Generalization Shortcomings）](#分布内记忆掩盖了分布外泛化的不足in-distribution-memory-masks-ood-generalization-shortcomings)
+      - [长程生成中的误差累积与缺乏过程验证（Error Accumulation in Long-range Generation &amp; Lack of Process Verification）](#长程生成中的误差累积与缺乏过程验证error-accumulation-in-long-range-generation-lack-of-process-verification)
+      - [缺乏用于主动干预的因果探针（Lack of Causal Probes for Active Intervention）](#缺乏用于主动干预的因果探针lack-of-causal-probes-for-active-intervention)
+  - [4.3 终极展望：通用世界模拟器（Ultimate Outlook: General World Simulator）](#4-3-ultimate-outlook-general-world-simulator)
+- [5 CoW-Bench](#5-cow-bench)
+  - [5.1 数据集（Dataset）](#5-1-dataset)
+    - [5.1.1 数据集构建（Dataset Construction）](#5-1-1-dataset-construction)
+    - [5.1.2 数据集分析（Dataset Analysis）](#5-1-2-dataset-analysis)
+      - [统计信息与分层本体（Statistics and Hierarchical Ontology）](#统计信息与分层本体statistics-and-hierarchical-ontology)
+      - [细粒度复杂度分析（Fine-grained Complexity Analysis）](#细粒度复杂度分析fine-grained-complexity-analysis)
+  - [5.2 评估指标（Evaluation metrics）](#5-2-evaluation-metrics)
+  - [5.3 与现有基准的比较（Comparison with Existing Benchmarks）](#5-3-comparison-with-existing-benchmarks)
+    - [判别式感知 vs. 生成式模拟（Discriminative Perception vs. Generative Simulation）](#判别式感知-vs-生成式模拟discriminative-perception-vs-generative-simulation)
+    - [评估信号：问答准确率 vs. 动态约束满足度（Evaluation Signals: QA Accuracy vs. Dynamic Constraint Satisfaction）](#评估信号问答准确率-vs-动态约束满足度evaluation-signals-qa-accuracy-vs-dynamic-constraint-satisfaction)
+    - [复杂度来源：认知深度 vs. 物理真实性（Complexity Sources: Cognitive Depth vs. Physical Fidelity）](#复杂度来源认知深度-vs-物理真实性complexity-sources-cognitive-depth-vs-physical-fidelity)
 
 ## 摘要（Abstract）
 
-能够学习、模拟和推理客观物理规律的 **世界模型（World Model）** 的构建，是追求 **人工通用智能（Artificial General Intelligence, AGI）** 的一项基础性挑战。以 Sora 等视频生成模型为代表的最新进展，展示了数据驱动的 **缩放定律（Scaling Laws）** 在近似物理动力学方面的潜力，而新兴的 **统一多模态模型（Unified Multimodal Model, UMM）** 则为整合感知、语言和推理提供了一种有前景的架构范式。尽管取得了这些进展，该领域仍然缺乏一个原则性的理论框架来定义通用世界模型所必需的基本属性。在本文中，我们提出，一个世界模型必须基于 **一致性三元组（Trinity of Consistency）** ： **模态一致性（Modal Consistency）** 作为语义接口， **空间一致性（Spatial Consistency）** 作为几何基础，以及 **时间一致性（Temporal Consistency）** 作为因果引擎。通过这个三元视角，我们系统地回顾了多模态学习的演变，揭示了一条从松散耦合的专业模块走向统一架构的轨迹，该架构使得内部世界模拟器的协同涌现成为可能。为补充这一概念框架，我们引入了  **CoW-Bench** ，一个以多帧推理和生成场景为核心的基准。CoW-Bench 在统一的评估协议下评估视频生成模型和统一多模态模型。我们的工作为迈向通用世界模型建立了一条原则性路径，阐明了当前系统的局限性以及未来进步所需的架构要求。
+能够学习、模拟和推理客观物理规律的 **世界模型（World Model）** 的构建，是追求 **人工通用智能（Artificial General Intelligence, AGI）** 的一项基础性挑战。以 Sora 等视频生成模型为代表的最新进展，展示了数据驱动的 **缩放定律（Scaling Laws）** 在近似物理动力学方面的潜力，而新兴的 **统一多模态模型（Unified Multimodal Model, UMM）** 则为整合感知、语言和推理提供了一种有前景的架构范式。尽管取得了这些进展，该领域仍然**缺乏一个原则性的理论框架来定义通用世界模型所必需的基本属性**。在本文中，我们提出，一个世界模型必须基于 **一致性三元组（Trinity of Consistency）** ： **模态一致性（Modal Consistency）** 作为语义接口， **空间一致性（Spatial Consistency）** 作为几何基础，以及 **时间一致性（Temporal Consistency）** 作为因果引擎。通过这个三元视角，我们系统地回顾了**多模态学习**的演变，揭示了一条**从松散耦合的专业模块**走向**统一架构**的轨迹，该架构使得内部世界模拟器的协同涌现成为可能。为补充这一概念框架，我们引入了  **CoW-Bench** ，一个**以多帧推理和生成场景为核心的基准**。CoW-Bench 在统一的评估协议下评估视频生成模型和统一多模态模型。我们的工作为迈向通用世界模型建立了一条原则性路径，阐明了当前系统的局限性以及未来进步所需的架构要求。
 
 [Code](https://github.com/openraiser/awesome-world-model-evolution) [Leaderboard](https://openraiser.github.io/CoW-Bench/) [Dataset](https://huggingface.co/datasets/openraiser/CoW-Bench)
 
 `<a id="figure-1"></a>`
 
-![github_logo](images/github_logo.png)
+![github_logo](images/fig_teaser_compressed.png)
 
 > 图 1: 世界模型中的一致性三元组：模态一致性（语义）、空间一致性（几何）和时间一致性（因果）。
 
@@ -224,9 +191,9 @@
 
 对 **人工通用智能（AGI）** 的追求，从根本上植根于赋予机器对物理现实深刻理解的渴望。一个真正智能的智能体必须从一个被动的观察者 [lecun2022path] 演变为一个主动的模拟器 [openai2024sora, bardes2024vjepa]，拥有一个能够学习客观物理定律、推理反事实场景 [lu2024deepseek] 并根据当前行动预测未来状态 [lingbotworld2026] 的内部世界模型。
 
-近年来，由数据驱动的 **缩放定律（Scaling Laws）** 推动，生成能力呈爆炸式增长。以 Sora [openai2024sora] 和 Gen-3 [runway2024gen3] 为代表的视频生成模型，展示了逼近复杂动态的惊人能力，创建了通常与真实世界难以区分的高保真视觉序列。同时， **统一多模态模型（Unified Multimodal Models, UMMs）** 的兴起 [team2023gemini, deng2025emerging] 为将多样化的感官输入整合到一个共享的语义流形 [min2024platonic] 中提供了一种有前景的架构范式。然而，一个关键差距仍然存在：现有模型尽管在视觉上看似合理，但通常表现得像幼稚的物理学家。它们经常遭受结构性幻觉、时间不一致性和违反因果关系的困扰——这些是系统模仿像素统计而非内化物理原理的症状。该领域缺乏一个原则性的理论框架来定义通用世界模型所必需的基本属性。
+近年来，由数据驱动的 **缩放定律（Scaling Laws）** 推动，生成能力呈爆炸式增长。以 Sora [openai2024sora] 和 Gen-3 [runway2024gen3] 为代表的视频生成模型，展示了逼近复杂动态的惊人能力，创建了通常与真实世界难以区分的高保真视觉序列。同时， **统一多模态模型（Unified Multimodal Models, UMMs）** 的兴起 [team2023gemini, deng2025emerging] 为将多样化的感官输入整合到一个共享的语义流形 [min2024platonic] 中提供了一种有前景的架构范式。然而，一个关键差距仍然存在：**现有模型尽管在视觉上看似合理，但通常表现得像幼稚的物理学家**。它们经常遭受结构性幻觉、时间不一致性和违反因果关系的困扰——这些是系统模仿像素统计而非内化物理原理的症状。该领域缺乏一个原则性的理论框架来定义通用世界模型所必需的基本属性。
 
-为了弥合视觉生成与物理模拟之间的鸿沟，我们提出一个健壮的世界模型必须基于 **一致性三元组（Trinity of Consistency）** 。我们认为，一个有效的内部模拟器必须满足三个正交且协同的约束：
+为了弥合视觉生成与物理模拟之间的鸿沟，我们提出一个健壮的世界模型必须基于 **一致性三元组（Trinity of Consistency）** 。我们认为，**一个有效的内部模拟器必须满足三个正交且协同的约束**：
 
 - **模态一致性（语义接口）** ：将异质信息（文本、图像、触觉）对齐到统一语义空间的能力，作为指令和反馈的认知接口。
 - **空间一致性（几何基础）** ：构建一个尊重几何、遮挡和物体恒存性的三维感知表示的能力，确保模拟世界的静态合理性。
@@ -234,15 +201,20 @@
 
 通过这个三元视角，我们系统地回顾了生成模型从专业模块到统一世界模拟器的演变。我们追溯了从松散耦合的专业模块到端到端统一架构的轨迹。我们认为，消除这些维度之间的障碍是世界模拟能力涌现的必要基础，确保模态、空间和时间不是孤立运作，而是协同建模一个连贯的现实。
 
-本文的组织结构反映了从专业模块到统一世界模拟器的演化路径。首先（§[2](#section-2)），我们解构模态、空间和时间一致性的独立发展，分析它们各自的理论基础。其次（§[3](#section-3)），我们研究统一多模态模型所引发的范式转变，详细阐述这些维度的深度融合如何促进物理模拟能力的涌现。第三（§[4](#section-4)），我们指出现有概率生成器与真实物理模拟器之间仍然存在的差距，为严格的评估奠定基础。使用的符号总结在表 [1](#table-1) 中。
+本文的组织结构反映了从专业模块到统一世界模拟器的演化路径。
 
-最后，理论框架需要严格的验证。我们引入了  **CoW-Bench（世界模型一致性基准，Consistency of World-models Benchmark）** ，一个以多帧推理和约束满足为核心的统一评估套件。与以往的基准不同，CoW-Bench 严格测试模型在复杂、开放场景下维持一致性三元组的能力，迫使其证明自己理解了世界，而不仅仅是知道如何描绘它。
+- 首先（§[2](#section-2)），我们解构模态、空间和时间一致性的独立发展，分析它们各自的理论基础。
+- 其次（§[3](#section-3)），我们研究统一多模态模型所引发的范式转变，详细阐述这些维度的深度融合如何促进物理模拟能力的涌现。
+- 第三（§[4](#section-4)），我们指出现有概率生成器与真实物理模拟器之间仍然存在的差距，为严格的评估奠定基础。
+- 使用的符号总结在表 [1](#table-1) 中。
+
+最后，理论框架需要严格的验证。我们引入了  **CoW-Bench（世界模型一致性基准，Consistency of World-models Benchmark）** ，一个以多帧推理和约束满足为核心的统一评估套件。与以往的基准不同，CoW-Bench **严格测试模型在复杂、开放场景下维持一致性三元组的能力，迫使其证明自己理解了世界，而不仅仅是知道如何描绘它**。
 
 `<a id="table-1"></a>`
 
 `<a id="figure-2"></a>`
 
-![github_logo](images/github_logo.png)
+![github_logo](images/bar_comparison.png)
 
 > 图 2: 主流模型在不同任务上的性能比较。分数已从原始范围 [0, 10] 线性重新缩放到百分比范围 [0, 100]。
 
@@ -288,15 +260,21 @@
 
 ### 2.1 通用世界模型的剖析（The Anatomy of General World Models）
 
-如第 1 节（§[1](#section-1)）所述， **世界模型（world models）**  的构建依赖于 **模态一致性（modal consistency）** （作为信息接口）、 **空间一致性（spatial consistency）** （作为几何基石）和 **时间一致性（temporal consistency）** （作为动态引擎）的有机整合。在专用模型的演进过程中，这些一致性并非孤立发展，而是相互渗透：来自模态对齐的统一表示空间为空间几何的重建提供了语义先验，而空间一致性的三维流形则为时间演化建立了物理约束。
+如第 1 节（§[1](#section-1)）所述， **世界模型（world models）**  的构建依赖于 **模态一致性（modal consistency）** （作为信息接口）、 **空间一致性（spatial consistency）** （作为几何基石）和 **时间一致性（temporal consistency）** （作为动态引擎）的有机整合。在专用模型的演进过程中，这些一致性并非孤立发展，而是相互渗透：**来自模态对齐的统一表示空间为空间几何的重建提供了语义先验，而空间一致性的三维流形则为时间演化建立了物理约束。**
 
-本节解构了这一演进历史。我们将追溯专用模型如何首先在孤立状态下攻克这些挑战：模态对齐通过高维流形映射趋于成熟，空间一致性通过从二维代理到显式三维基元的转变得以解决，而时间一致性则从简单的帧插值演变为因果动力学建模。在此，我们系统地分析了每个维度的理论基础和机制转变，建立了必要的先决条件，这些条件最终使得后续章节讨论的统一世界模拟器得以出现。
+本节解构了这一演进历史。我们将追溯专用模型如何首先在孤立状态下攻克这些挑战：
+
+- 模态对齐通过**高维流形映射**趋于成熟，
+- 空间一致性通过**从二维代理到显式三维基元的转变**得以解决，
+- 而时间一致性则从简单的**帧插值**演变为**因果动力学建模**。
+
+在此，我们系统地分析了每个维度的理论基础和机制转变，建立了必要的先决条件，这些条件最终使得后续章节讨论的统一世界模拟器得以出现。
 
 `<a id="section-2-2"></a>`
 
 ### 2.2 模态一致性（Modal Consistency）
 
-构建通用世界模型的核心挑战在于异构模态的语义对齐。与单模态生成的同质性不同，多模态一致性本质上是一个求解高维异构流形对齐的问题，如图 [3](#figure-3) 所示。模型必须超越熵差异和拓扑失配，构建一个物理完备且逻辑自洽的统一表示空间。为此，我们引入两个基本的理论假设，即 **柏拉图表示假说（Platonic Representation Hypothesis）** 和 **超球面几何假说（Hypersphere Geometry Hypothesis）** ，并以此为基础阐述从直接前馈映射到迭代推理与规划的认知架构演进。
+构建通用世界模型的核心挑战在于异构模态的语义对齐。与单模态生成的同质性不同，多模态一致性本质上是一个**求解高维异构流形对齐的问题**，如图 [3](#figure-3) 所示。模型必须**超越熵差异和拓扑失配，构建一个物理完备且逻辑自洽的统一表示空间**。为此，我们引入两个基本的理论假设，即 **柏拉图表示假说（Platonic Representation Hypothesis）** 和 **超球面几何假说（Hypersphere Geometry Hypothesis）** ，并以此为基础阐述**从直接前馈映射（feed-forward mapping）到迭代推理与规划（iterative reasoning and planning）的认知架构演进**。
 
 `<a id="figure-3"></a>`
 
@@ -304,8 +282,16 @@
 
 > 图 3：统一表示目标。模态一致性旨在将异构输入（文本、图像、视频、音频）投影到一个统一的、物理对齐的潜在空间中。
 
-为了系统地解构这一对齐过程，本节将首先从几何拓扑的角度阐明模态差异的起源（§[2.2.1](#S2.SS2.SSS1)）；随后，分析两种主流的生成流形机制——即离散自回归和连续流匹配（§[2.2.2](#S2.SS2.SSS2)）；接着，探讨为最小化梯度冲突而演化的正交解耦架构（§[2.2.3](#S2.SS2.SSS3)）；最后，介绍基于反馈的意图对齐以及迈向测试时计算的认知推理循环（§[2.2.5](#S2.SS2.SSS5)）。
+为了系统地解构这一对齐过程，本节将：
 
+- 首先，**从几何拓扑的角度阐明模态差异的起源**（§[2.2.1](#S2.SS2.SSS1)）；
+- 随后，分析两种主流的**生成流形机制**——即**离散自回归（discrete autoregression）**和**连续流匹配（continuous flow matching）**（§[2.2.2](#S2.SS2.SSS2)）；
+- 接着，探讨为最小化梯度冲突而演化的**正交解耦架构**（§[2.2.3](#S2.SS2.SSS3)）；
+- 最后，介绍**基于反馈的意图对齐**以及**迈向测试时计算的认知推理循环**（§[2.2.5](#S2.SS2.SSS5)）。
+- elucidate the origins of the modality gap from the perspective of geometric topology (§2.2.1);
+- subsequently, it will analyze two mainstream generative manifold mechanisms—namely, discrete autoregression and continuous flow matching (§2.2.2);
+- it will then explore the orthogonal decoupled architecture evolved to minimize gradient conflicts (§2.2.3);
+- and finally, it will introduce feedback-based intent alignment and the cognitive inference loop moving towards test-time compute (§2.2.5).
 - [2.2.1 理论基础](#221-theoretical-foundations)
 - [2.2.2 离散序列与连续流形](#222-discrete-sequences-vs-continuous-manifolds)
 - [2.2.3 架构演进](#223-architectural-evolution)
@@ -320,29 +306,37 @@
 
 ##### 柏拉图洞穴与投影流形（Platonic Cave & Projected Manifolds）
 
-多模态学习的理论基础可以追溯到 **柏拉图表示假说（Platonic Representation Hypothesis）**  [min2024platonic]。该假说正式定义了现实世界中存在一个客观的潜在物理状态空间 $\mathcal{Z}_{world}$，其中图像和文本是该高维实体在不同低维子空间上的投影。模态一致性的本质是求解一个联合逆投影问题：通过观察到的“影子” $\{x_{img},x_{txt}\}$ 重建共享的潜在变量 $z$。然而，这是一个典型的病态问题——视觉投影 $\mathcal{P}_{img}$ 保留了大量的高频物理熵，而文本投影 $\mathcal{P}_{txt}$ 则高度抽象了离散的符号逻辑。这种 **熵不对称性（Entropy Asymmetry）**  构成了直接对齐的主要障碍。
+多模态学习的理论基础可以追溯到 **柏拉图表示假说（Platonic Representation Hypothesis）**  [min2024platonic]。该假说正式定义了现实世界中存在一个客观的潜在物理状态空间 $\mathcal{Z}_{world}$，其中图像和文本是该高维实体在不同低维子空间上的投影。模态一致性的本质是求解一个**联合逆投影问题**：通过观察到的“影子” $\{x_{img},x_{txt}\}$ 重建共享的潜在变量 $z$。然而，这是一个典型的病态问题——视觉投影 $\mathcal{P}_{img}$ 保留了大量的高频物理熵，而文本投影 $\mathcal{P}_{txt}$ 则高度抽象了离散的符号逻辑。这种 **熵不对称性（Entropy Asymmetry）**  构成了直接对齐的主要障碍。
 
 ##### 超球面假说与模态差距（Hypersphere Hypothesis & Modal Gap）
 
-为了在数学上对齐这两个异构空间，主流范式（如 CLIP）引入了 **超球面假说（Hypersphere Hypothesis）**  [wang2020understanding]，该假说强制特征向量均匀分布在单位超球面 $\mathbb{S}^{d-1}$ 上。然而，这一强假设忽略了多模态表示中普遍存在的 **模态差距（modal gap）**  [liang2022neurips]。一方面，Liang 等人的经验研究指出了 **锥体效应（cone effect）** ，如图 [5](#figure-5) 所示：联合优化导致视觉和文本嵌入坍缩到两个狭窄且分离的锥形区域，破坏了特征空间的各向同性。另一方面，从流形学习的角度来看，这一差距揭示了更深层的拓扑失配：视觉数据通常分布在连续、稠密的低维流形上，而语言数据则呈现出稀疏、离散的聚类结构。这种内在维度和数据密度的根本差异导致了流形非同构，使得在两个空间之间实现完美的等距对齐，同时保持各自语义结构，成为一个病态问题。
+为了在数学上对齐这两个异构空间，主流范式（如 CLIP）引入了 **超球面假说（Hypersphere Hypothesis）**  [wang2020understanding]，该假说**强制特征向量均匀分布在单位超球面** $\mathbb{S}^{d-1}$ 上。然而，这一强假设忽略了多模态表示中普遍存在的 **模态差距（modal gap）**  [liang2022neurips]。
+
+- 一方面，Liang 等人的经验研究指出了 **锥体效应（cone effect）** ，如图 [5](#figure-5) 所示：**联合优化导致视觉和文本嵌入坍缩到两个狭窄且分离的锥形区域，破坏了特征空间的各向同性**。
+- 另一方面，从流形学习的角度来看，这一差距揭示了更深层的拓扑失配：**视觉数据通常分布在连续、稠密的低维流形上，而语言数据则呈现出稀疏、离散的聚类结构。**
+- 这种内在维度和数据密度的根本差异导致了**流形非同构**，使得在两个空间之间实现完美的等距对齐，同时保持各自语义结构，成为一个病态问题。
 
 `<a id="figure-5"></a>`
 
 ![Modality_Consistency_Challenge](images/Modality_Consistency_Challenge.png)
 
-> 图 5：模态差距挑战。（左）理想的超球面对齐假设均匀分布。（右）实际上，熵差异导致视觉嵌入坍缩到一个狭窄的“锥体”中，从而导致与离散文本词元的拓扑失配。
+> 图 5：模态差距挑战。
+>
+> （左）理想的超球面对齐假设均匀分布。
+>
+> （右）实际上，熵差异导致视觉嵌入坍缩到一个狭窄的“锥体”中，从而导致与离散文本词元的拓扑失配。
 
 ##### 计算范式的演进：从摊销推理到测试时计算（Evolution of Computational Paradigms: From Amortized Inference to Test-time Compute）
 
-面对上述几何拓扑失配导致的固有表示误差，简单的参数内化策略面临理论瓶颈，促使模态一致性的建模经历了两大计算范式之间的转变。这深刻地反映了 **训练时计算（train-time compute）** 和 **测试时计算（test-time compute）**  [snell2024scaling] 之间的权衡。
+面对上述几何拓扑失配导致的固有表示误差，简单的**参数内化策略**面临理论瓶颈，促使模态一致性的建模经历了两大计算范式之间的转变。这深刻地反映了 **训练时计算（train-time compute）** 和 **测试时计算（test-time compute）**  [snell2024scaling] 之间的权衡。
 
-早期的直接前馈映射对应于 **双塔架构（Dual-Tower architectures）**  [radford2021icml] 和单步生成模型，其核心是通过大规模训练将物理规则识别到神经网络权重中，即 **摊销推理（Amortized Inference）**  [gershman2014amortized]。该范式在推理时仅需一次前向传播（$\text{NFE}=1$）。虽然效率极高，但它受限于分布内统计相关性，本质上只能在已建立的锥形区域内进行插值，难以处理未见过的反事实组合 [bengio2021machine]。
+早期的**直接前馈映射**对应于 **双塔架构（Dual-Tower architectures）**  [radford2021icml] 和**单步生成模型**，其核心是**通过大规模训练将物理规则识别到神经网络权重中**，即 **摊销推理（Amortized Inference）**  [gershman2014amortized]。该范式在推理时仅需一次前向传播（$\text{NFE}=1$）。虽然效率极高，但它**受限于分布内统计相关性，本质上只能在已建立的锥形区域内进行插值，难以处理未见'过的反事实组合** [bengio2021machine]。
 
 相比之下，当前的趋势正转向 **迭代推理与规划（iterative reasoning & planning）** ，对应于迭代推理架构。该范式承认了单次映射在弥合模态差距方面的局限性，并因此在推理阶段引入了显式的状态空间搜索。通过在潜在空间中构建 **思维树（Tree of Thoughts）**  [yao2024tree] 或执行梯度引导的动态规划，模型利用额外的推理计算来即时校正物理漂移。这标志着一致性建模从静态模式匹配向动态流形规划的转变。
 
 #### 2.2.2 离散序列与连续流形（Discrete Sequences vs. Continuous Manifolds）
 
-为了在计算上实现上述理论中的 **联合逆投影（Joint Inverse Projection）** 过程，学术界探索了两条不同的数学路径来建模目标条件概率密度 $P(x_{img}|x_{txt})$。这一选择决定了潜在空间流形的物理本质：是将其视为 **离散符号序列（Discrete Symbolic Sequence）** 还是 **连续欧几里得向量场（Continuous Euclidean Vector Field）** ？我们在表 [2](#table-2) 中比较了这两种范式的数学形式和动态特性。
+为了在计算上实现上述理论中的 **联合逆投影（Joint Inverse Projection）** 过程，学术界探索了两条不同的数学路径来建模目标条件概率密度 $P(x_{img}|x_{txt})$。这一选择决定了**潜在空间流形的物理本质**：是将其视为 **离散符号序列（Discrete Symbolic Sequence）** 还是 **连续欧几里得向量场（Continuous Euclidean Vector Field）** ？我们在表 [2](#table-2) 中比较了这两种范式的数学形式和动态特性。
 
 `<a id="table-2"></a>`
 
@@ -358,25 +352,33 @@
 
 ##### 离散自回归（Discrete Autoregressive, AR）
 
-该范式的核心在于 **以词元为中心（Token-centric）**  的理念，试图通过统一的离散符号接口将视觉生成转化为序列预测问题 [van2017neural, ramesh2021zero]。其生成过程包含严格耦合的阶段：首先通过 VQ-GAN 将连续图像量化为离散符号，随后利用 Transformer 的因果注意力掩码最大化序列对数似然。
+该范式的核心在于 **以词元为中心（Token-centric）**  的理念，**试图通过统一的离散符号接口将视觉生成转化为序列预测问题** [van2017neural, ramesh2021zero]。其生成过程包含**严格耦合**的阶段：**首先通过 VQ-GAN 将连续图像量化为离散符号，随后利用 Transformer 的因果注意力掩码最大化序列对数似然。**
 
- **指数级漂移与码本坍塌（Exponential Drift & Codebook Collapse）** 。尽管 AR 范式实现了接口统一，但从动态视角来看，其存在两个内生缺陷 [Huh2023Straightening]。首先是 **维度灾难（curse of dimensionality）** 。离散化过程受 **狄利克雷过程（Dirichlet process）**  支配；随着码本维度增加，有效利用率呈指数级衰减，导致高频纹理丢失 [iccv2025GigaTok, cvpr2025MergeVQ]。其次是 **误差累积动态（error accumulation dynamics）** 。自回归生成的本质是算子的递归应用。假设算子的局部 **利普希茨常数（Lipschitz constant）**  为 $L>1$，则初始量化误差 $\epsilon_{0}$ 在 $T$ 步后的累积漂移为 $\|\delta_{T}\|\approx L^{T}\|\epsilon_{0}\|$。这种指数级误差放大解释了为什么 AR 模型在生成长序列时，其尾部常出现结构坍塌 [bengio2015scheduled]。
+ **指数级漂移与码本坍塌（Exponential Drift & Codebook Collapse）** 。尽管 AR 范式实现了接口统一，但从动态视角来看，其存在两个内生缺陷 [Huh2023Straightening]。
+
+- 首先是 **维度灾难（curse of dimensionality）** 。离散化过程受 **狄利克雷过程（Dirichlet process）**  支配；**随着码本维度增加，有效利用率呈指数级衰减，导致高频纹理丢失** [iccv2025GigaTok, cvpr2025MergeVQ]。
+- 其次是 **误差累积动态（error accumulation dynamics）** 。自回归生成的本质是算子的递归应用。假设算子的局部 **利普希茨常数（Lipschitz constant）**  为 $L>1$，则初始量化误差 $\epsilon_{0}$ 在 $T$ 步后的累积漂移为 $\|\delta_{T}\|\approx L^{T}\|\epsilon_{0}\|$。**这种指数级误差放大解释了为什么 AR 模型在生成长序列时，其尾部常出现结构坍塌** [bengio2015scheduled]。
 
 ##### 连续流匹配（Continuous Flow Matching, FM）
 
 为规避量化误差，新一代范式（如 Stable Diffusion 3 [esser2024sd3]、Emu3 [wang2024emu3]）回归到 **连续潜空间（continuous latent space）** 。不同于基于 SDE 去噪视角的传统扩散模型， **流匹配（Flow Matching, FM）**  [lipman2023flow] 采用  **ODE**  视角，构建连接噪声与数据的确定性传输路径。
 
- **速度场回归与修正路径（Velocity Field Regression & Rectified Path）** 。连续 FM 的核心思想是直接拟合概率流的速度场。训练时，中间状态 $x_{t}$ 被定义为数据与噪声之间的线性插值，对应一条理想的直线轨迹，其目标速度场恒为 $v_{t}=x_{1}-x_{0}$。神经网络通过 **均方误差（Mean Squared Error, MSE）**  损失直接回归该速度向量。 **修正流（Rectified Flow）**  [liu2023iclr] 证明，这种 Reflow 操作修正了传输轨迹，使其对应的利普希茨常数 $L\approx 1$。这意味着误差累积转变为线性增长 $\|\delta_{T}\|\approx T\cdot\epsilon_{step}$，使得 FM 能够以极少的步数生成高保真样本，同时完美保留潜空间的连续语义流形。
+ **速度场回归与修正路径（Velocity Field Regression & Rectified Path）** 。连续 FM 的核心思想是**直接拟合概率流的速度场**。
+
+- 训练时，中间状态 $x_{t}$ 被定义为数据与噪声之间的线性插值，对应一条理想的直线轨迹，其目标速度场恒为 $v_{t}=x_{1}-x_{0}$。
+- 神经网络通过 **均方误差（Mean Squared Error, MSE）**  损失直接回归该速度向量。
+- **修正流（Rectified Flow）**  [liu2023iclr] 证明，这种 Reflow 操作修正了传输轨迹，使其对应的利普希茨常数 $L\approx 1$。
+- 这意味着误差累积转变为线性增长 $\|\delta_{T}\|\approx T\cdot\epsilon_{step}$，使得 FM 能够以极少的步数生成高保真样本，同时完美保留潜空间的连续语义流形。
 
 #### 2.2.3 架构演进（Architectural Evolution）
 
-建立生成机制仅解决了目标流形的数学表达。如何将异构模态信息注入该流形，取决于模型的 **条件机制（conditioning mechanism）** 。多模态架构的演进呈现出非线性特征，其本质是寻找最优的参数空间拓扑结构，以最小化模态间的梯度冲突和信息损失。该过程经历了从几何隔离到早期融合，最终收敛于正交解耦的三阶段演进，如图 [6](#figure-6) 所示。
+建立生成机制仅解决了目标流形的数学表达。如何将异构模态信息注入该流形，取决于模型的 **条件机制（conditioning mechanism）** 。多模态架构的演进呈现出非线性特征，其本质是寻找最优的参数空间拓扑结构，以最小化模态间的梯度冲突和信息损失。该过程经历了从**几何隔离**到**早期融合**，最终收敛于**正交解耦**的三阶段演进，如图 [6](#figure-6) 所示。
 
 `<a id="figure-6"></a>`
 
 ![Evolution_Multimodal](images/Evolution_Multimodal.png)
 
-> 图 6：多模态融合范式演进。从几何隔离（双塔架构）到不稳定的早期融合（适配器），最终演进至大规模统一架构中正交解耦的原生统一多模态模型（MM-DiT）。
+> 图 6：多模态融合范式演进。从几何隔离（双塔架构）到不稳定的早期融合（适配器），最终演进至大规模统一架构中正交解耦的**原生统一多模态模型**（MM-DiT）。
 
 - [(1) 早期演进：双塔架构与连接器范式的建立。](#1-早期演进双塔架构与连接器范式的建立)
 - [(2) 早期融合与统一优化的挑战。](#2-早期融合与统一优化的挑战)
@@ -384,9 +386,11 @@
 
 ##### (1) 早期演进：双塔架构与连接器范式的建立。
 
-多模态对齐的早期探索呈现出两条清晰的技术演进路径。其一是以 CLIP [radford2021icml] 和 ALIGN [jia2021icml] 为代表的 **双塔架构（Dual-Tower Architecture）** 。该范式利用 **对比学习（contrastive learning）**  将异构模态投影到共享的超球面上。尽管在检索任务中表现出色，但独立编码器对图像和文本的分离处理导致了几何拓扑上的天然不对称性，缺乏深度的细粒度交互。
+多模态对齐的早期探索呈现出**两条清晰的技术演进路径**。
 
-为解决此局限性，以 Flamingo [alayrac2022flamingo] 和 BLIP/BLIP-2 [li2022blip, li2023blip2] 为代表的 **基于连接器的范式（Connector-based Paradigm）**  应运而生。这些方法冻结了预训练的视觉编码器，并创新性地引入了可学习的桥接模块（如 Perceiver Resampler 或 Q-Former），用以对齐视觉特征与 **大语言模型（Large Language Models, LLMs）**  的语义空间。这种 **冻结视觉主干与轻量级连接器（Frozen Visual Backbone & Lightweight Connector）**  的设计不仅降低了训练成本，也为后续的 **大语言模型（Large Multimodal Models, LMMs）**  建立了标准架构模板。
+- 其一是以 CLIP [radford2021icml] 和 ALIGN [jia2021icml] 为代表的 **双塔架构（Dual-Tower Architecture）** 。该范式利用 **对比学习（contrastive learning）**  将异构模态投影到共享的超球面上。尽管在检索任务中表现出色，但独立编码器对图像和文本的分离处理导致了几何拓扑上的天然不对称性，缺乏深度的细粒度交互。
+
+- 为解决此局限性，以 Flamingo [alayrac2022flamingo] 和 BLIP/BLIP-2 [li2022blip, li2023blip2] 为代表的 **基于连接器的范式（Connector-based Paradigm）**  应运而生。这些方法**冻结了预训练的视觉编码器**，并创新性地引入了可学习的桥接模块（如 Perceiver Resampler 或 Q-Former），用以对齐视觉特征与 **大语言模型（Large Language Models, LLMs）**  的语义空间。这种 **冻结视觉主干与轻量级连接器（Frozen Visual Backbone & Lightweight Connector）**  的设计不仅降低了训练成本，也为后续的 **大语言模型（Large Multimodal Models, LMMs）**  建立了标准架构模板。
 
 ##### (2) 早期融合与统一优化的挑战。
 
@@ -408,14 +412,14 @@
 
 `<a id="figure-8"></a>`
 
-![github_logo](images/github_logo.png)
+![github_logo](images/MMdit.png)
 
  **图 8: MM-DiT 架构。**  通过为文本和图像模态保持独立的权重集，并仅通过联合注意力（Joint Attention）进行交互，MM-DiT 实现了正交梯度更新，有效解决了模态冲突。
 
 从优化动态的角度来看，这种设计迫使联合损失函数的 **海森矩阵（Hessian matrix）** 呈现近似块对角结构：
 
 $$
-H_{total}\approx\begin{bmatrix}H_{txt}&0\\ 0&H_{img}\end{bmatrix},\quad\text{s.t.}\penalty 10000\ \frac{\partial^{2}\mathcal{L}}{\partial W_{txt}\partial W_{img}}\to 0,(1)
+H_{total}\approx\begin{bmatrix}H_{txt}&0\\ 0&H_{img}\end{bmatrix},\quad\text{s.t.} \ \frac{\partial^{2}\mathcal{L}}{\partial W_{txt}\partial W_{img}}\to 0,(1)
 $$
 
 其中 $\boldsymbol{H}_{\textrm{total}}$ 表示联合海森矩阵，$\boldsymbol{W}_{\textrm{txt/img}}$ 代表特定模态的参数。这种结构有效地隔离了模态特定的曲率，使得不同模态的梯度更新在参数空间中趋向于正交。经验数据表明，该机制将梯度冲突率从 **自回归（AR）范式** 中的超过 50% 显著降低至约 30% [ma2024theoretical]。这一点在  **Stable Diffusion 3.5 Large**  中得到了验证：得益于模态解耦，在需要复杂排版渲染和长文本理解的任务中，该模型展现出的指令遵循能力和物理保真度显著优于诸如  **LLaVA**  等非对称架构。

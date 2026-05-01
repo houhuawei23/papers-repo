@@ -2,9 +2,7 @@
 
 # Paper Read Log
 
-### 2026.04.24
-
-The Trinity of Consistency as a Defining Principle for General World Models
+### 2026.04.24 ～ The Trinity of Consistency as a Defining Principle for General World Models
 
 三重一致性作为通用世界模型的定义原则
 
@@ -20,10 +18,5 @@ The Trinity of Consistency as a Defining Principle for General World Models
 - 像素模拟和预测 vs 满足物理约束的模拟推理
 - 为什么要让大模型去学习物理规律，大模型本身就是概率的无约束的，与确定性的运动推理本性不相符
   - 是否应该考虑使用其他方法
-
-其他：
-
-
-
 
 

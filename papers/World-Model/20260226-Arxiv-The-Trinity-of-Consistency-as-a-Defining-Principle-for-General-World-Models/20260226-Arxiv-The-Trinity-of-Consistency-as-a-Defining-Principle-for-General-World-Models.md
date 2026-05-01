@@ -206,7 +206,7 @@ The construction of World Models capable of learning, simulating, and reasoning 
 
 <a id="figure-1"></a>
 
-![github_logo](images/github_logo.png)
+![github_logo](images/fig_teaser_compressed.png)
 
 > Figure 1: The Trinity of Consistency in world models: Modal Consistency (Semantics), Spatial Consistency (Geometry), and Temporal Consistency (Causality).
 
@@ -234,7 +234,7 @@ Finally, theoretical frameworks require rigorous verification. We introduce CoW-
 
 <a id="figure-2"></a>
 
-![github_logo](images/github_logo.png)
+![github_logo](images/bar_comparison.png)
 
 > Figure 2: Performance Comparison of Mainstream Models across Different Tasks. The score has been linearly rescaled from the original range of [0, 10] to a percentage scale of [0, 100].
 

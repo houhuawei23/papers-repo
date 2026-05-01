@@ -1,0 +1,67 @@
+paper:
+  id: arxiv:2602.12215
+  title: 'LDA-1B: Scaling L atent D ynamics A ction Model via Universal Embodied Data
+    Ingestion'
+  authors:
+  - name: Jiangran Lyu
+    affiliations:
+    - ', Kai Liu'
+  - name: Jiayi Chen
+    affiliations:
+    - ', Jiazhao Zhang'
+  - name: Xuesong Shi
+    affiliations:
+    - ', Haoran Li'
+  publication:
+    type: preprint
+    venue: arXiv
+    date_published: '2026-02-01'
+    year: 2026
+  identifiers:
+    arxiv: '2602.12215'
+  content:
+    abstract: 'Abstract Recent robot foundation models largely rely on large-scale
+      behavior cloning, which imitates expert actions but discards transferable dynamics
+      knowledge embedded in heterogeneous embodied data.
+
+      While the Unified World Model (UWM) formulation has the potential to leverage
+      such diverse data, existing instantiations struggle to scale to foundation-level
+      due to coarse data usage and fragmented datasets.
+
+      We introduce LDA-1B , a robot foundation model that scales through universal
+      embodied data ingestion by jointly learning dynamics, policy, and visual forecasting,
+      assigning distinct roles to data of varying quality.
+
+      To support this regime at scale, we assemble and standardize EI-30k , an embodied
+      interaction dataset comprising over 30k hours of human and robot trajectories
+      in a unified format.
+
+      Scalable dynamics learning over such heterogeneous data is enabled by prediction
+      in a structured DINO latent space, which avoids redundant pixel-space appearance
+      modeling.
+
+      Complementing this representation, LDA-1B employs a multi-modal diffusion transformer
+      to handle asynchronous vision and action streams, enabling stable training at
+      the 1B-parameter scale.
+
+      Experiments in simulation and the real world show LDA-1B outperforms prior methods
+      (e.g., π 0.5 \pi_{0.5} ) by up to 21% , 48% , and 23% on contact-rich, dexterous,
+      and long-horizon tasks, respectively.
+
+      Notably, LDA-1B enables data-efficient fine-tuning, gaining 10% by leveraging
+      30% low-quality trajectories typically harmful and discarded.'
+    language: en
+    citation: 'Jiangran Lyu et al.. (2026). LDA-1B: Scaling L atent D ynamics A ction
+      Model via Unive.... arXiv:2602.12215.'
+  workflow:
+    status: unread
+    priority: normal
+    date_added: '2026-02-01'
+  relations:
+    tags: []
+    categories: []
+    related: []
+  bibtex: "@misc{lyu20262602,\n  author = {Lyu, Jiangran and Chen, Jiayi and Shi,\
+    \ Xuesong},\n  title = {LDA-1B: Scaling L atent D ynamics A ction Model via Universal\
+    \ Embodied Data Ingestion},\n  year = {2026},\n  eprint = {2602.12215},\n  archivePrefix\
+    \ = {arXiv},\n}"
